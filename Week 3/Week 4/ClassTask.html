@@ -1,0 +1,194 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Programming</title>
+    
+</head>
+<body>
+    <h1>Welcome to Web Programming</h1>
+    <h2>About This Course</h2>
+    <p>This course will teach you the fundamentals of web development, including HTML, CSS, and JavaScript. You will learn how to create interactive and responsive web pages.</p>
+
+    <p>This is a simple web page created as part of the web programming course.</p>
+    <a href="https://www.gachon.ac.kr/" target="_blank">Gachon University</a>
+    <img src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/zsvd3z10dgw4jkxaru6ti4jq" alt="Sample Image" width="300">
+    
+    <ol>
+        <li>Week 1: Introduction to Web Development</li>
+        <li>Week 2: HTML Basics</li>
+        <li>Week 3: CSS Basics</li>
+        <li>Week 4: JavaScript Basics</li>
+    </ol>
+    <table border="1">
+        <tr>
+            <th>Week</th>
+            <th>Topic</th>
+            <th>Assignment</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Introduction to Web Development</td>
+            <td>Read Chapter 1</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>HTML Basics</td>
+            <td>Create a simple web page</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>CSS Basics</td>
+            <td>Style your web page</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>JavaScript Basics</td>
+            <td>Add interactivity to your web page</td>
+        </tr>
+    </table>
+    <h1>Contact Information</h1>
+    <p>If you have any questions or need further assistance, feel free to contact us:</p>
+    <ul>
+        <li>Email: info@university.edu</li>
+        <li>Phone: (123) 456-7890</li>
+    </ul>
+    <span style="color: blue; font-weight: bold;">Note:</span> Please make sure to submit your assignments on time to receive feedback and grades.  
+    <div style="background-color: lightgray; padding: 10px; margin-top: 20px;">
+        <h2>Important Announcement</h2>
+        <p>The deadline for the first assignment has been extended to next Friday. Please check your email for further details.</p>
+    </div>  
+    /* This is a comment in HTML. Comments are not displayed in the browser and are used to leave notes for developers. */      
+   <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f9f9f9;
+    }
+    p {
+        color: navy;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    h1 {
+        color: darkgreen;
+        font-size: 24px;
+    }
+    h2 {
+        color: darkred;
+        font-size: 20px;
+    }
+    a {
+        color: blue;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    ul {
+        list-style-type: square;
+    }
+    ol {
+        list-style-type: decimal;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+    th {    
+        background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    tr:hover {
+        background-color: #f1f1f1;          
+    }
+    img {
+        display: block;
+        margin: 20px auto;
+    }   
+    img {
+        display: block;
+        margin: 20px auto;
+        .container {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column; 
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex: 1 1 calc(33.333% - 20px);
+            min-width: 250px;
+            width: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }   
+            
+}
+    </style>
+ 
+    </div>
+    <hr>
+    <footer>
+        <p>&copy; 2024 Web Programming Course. All rights reserved.</p>
+    </footer>
+    <h3>Container</h3>
+    <div class="container">
+        <div class="card">
+            <h4>Week 1</h4>
+            <p>Introduction to Web Development</p>
+        </div>
+        <div class="card">
+            <h4>Week 2</h4>
+            <p>HTML Basics</p>
+        </div>
+        <div class="card">
+            <h4>Week 3</h4>
+            <p>CSS Basics</p>
+        </div>
+    </div>
+    <H1>Grade Checker</H1>
+    <label for="grade">Enter your grade:</label>
+    <input type="number" id="grade" name="grade" min="0" max="100">
+    <button onclick="checkGrade()">Check Grade</button>
+    <p id="result"></p>
+    <script>
+        function checkGrade() {
+            const grade = document.getElementById('grade').value;
+            let resultText = '';
+            if (grade >= 90) {
+                resultText = 'Excellent! You got an A.';
+            } else if (grade >= 80) {
+                resultText = 'Good job! You got a B.';
+            } else if (grade >= 70) {
+                resultText = 'Not bad! You got a C.';
+            } else if (grade >= 60) {
+                resultText = 'You passed with a D.';
+            } else {
+                resultText = 'Unfortunately, you failed with an F.';
+            }
+            document.getElementById('result').textContent = resultText;
+        }
+    </script>
+</body>
+</html>
