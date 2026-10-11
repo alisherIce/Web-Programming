@@ -1,1 +1,179 @@
+/* =========================
+   GENERAL STYLES
+========================= */
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #172033;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.hero {
+    background: #111827;
+    color: white;
+    padding: 85px 0 75px;
+}
+
+.eyebrow {
+    color: #93c5fd;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(36px, 5vw, 58px);
+    letter-spacing: -1.5px;
+    margin-bottom: 18px;
+}
+
+.subtitle {
+    max-width: 650px;
+    color: #cbd5e1;
+    font-size: 17px;
+}
+
+.student-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.student-info span {
+    display: inline-block;
+    padding: 9px 15px;
+    border: 1px solid #374151;
+    border-radius: 7px;
+    background: #1f2937;
+    color: #e5e7eb;
+    font-size: 13px;
+}
+
+/* =========================
+   WEEKLY ASSIGNMENTS
+========================= */
+
+.weekly-section {
+    padding: 65px 0 75px;
+}
+
+.weekly-section h2 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.description {
+    color: #64748b;
+    margin-bottom: 32px;
+}
+
+.week-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.week-card {
+    display: block;
+    padding: 30px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    color: #172033;
+    text-decoration: none;
+    transition: transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+}
+
+.week-card:hover {
+    transform: translateY(-5px);
+    border-color: #93c5fd;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.number {
+    display: inline-block;
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.week-card h3 {
+    font-size: 25px;
+    margin: 12px 0 8px;
+}
+
+.week-card p {
+    color: #64748b;
+    margin-bottom: 24px;
+}
+
+.open {
+    color: #2563eb;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    background: #111827;
+    color: #9ca3af;
+    padding: 25px 15px;
+    text-align: center;
+    font-size: 13px;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 650px) {
+    .hero {
+        padding: 60px 0;
+    }
+
+    .week-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .weekly-section {
+        padding: 45px 0;
+    }
+
+    .week-card {
+        padding: 24px;
+    }
+
+    .student-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
