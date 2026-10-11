@@ -4,179 +4,187 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Web Programming | Alisher Ulmasov</title>
-
-    <meta name="description"
-          content="Web Programming assignments and projects by Alisher Ulmasov, Gachon University.">
+    <title>Web Programming | My Course Archive</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        .hero h1 {
+            max-width: 900px;
+            line-height: 0.95;
+            overflow-wrap: break-word;
+        }
+
+        .hero p {
+            text-align: center;
+        }
+
+        .week-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .week-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 18px;
+            min-height: 82px;
+            border: 2px solid #111827;
+            border-radius: 14px;
+            background: #fff;
+            color: #111827;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .week-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 5px 0 #111827;
+        }
+
+        .week-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
+            background: #ffe34f;
+            font-size: 27px;
+            font-weight: 800;
+        }
+
+        .week-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .week-info h2 {
+            margin: 0 0 7px;
+            font-size: 18px;
+        }
+
+        .week-info p {
+            margin: 0;
+            color: #4b587b;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .week-open {
+            flex-shrink: 0;
+            color: #303cff;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .archive {
+            width: min(720px, 90%);
+            margin: 28px auto 40px;
+        }
+
+        .archive-title {
+            color: #4b587b;
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+
+        .footer {
+            padding: 22px;
+            border-top: 1px solid #c7ccff;
+            color: #4b587b;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        @media (max-width: 550px) {
+            .week-card {
+                gap: 11px;
+                padding: 12px;
+            }
+
+            .week-number {
+                width: 40px;
+                height: 40px;
+                font-size: 23px;
+            }
+
+            .week-info h2 {
+                font-size: 16px;
+            }
+
+            .week-info p {
+                font-size: 12px;
+            }
+
+            .week-open {
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar">
-        <a href="index.html" class="brand">ALISHER<span>.</span></a>
-
-        <span class="nav-label">WEB DEVELOPMENT</span>
-
-        <a href="#course-archive" class="nav-button">Explore</a>
+        <div>Web Programming</div>
+        <a href="index.html">Home</a>
     </nav>
 
-
-    <!-- Hero Section -->
     <header class="hero">
-        <div class="hero-content">
-
-            <p class="hero-label">CODE · CREATE · LEARN</p>
-
-            <h1>
-                Web<br>
-                Programming<span>.</span>
-            </h1>
-
-            <p class="hero-description">
-                A collection of my weekly assignments, coding exercises,
-                and progress in web development.
-            </p>
-
-            <a href="#course-archive" class="primary-button">
-                Explore My Work <span>↓</span>
-            </a>
-
-        </div>
-
-        <div class="hero-symbol" aria-hidden="true">&lt;/&gt;</div>
+        <h1>Web<br>Programming</h1>
+        <p>My weekly assignments, exercises, and programming practice.</p>
     </header>
 
+    <main class="archive">
 
-    <!-- Course Archive -->
-    <main id="course-archive" class="container">
+        <h3 class="archive-title">Choose a week</h3>
 
-        <div class="section-heading">
-            <div>
-                <p class="section-label">COURSE ARCHIVE</p>
-                <h2>My Assignments</h2>
-                <p class="section-description">
-                    Choose a week to explore my work.
-                </p>
-            </div>
+        <div class="week-list">
 
-            <span class="week-count">04 WEEKS</span>
-        </div>
-
-
-        <!-- Week Cards -->
-        <div class="week-grid">
-
-            <!-- Week 1 -->
-            <a href="Week%201/index.html" class="week-card">
-
-                <div class="card-top">
-                    <span class="week-number">01</span>
-                    <span class="card-arrow">↗</span>
+            <a class="week-card" href="Week%201/index.html">
+                <span class="week-number">1</span>
+                <div class="week-info">
+                    <h2>Week 1</h2>
+                    <p>HTML basics: headings, text, links, images and lists.</p>
                 </div>
-
-                <div class="card-content">
-                    <h3>Week 1</h3>
-
-                    <p>
-                        HTML fundamentals, headings, links, images,
-                        lists, and basic page structure.
-                    </p>
-                </div>
-
-                <div class="card-bottom">
-                    <span class="category">HTML FUNDAMENTALS</span>
-                    <span class="explore-link">Explore week →</span>
-                </div>
-
+                <span class="week-open">Open week →</span>
             </a>
 
-
-            <!-- Week 2 -->
-            <a href="Week%202/index.html" class="week-card">
-
-                <div class="card-top">
-                    <span class="week-number">02</span>
-                    <span class="card-arrow">↗</span>
+            <a class="week-card" href="Week%202/index.html">
+                <span class="week-number">2</span>
+                <div class="week-info">
+                    <h2>Week 2</h2>
+                    <p>Semantic HTML, figures, FAQs and web programming tasks.</p>
                 </div>
-
-                <div class="card-content">
-                    <h3>Week 2</h3>
-
-                    <p>
-                        Semantic HTML, page structure, and practical
-                        web programming exercises.
-                    </p>
-                </div>
-
-                <div class="card-bottom">
-                    <span class="category">HTML & STRUCTURE</span>
-                    <span class="explore-link">Explore week →</span>
-                </div>
-
+                <span class="week-open">Open week →</span>
             </a>
 
-
-            <!-- Week 3 -->
-            <a href="Week%203/index.html" class="week-card">
-
-                <div class="card-top">
-                    <span class="week-number">03</span>
-                    <span class="card-arrow">↗</span>
+            <a class="week-card" href="Week%203/index.html">
+                <span class="week-number">3</span>
+                <div class="week-info">
+                    <h2>Week 3</h2>
+                    <p>CSS styling, the box model, navigation and exercises.</p>
                 </div>
-
-                <div class="card-content">
-                    <h3>Week 3</h3>
-
-                    <p>
-                        CSS styling, the box model, layouts,
-                        and navigation techniques.
-                    </p>
-                </div>
-
-                <div class="card-bottom">
-                    <span class="category">CSS & DESIGN</span>
-                    <span class="explore-link">Explore week →</span>
-                </div>
-
+                <span class="week-open">Open week →</span>
             </a>
 
-
-            <!-- Week 4 -->
-            <a href="Week%204/index.html" class="week-card">
-
-                <div class="card-top">
-                    <span class="week-number">04</span>
-                    <span class="card-arrow">↗</span>
+            <a class="week-card" href="Week%204/index.html">
+                <span class="week-number">4</span>
+                <div class="week-info">
+                    <h2>Week 4</h2>
+                    <p>JavaScript, DOM, events and interactive web exercises.</p>
                 </div>
-
-                <div class="card-content">
-                    <h3>Week 4</h3>
-
-                    <p>
-                        JavaScript fundamentals, DOM manipulation,
-                        events, and interactive web development.
-                    </p>
-                </div>
-
-                <div class="card-bottom">
-                    <span class="category">JAVASCRIPT & DOM</span>
-                    <span class="explore-link">Explore week →</span>
-                </div>
-
+                <span class="week-open">Open week →</span>
             </a>
 
         </div>
 
     </main>
 
-
-    <!-- Footer -->
     <footer class="footer">
-        <p class="copyright">© 2026</p>
-        <p class="footer-name">Alisher Ulmasov | Gachon University</p>
+        My Web Programming Portfolio · Learning and building every week.
     </footer>
 
 </body>
