@@ -4,12 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description"
-          content="Alisher Ulmasov's Web Programming portfolio featuring weekly assignments and exercises.">
+    <title>Alisher | Web Programming Portfolio</title>
 
-    <title>Web Programming | Alisher Ulmasov</title>
-    <h4><b>202537098</b></h4>
-    
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -17,20 +13,21 @@
 
     <!-- Navigation -->
     <nav class="navbar">
-        <a class="brand" href="index.html">ALISHER<span>.</span></a>
+        <a href="./" class="logo">ALISHER<span>.</span></a>
 
-        <a class="nav-home" href="index.html">Home</a>
+        <div class="nav-info">
+            <span>Gachon University</span>
+            <span class="student-id">Student ID: 202537098</span>
+        </div>
     </nav>
 
     <!-- Hero Section -->
     <header class="hero">
         <div class="hero-content">
-
-            <p class="hero-label">MY UNIVERSITY PORTFOLIO</p>
+            <p class="eyebrow">MY UNIVERSITY PORTFOLIO</p>
 
             <h1>
-                Web<br>
-                <span>Programming.</span>
+                Web Programming<span>.</span>
             </h1>
 
             <p class="hero-description">
@@ -38,10 +35,9 @@
                 and progress in web development.
             </p>
 
-            <a class="hero-button" href="#weeks">
+            <a href="#assignments" class="primary-button">
                 Explore My Work <span>↓</span>
             </a>
-
         </div>
 
         <div class="hero-decoration" aria-hidden="true">
@@ -49,125 +45,113 @@
         </div>
     </header>
 
-    <!-- Weekly Archive -->
-    <main id="weeks" class="container">
+    <!-- Assignments -->
+    <main id="assignments" class="main-content">
 
-        <div class="section-heading">
+        <section class="section-heading">
             <div>
-                <p class="eyebrow">COURSE ARCHIVE</p>
+                <p class="section-label">COURSE ARCHIVE</p>
                 <h2>My Assignments</h2>
-            </div>
-
-            <p class="section-description">
-                Choose a week to explore my work.
-            </p>
-        </div>
-
-        <div class="week-list">
-
-            <!-- Week 1 -->
-            <a class="week-card" href="Week%201/index.html">
-
-                <span class="week-number">01</span>
-
-                <div class="week-info">
-                    <h3>Week 1</h3>
-                    <p>
-                        HTML fundamentals, headings, links, images,
-                        lists, and basic page structure.
-                    </p>
-                </div>
-
-                <span class="week-open">
-                    Explore <span>↗</span>
-                </span>
-
-            </a>
-
-            <!-- Week 2 -->
-            <a class="week-card" href="Week%202/index.html">
-
-                <span class="week-number">02</span>
-
-                <div class="week-info">
-                    <h3>Week 2</h3>
-                    <p>
-                        Semantic HTML, page structure,
-                        and practical web programming exercises.
-                    </p>
-                </div>
-
-                <span class="week-open">
-                    Explore <span>↗</span>
-                </span>
-
-            </a>
-
-            <!-- Week 3 -->
-            <a class="week-card" href="Week%203/index.html">
-
-                <span class="week-number">03</span>
-
-                <div class="week-info">
-                    <h3>Week 3</h3>
-                    <p>
-                        CSS styling, the box model,
-                        layout techniques, and navigation.
-                    </p>
-                </div>
-
-                <span class="week-open">
-                    Explore <span>↗</span>
-                </span>
-
-            </a>
-
-            <!-- Week 4 -->
-            <a class="week-card" href="Week%204/index.html">
-
-                <span class="week-number">04</span>
-
-                <div class="week-info">
-                    <h3>Week 4</h3>
-                    <p>
-                        JavaScript, DOM manipulation,
-                        events, and interactive web development.
-                    </p>
-                </div>
-
-                <span class="week-open">
-                    Explore <span>↗</span>
-                </span>
-
-            </a>
-
-        </div>
-
-    </main>
-
-    <!-- Professional Footer -->
-    <footer class="footer">
-
-        <div class="footer-content">
-
-            <div class="footer-main">
-                <a class="footer-brand" href="index.html">
-                    ALISHER<span>.</span>
-                </a>
-
-                <p>
-                    Computer Engineering Student<br>
-                    Gachon University
+                <p class="section-description">
+                    Choose a week to explore my work.
                 </p>
             </div>
 
-            <div class="footer-bottom">
-                <p>Web Programming Portfolio</p>
-                <p>© 2026 Alisher Ulmasov. All rights reserved.</p>
+            <span class="week-count">04 WEEKS</span>
+        </section>
+
+        <section class="week-grid">
+
+            <!-- Week 1 -->
+            <a href="Week%201/index.html" class="week-card">
+                <div class="week-top">
+                    <span class="week-number">01</span>
+                    <span class="arrow">↗</span>
+                </div>
+
+                <h3>Week 1</h3>
+
+                <p>
+                    HTML fundamentals, headings, links, images,
+                    lists, and basic page structure.
+                </p>
+
+                <span class="card-button">Explore Week 1 →</span>
+            </a>
+
+            <!-- Week 2 -->
+            <a href="Week%202/index.html" class="week-card">
+                <div class="week-top">
+                    <span class="week-number">02</span>
+                    <span class="arrow">↗</span>
+                </div>
+
+                <h3>Week 2</h3>
+
+                <p>
+                    Semantic HTML, page structure, and practical
+                    web programming exercises.
+                </p>
+
+                <span class="card-button">Explore Week 2 →</span>
+            </a>
+
+            <!-- Week 3 -->
+            <a href="Week%203/index.html" class="week-card">
+                <div class="week-top">
+                    <span class="week-number">03</span>
+                    <span class="arrow">↗</span>
+                </div>
+
+                <h3>Week 3</h3>
+
+                <p>
+                    CSS styling, the box model, layout techniques,
+                    and navigation.
+                </p>
+
+                <span class="card-button">Explore Week 3 →</span>
+            </a>
+
+            <!-- Week 4 -->
+            <a href="Week%204/index.html" class="week-card">
+                <div class="week-top">
+                    <span class="week-number">04</span>
+                    <span class="arrow">↗</span>
+                </div>
+
+                <h3>Week 4</h3>
+
+                <p>
+                    JavaScript, DOM manipulation, events,
+                    and interactive web development.
+                </p>
+
+                <span class="card-button">Explore Week 4 →</span>
+            </a>
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <a href="./" class="footer-logo">ALISHER<span>.</span></a>
+                <p>Computer Engineering Student</p>
+                <p>Gachon University, South Korea</p>
             </div>
 
+            <div class="footer-right">
+                <p>Web Programming Portfolio</p>
+                <p>Student ID: 202537098</p>
+            </div>
         </div>
 
+        <div class="footer-bottom">
+            <span>© 2026 Alisher Ulmasov. All rights reserved.</span>
+            <span>Designed & built with HTML and CSS.</span>
+        </div>
     </footer>
 
 </body>
