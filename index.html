@@ -4,189 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Web Programming | My Course Archive</title>
+    <title>Week 4 | Web Programming</title>
 
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-        .hero h1 {
-            max-width: 900px;
-            line-height: 0.95;
-            overflow-wrap: break-word;
-        }
-
-        .hero p {
-            text-align: center;
-        }
-
-        .week-list {
-            display: grid;
-            gap: 12px;
-        }
-
-        .week-card {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 14px 18px;
-            min-height: 82px;
-            border: 2px solid #111827;
-            border-radius: 14px;
-            background: #fff;
-            color: #111827;
-            transition: transform 0.15s, box-shadow 0.15s;
-        }
-
-        .week-card:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 4px 5px 0 #111827;
-        }
-
-        .week-number {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            width: 46px;
-            height: 46px;
-            border-radius: 10px;
-            background: #ffe34f;
-            font-size: 27px;
-            font-weight: 800;
-        }
-
-        .week-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .week-info h2 {
-            margin: 0 0 7px;
-            font-size: 18px;
-        }
-
-        .week-info p {
-            margin: 0;
-            color: #4b587b;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .week-open {
-            flex-shrink: 0;
-            color: #303cff;
-            font-weight: 800;
-            font-size: 14px;
-        }
-
-        .archive {
-            width: min(720px, 90%);
-            margin: 28px auto 40px;
-        }
-
-        .archive-title {
-            color: #4b587b;
-            font-size: 15px;
-            margin-bottom: 16px;
-        }
-
-        .footer {
-            padding: 22px;
-            border-top: 1px solid #c7ccff;
-            color: #4b587b;
-            text-align: center;
-            font-size: 13px;
-        }
-
-        @media (max-width: 550px) {
-            .week-card {
-                gap: 11px;
-                padding: 12px;
-            }
-
-            .week-number {
-                width: 40px;
-                height: 40px;
-                font-size: 23px;
-            }
-
-            .week-info h2 {
-                font-size: 16px;
-            }
-
-            .week-info p {
-                font-size: 12px;
-            }
-
-            .week-open {
-                font-size: 12px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
 
+    <!-- Navigation -->
     <nav class="navbar">
-        <div>Web Programming</div>
-        <a href="index.html">Home</a>
+        <div>Web Programming / <span>Week 4</span></div>
+        <a href="../index.html">Back</a>
     </nav>
 
+    <!-- Header -->
     <header class="hero">
-        <h1>Web<br>Programming</h1>
-        <p>My weekly assignments, exercises, and programming practice.</p>
+        <h1>Week 4</h1>
+        <p>JavaScript, DOM manipulation, events and interactive web development.</p>
     </header>
 
-    <main class="archive">
+    <!-- Tasks -->
+    <main class="container">
 
-        <h3 class="archive-title">Choose a week</h3>
+        <h3 class="section-title">Tasks & Exercises</h3>
 
-        <div class="week-list">
+        <div class="task-list">
 
-            <a class="week-card" href="Week%201/index.html">
-                <span class="week-number">1</span>
-                <div class="week-info">
-                    <h2>Week 1</h2>
-                    <p>HTML basics: headings, text, links, images and lists.</p>
-                </div>
-                <span class="week-open">Open week →</span>
-            </a>
-
-            <a class="week-card" href="Week%202/index.html">
-                <span class="week-number">2</span>
-                <div class="week-info">
-                    <h2>Week 2</h2>
-                    <p>Semantic HTML, figures, FAQs and web programming tasks.</p>
-                </div>
-                <span class="week-open">Open week →</span>
-            </a>
-
-            <a class="week-card" href="Week%203/index.html">
-                <span class="week-number">3</span>
-                <div class="week-info">
-                    <h2>Week 3</h2>
-                    <p>CSS styling, the box model, navigation and exercises.</p>
-                </div>
-                <span class="week-open">Open week →</span>
-            </a>
-
-            <a class="week-card" href="Week%204/index.html">
-                <span class="week-number">4</span>
-                <div class="week-info">
-                    <h2>Week 4</h2>
-                    <p>JavaScript, DOM, events and interactive web exercises.</p>
-                </div>
-                <span class="week-open">Open week →</span>
+            <a class="task-card" href="ClassTask.html">
+                <span class="task-number">1</span>
+                <span class="task-title">Class Task</span>
+                <span class="open-link">Open →</span>
             </a>
 
         </div>
 
     </main>
 
+    <!-- Professional Footer -->
     <footer class="footer">
-    <p>© 2026 Alisher Ulmasov</p>
-    <p>Web Programming Portfolio | Gachon University</p>
-</footer>
+        <div class="footer-content">
+
+            <h3>ALISHER ULMASOV</h3>
+
+            <p>Computer Engineering Student at Gachon University</p>
+
+            <div class="footer-line"></div>
+
+            <p class="footer-description">
+                Web Programming Portfolio — Projects, assignments, and continuous learning.
+            </p>
+
+            <p class="copyright">
+                © 2026 Alisher Ulmasov. All rights reserved.
+            </p>
+
+        </div>
+    </footer>
 
 </body>
 </html>
