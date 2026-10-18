@@ -3,69 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Week 2 | Web Programming</title>
-
-    <link rel="stylesheet" href="../style.css">
+    <meta name="description" content="Week 2 semantic HTML assignment by Alisher Ulmasov.">
+    <title>Week 02 — Semantic HTML | Alisher Ulmasov</title>
+    <link rel="stylesheet" href="../portfolio.css">
 </head>
-
 <body>
-
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div>Web Programming / <span>Week 2</span></div>
-        <a href="../index.html">Back</a>
+    <nav class="site-nav" aria-label="Main navigation">
+        <a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / PORTFOLIO</span></a>
+        <a class="nav-link" href="../index.html">← All weeks</a>
     </nav>
-
-    <!-- Header -->
-    <header class="hero">
-        <h1>Week 2</h1>
-        <p>Semantic HTML, page structure, and web development exercises.</p>
-    </header>
-
-    <!-- Tasks -->
-    <main class="container">
-
-        <h3 class="section-title">Tasks & Exercises</h3>
-
-        <div class="task-list">
-
-            <a class="task-card" href="Task1.html">
-                <span class="task-number">1</span>
-                <span class="task-title">Task 1</span>
-                <span class="open-link">Open →</span>
-            </a>
-
-            <a class="task-card" href="Exer8.html">
-                <span class="task-number">2</span>
-                <span class="task-title">Exercise 8</span>
-                <span class="open-link">Open →</span>
-            </a>
-
-        </div>
-
+    <main>
+        <header class="archive-intro">
+            <div class="archive-meta"><span>COURSE ARCHIVE · WEEK 02</span><span>GACHON UNIVERSITY</span></div>
+            <h1>Semantic HTML.</h1>
+            <p>Building clearer pages with meaningful elements and a thoughtful document structure.</p>
+        </header>
+        <section class="archive-content" aria-labelledby="assignment-heading">
+            <div class="archive-content-head"><h2 id="assignment-heading">Assignments</h2><p>Select an assignment to open it</p></div>
+            <div class="assignment-list">
+                <a class="assignment-link" href="Task1.html"><span class="assignment-index">02.01</span><span class="assignment-title">Week 2 task</span><span class="assignment-arrow">↗</span></a>
+            </div>
+        </section>
     </main>
-
-    <!-- Professional Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-
-            <h3>ALISHER ULMASOV</h3>
-
-            <p>Computer Engineering Student at Gachon University</p>
-
-            <div class="footer-line"></div>
-
-            <p class="footer-description">
-                Web Programming Portfolio — Projects, assignments, and continuous learning.
-            </p>
-
-            <p class="copyright">
-                © 2026 Alisher Ulmasov. All rights reserved.
-            </p>
-
-        </div>
-    </footer>
-
+    <footer class="site-footer"><a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / PORTFOLIO</span></a><p>Web Programming · Gachon University · 2026</p></footer>
 </body>
 </html>

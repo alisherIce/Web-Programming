@@ -3,171 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="description"
-          content="Alisher Ulmasov's Web Programming portfolio featuring weekly assignments and exercises.">
-
-    <title>Web Programming | Alisher Ulmasov</title>
-
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Alisher Ulmasov's Web Programming coursework at Gachon University, organized by week.">
+    <meta name="theme-color" content="#f7f7f5">
+    <title>Web Programming — Alisher Ulmasov</title>
+    <link rel="stylesheet" href="portfolio.css">
 </head>
-
 <body>
-
-    <!-- Navigation -->
-    <nav class="navbar">
-        <a class="brand" href="index.html">ALISHER<span>.</span></a>
-
-        <a class="nav-home" href="index.html">Home</a>
+    <nav class="site-nav" aria-label="Main navigation">
+        <a class="wordmark" href="index.html">ALISHER ULMASOV<span> / PORTFOLIO</span></a>
+        <a class="nav-link" href="#coursework">Coursework <span aria-hidden="true">↓</span></a>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="hero">
-        <div class="hero-content">
+    <main>
+        <section class="intro" aria-labelledby="page-title">
+            <div class="intro-meta"><span>GACHON UNIVERSITY</span><span>COMPUTER ENGINEERING</span><span>COURSE LOGBOOK · 2026</span></div>
+            <div class="hero-layout">
+                <div class="hero-main-copy">
+                    <h1 id="page-title">Web<br>Programming<span class="period">.</span></h1>
+                    <p class="intro-copy">A record of what I’m learning and building, week by week.</p>
+                    <a class="hero-cta" href="#coursework">Explore coursework <span aria-hidden="true">↓</span></a>
+                </div>
+                <aside class="hero-index" aria-label="Portfolio summary">
+                    <div class="index-orbit" aria-hidden="true"><span>AU</span><i></i><b></b></div>
+                    <p class="hero-index-label">A STUDENT PORTFOLIO</p>
+                    <p class="hero-index-name">Alisher Ulmasov</p>
+                    <div class="index-rule"></div>
+                    <div class="index-stat"><span>COURSE WEEKS</span><strong>04</strong></div>
+                    <div class="index-stat"><span>PROJECTS & EXERCISES</span><strong>21</strong></div>
+                </aside>
+            </div>
+            <div class="intro-bottom"><span>DESIGN · CODE · ITERATE</span><span>01 — 04 <i>SCROLL TO EXPLORE ↓</i></span></div>
+        </section>
 
-            <p class="hero-label">MY UNIVERSITY PORTFOLIO</p>
-
-            <h1>
-                Web<br>
-                <span>Programming.</span>
-            </h1>
-
-            <p class="hero-description">
-                A collection of my weekly assignments, coding exercises,
-                and progress in web development.
-            </p>
-
-            <a class="hero-button" href="#weeks">
-                Explore My Work <span>↓</span>
-            </a>
-
-        </div>
-
-        <div class="hero-decoration" aria-hidden="true">
-            &lt;/&gt;
-        </div>
-    </header>
-
-    <!-- Weekly Archive -->
-    <main id="weeks" class="container">
-
-        <div class="section-heading">
-            <div>
-                <p class="eyebrow">COURSE ARCHIVE</p>
-                <h2>My Assignments</h2>
+        <section class="coursework" id="coursework" aria-labelledby="coursework-title">
+            <div class="section-topline"><p class="section-kicker">COURSE ARCHIVE</p><p class="section-count">01 — 04</p></div>
+            <div class="section-heading">
+                <h2 id="coursework-title">Coursework</h2>
+                <p>Select a week to see its assignments and exercises.</p>
             </div>
 
-            <p class="section-description">
-                Choose a week to explore my work.
-            </p>
-        </div>
-
-        <div class="week-list">
-
-            <!-- Week 1 -->
-            <a class="week-card" href="Week%201/index.html">
-
-                <span class="week-number">01</span>
-
-                <div class="week-info">
-                    <h3>Week 1</h3>
-                    <p>
-                        HTML fundamentals, headings, links, images,
-                        lists, and basic page structure.
-                    </p>
-                </div>
-
-                <span class="week-open">
-                    Explore <span>↗</span>
-                </span>
-
-            </a>
-
-            <!-- Week 2 -->
-            <a class="week-card" href="Week%202/index.html">
-
-                <span class="week-number">02</span>
-
-                <div class="week-info">
-                    <h3>Week 2</h3>
-                    <p>
-                        Semantic HTML, page structure,
-                        and practical web programming exercises.
-                    </p>
-                </div>
-
-                <span class="week-open">
-                    Explore <span>↗</span>
-                </span>
-
-            </a>
-
-            <!-- Week 3 -->
-            <a class="week-card" href="Week%203/index.html">
-
-                <span class="week-number">03</span>
-
-                <div class="week-info">
-                    <h3>Week 3</h3>
-                    <p>
-                        CSS styling, the box model,
-                        layout techniques, and navigation.
-                    </p>
-                </div>
-
-                <span class="week-open">
-                    Explore <span>↗</span>
-                </span>
-
-            </a>
-
-            <!-- Week 4 -->
-            <a class="week-card" href="Week%204/index.html">
-
-                <span class="week-number">04</span>
-
-                <div class="week-info">
-                    <h3>Week 4</h3>
-                    <p>
-                        JavaScript, DOM manipulation,
-                        events, and interactive web development.
-                    </p>
-                </div>
-
-                <span class="week-open">
-                    Explore <span>↗</span>
-                </span>
-
-            </a>
-
-        </div>
-
+            <div class="week-grid">
+                <a class="week-card" href="Week%201/index.html">
+                    <div class="card-top"><span class="week-index">WEEK 01</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+                    <div><h3>HTML foundations</h3><p>Page structure, text, links, images, and lists.</p></div>
+                    <span class="card-action">View assignments <span aria-hidden="true">→</span></span>
+                </a>
+                <a class="week-card" href="Week%202/index.html">
+                    <div class="card-top"><span class="week-index">WEEK 02</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+                    <div><h3>Semantic HTML</h3><p>Organizing content with meaningful page elements.</p></div>
+                    <span class="card-action">View assignments <span aria-hidden="true">→</span></span>
+                </a>
+                <a class="week-card" href="Week%203/index.html">
+                    <div class="card-top"><span class="week-index">WEEK 03</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+                    <div><h3>CSS & interaction</h3><p>Styling, layout, navigation, and interactive exercises.</p></div>
+                    <span class="card-action">View assignments <span aria-hidden="true">→</span></span>
+                </a>
+                <a class="week-card" href="Week%204/index.html">
+                    <div class="card-top"><span class="week-index">WEEK 04</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+                    <div><h3>JavaScript & DOM</h3><p>Events, browser behavior, and interactive web pages.</p></div>
+                    <span class="card-action">View assignments <span aria-hidden="true">→</span></span>
+                </a>
+            </div>
+        </section>
     </main>
 
-    <!-- Professional Footer -->
-    <footer class="footer">
-
-        <div class="footer-content">
-
-            <div class="footer-main">
-                <a class="footer-brand" href="index.html">
-                    ALISHER<span>.</span>
-                </a>
-
-                <p>
-                    Computer Engineering Student<br>
-                    Gachon University
-                </p>
-            </div>
-
-            <div class="footer-bottom">
-                <p>Web Programming Portfolio</p>
-                <p>© 2026 Alisher Ulmasov. All rights reserved.</p>
-            </div>
-
-        </div>
-
+    <footer class="site-footer">
+        <a class="wordmark" href="index.html">ALISHER ULMASOV<span> / PORTFOLIO</span></a>
+        <p>Web Programming · Gachon University · 2026</p>
     </footer>
-
 </body>
 </html>
