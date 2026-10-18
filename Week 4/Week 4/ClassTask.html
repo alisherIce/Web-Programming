@@ -1,194 +1,220 @@
-<!DOCTYPE html> 
-<html lang="en"> 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Programming</title>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111c17">
+  <meta name="description" content="A polished university web programming course page by Alisher Ulmasov.">
+  <title>Web Programming | Class Task · Alisher Ulmasov</title>
+  <style>
+    :root {
+      --green: #047857;
+      --green-dark: #064e3b;
+      --green-light: #d1fae5;
+      --yellow: #ffe34f;
+      --background: #f4f6f1;
+      --white: #ffffff;
+      --text: #17211d;
+      --muted: #68766e;
+      --border: #dce4dd;
+      --dark: #111c17;
+      --shadow: 5px 6px 0 var(--dark);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body { margin: 0; background: var(--background); color: var(--text); font-family: Arial, Helvetica, sans-serif; line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--yellow); outline-offset: 4px; }
+
+    .navbar { position: sticky; top: 0; z-index: 5; min-height: 66px; padding: 12px max(5%, calc((100% - 1100px) / 2)); display: flex; align-items: center; justify-content: space-between; gap: 18px; background: var(--dark); color: var(--white); }
+    .brand { font-size: 18px; font-weight: 900; letter-spacing: 1px; }
+    .brand span, .footer-brand span { color: var(--yellow); }
+    .nav-right { display: flex; align-items: center; gap: 18px; }
+    .breadcrumb { color: #bdc9c0; font-size: 12px; }
+    .back-link { padding: 8px 16px; border-radius: 30px; background: var(--yellow); color: var(--dark); font-size: 12px; font-weight: 900; transition: transform .2s; }
+    .back-link:hover { transform: translateY(-2px); }
+
+    .hero { position: relative; overflow: hidden; padding: 63px 6% 70px; background: var(--green); color: var(--white); }
+    .hero-inner { position: relative; z-index: 1; width: min(1000px, 100%); margin: 0 auto; }
+    .hero-label { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; color: var(--yellow); font-size: 11px; font-weight: 900; letter-spacing: 2.5px; }
+    .hero-label::before { width: 25px; height: 2px; background: var(--yellow); content: ''; }
+    .hero h1 { max-width: 850px; margin: 0; font-size: clamp(48px, 8vw, 88px); line-height: .98; letter-spacing: -4px; font-weight: 900; }
+    .hero h1 span { color: var(--yellow); }
+    .hero-description { max-width: 590px; margin: 22px 0 0; color: #e4f5eb; font-size: 16px; line-height: 1.8; }
+    .hero-decoration { position: absolute; right: 7%; bottom: -87px; color: rgba(255,255,255,.08); font-size: clamp(170px, 28vw, 315px); line-height: 1; font-weight: 900; pointer-events: none; user-select: none; }
+
+    .page-content { width: min(1000px, 90%); margin: -24px auto 0; padding-bottom: 70px; position: relative; z-index: 2; }
+    .course-strip { display: grid; grid-template-columns: repeat(3, 1fr); margin-bottom: 28px; border: 2px solid var(--dark); border-radius: 14px; background: var(--white); box-shadow: var(--shadow); }
+    .course-fact { padding: 16px 19px; }
+    .course-fact + .course-fact { border-left: 1px solid var(--border); }
+    .fact-label { display: block; margin-bottom: 3px; color: var(--muted); font-size: 10px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; }
+    .fact-value { font-size: 14px; font-weight: 900; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin: 37px 0 16px; }
+    .eyebrow { margin: 0 0 4px; color: var(--green); font-size: 10px; font-weight: 900; letter-spacing: 1.8px; }
+    .section-heading h2 { margin: 0; font-size: clamp(25px, 4vw, 33px); font-weight: 900; letter-spacing: -.8px; }
+    .section-description { max-width: 260px; margin: 0 0 3px; color: var(--muted); font-size: 12px; text-align: right; }
+
+    .topic-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+    .topic-card { position: relative; overflow: hidden; min-height: 144px; padding: 20px; border: 2px solid var(--dark); border-radius: 14px; background: var(--white); box-shadow: 3px 4px 0 var(--dark); transition: transform .2s, box-shadow .2s, border-color .2s; }
+    .topic-card:hover { transform: translate(-2px, -2px); box-shadow: 5px 6px 0 var(--dark); border-color: var(--green); }
+    .topic-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .topic-number { display: grid; width: 35px; height: 35px; place-items: center; border-radius: 10px; background: var(--yellow); color: var(--dark); font-size: 14px; font-weight: 900; }
+    .topic-mark { color: #b7c3b9; font-size: 19px; font-weight: 900; }
+    .topic-card h3 { margin: 0 0 4px; font-size: 16px; font-weight: 900; }
+    .topic-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+
+    .bottom-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; margin-top: 28px; }
+    .info-card { padding: 22px; border: 2px solid var(--dark); border-radius: 14px; background: var(--white); box-shadow: 3px 4px 0 var(--dark); }
+    .info-card h2 { margin: 0 0 14px; font-size: 19px; font-weight: 900; letter-spacing: -.4px; }
+    .announcement { display: flex; gap: 12px; padding: 14px; border-radius: 10px; background: #f2f6f0; }
+    .announcement-icon { display: grid; width: 31px; height: 31px; flex: 0 0 31px; place-items: center; border-radius: 9px; background: var(--green-light); color: var(--green-dark); font-weight: 900; }
+    .announcement h3 { margin: 0 0 3px; font-size: 13px; }
+    .announcement p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+    .contact-intro { margin: -6px 0 13px; color: var(--muted); font-size: 12px; }
+    .contact-list { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+    .contact-list li { display: flex; align-items: center; gap: 9px; color: var(--text); font-size: 12px; }
+    .contact-icon { display: grid; width: 26px; height: 26px; flex: 0 0 26px; place-items: center; border-radius: 8px; background: #f1f5ef; color: var(--green); font-size: 12px; font-weight: 900; }
+    .contact-list a { color: var(--green-dark); font-weight: 800; }
+    .contact-list a:hover { text-decoration: underline; }
+
+    .grade-card { margin-top: 27px; padding: 23px; border: 2px solid var(--dark); border-radius: 15px; background: var(--dark); color: var(--white); box-shadow: var(--shadow); }
+    .grade-head { display: flex; align-items: start; justify-content: space-between; gap: 16px; margin-bottom: 17px; }
+    .grade-head .eyebrow { color: var(--yellow); }
+    .grade-head h2 { margin: 0; font-size: 21px; font-weight: 900; }
+    .grade-symbol { color: rgba(255,227,79,.55); font-size: 32px; font-weight: 900; line-height: 1; }
+    .grade-form { display: flex; align-items: end; gap: 10px; }
+    .grade-field { flex: 1; }
+    .grade-field label { display: block; margin: 0 0 6px; color: #bdc9c0; font-size: 11px; font-weight: 700; }
+    .grade-field input { width: 100%; padding: 11px 13px; border: 1px solid #506056; border-radius: 8px; background: #1a2921; color: white; }
+    .grade-field input:focus { border-color: var(--yellow); outline: none; }
+    .grade-button { min-height: 43px; padding: 0 16px; border: 0; border-radius: 8px; background: var(--yellow); color: var(--dark); font-size: 12px; font-weight: 900; transition: transform .2s; }
+    .grade-button:hover { transform: translateY(-2px); }
+    #grade-result { min-height: 24px; margin: 13px 0 0; color: #e4f5eb; font-size: 13px; font-weight: 700; }
+
+    .footer { padding: 30px 5% 20px; border-top: 4px solid var(--green); background: var(--dark); color: var(--white); }
+    .footer-content { display: flex; width: min(1000px, 100%); align-items: center; justify-content: space-between; gap: 15px; margin: 0 auto; }
+    .footer-brand { margin: 0; font-size: 17px; font-weight: 900; letter-spacing: 1px; }
+    .footer-note, .copyright { margin: 0; color: #aab7ae; font-size: 11px; }
+    @media (max-width: 700px) {
+      .hero { padding: 48px 6% 58px; }
+      .hero h1 { letter-spacing: -2px; }
+      .hero-decoration { right: 1%; bottom: -35px; font-size: 160px; }
+      .page-content { width: 90%; padding-bottom: 48px; }
+      .bottom-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 500px) {
+      .navbar { min-height: 60px; }
+      .breadcrumb { display: none; }
+      .hero { padding: 42px 6% 55px; }
+      .hero h1 { font-size: clamp(43px, 12vw, 59px); }
+      .hero-description { font-size: 14px; }
+      .course-strip { grid-template-columns: 1fr; }
+      .course-fact { padding: 11px 15px; }
+      .course-fact + .course-fact { border-top: 1px solid var(--border); border-left: 0; }
+      .section-heading { align-items: flex-start; flex-direction: column; gap: 5px; }
+      .section-description { text-align: left; }
+      .topic-grid { grid-template-columns: 1fr; }
+      .topic-card { min-height: auto; }
+      .grade-card, .info-card { padding: 18px; }
+      .grade-form { align-items: stretch; flex-direction: column; }
+      .grade-button { width: 100%; }
+      .footer-content { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome to Web Programming</h1>
-    <h2>About This Course</h2>
-    <p>This course will teach you the fundamentals of web development, including HTML, CSS, and JavaScript. You will learn how to create interactive and responsive web pages.</p>
+  <nav class="navbar" aria-label="Main navigation">
+    <a class="brand" href="../../index.html">ALISHER<span>.</span></a>
+    <div class="nav-right"><span class="breadcrumb">Web Programming / Week 4 / Class Task</span><a class="back-link" href="../index.html">← Week 4</a></div>
+  </nav>
 
-    <p>This is a simple web page created as part of the web programming course.</p>
-    <a href="https://www.gachon.ac.kr/" target="_blank">Gachon University</a>
-    <img src="https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/zsvd3z10dgw4jkxaru6ti4jq" alt="Sample Image" width="300">
-    
-    <ol>
-        <li>Week 1: Introduction to Web Development</li>
-        <li>Week 2: HTML Basics</li>
-        <li>Week 3: CSS Basics</li>
-        <li>Week 4: JavaScript Basics</li>
-    </ol>
-    <table border="1">
-        <tr>
-            <th>Week</th>
-            <th>Topic</th>
-            <th>Assignment</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Introduction to Web Development</td>
-            <td>Read Chapter 1</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>HTML Basics</td>
-            <td>Create a simple web page</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>CSS Basics</td>
-            <td>Style your web page</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>JavaScript Basics</td>
-            <td>Add interactivity to your web page</td>
-        </tr>
-    </table>
-    <h1>Contact Information</h1>
-    <p>If you have any questions or need further assistance, feel free to contact us:</p>
-    <ul>
-        <li>Email: info@university.edu</li>
-        <li>Phone: (123) 456-7890</li>
-    </ul>
-    <span style="color: blue; font-weight: bold;">Note:</span> Please make sure to submit your assignments on time to receive feedback and grades.  
-    <div style="background-color: lightgray; padding: 10px; margin-top: 20px;">
-        <h2>Important Announcement</h2>
-        <p>The deadline for the first assignment has been extended to next Friday. Please check your email for further details.</p>
-    </div>  
-    /* This is a comment in HTML. Comments are not displayed in the browser and are used to leave notes for developers. */      
-   <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-color: #f9f9f9;
-    }
-    p {
-        color: navy;
-        font-size: 16px;
-        line-height: 1.5;
-    }
-    h1 {
-        color: darkgreen;
-        font-size: 24px;
-    }
-    h2 {
-        color: darkred;
-        font-size: 20px;
-    }
-    a {
-        color: blue;
-        text-decoration: none;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
-    ul {
-        list-style-type: square;
-    }
-    ol {
-        list-style-type: decimal;
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    th, td {
-        padding: 10px;
-        text-align: left;
-    }
-    th {    
-        background-color: #f2f2f2;
-    }
-    tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-    tr:hover {
-        background-color: #f1f1f1;          
-    }
-    img {
-        display: block;
-        margin: 20px auto;
-    }   
-    img {
-        display: block;
-        margin: 20px auto;
-        .container {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column; 
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
-        .card {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            flex: 1 1 calc(33.333% - 20px);
-            min-width: 250px;
-            width: 100%;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        }   
-            
-}
-    </style>
- 
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="hero-label">GACHON UNIVERSITY · COMPUTER ENGINEERING</p>
+      <h1>Learn by<br><span>building.</span></h1>
+      <p class="hero-description">A snapshot of my web programming course: the topics I’m exploring, the skills I’m practicing, and the work behind each new idea.</p>
     </div>
-    <hr>
-    <footer>
-        <p>&copy; 2024 Web Programming Course. All rights reserved.</p>
-    </footer>
-    <h3>Container</h3>
-    <div class="container">
-        <div class="card">
-            <h4>Week 1</h4>
-            <p>Introduction to Web Development</p>
-        </div>
-        <div class="card">
-            <h4>Week 2</h4>
-            <p>HTML Basics</p>
-        </div>
-        <div class="card">
-            <h4>Week 3</h4>
-            <p>CSS Basics</p>
-        </div>
+    <div class="hero-decoration" aria-hidden="true">&lt;/&gt;</div>
+  </header>
+
+  <main class="page-content">
+    <section class="course-strip" aria-label="Course information">
+      <div class="course-fact"><span class="fact-label">Course</span><span class="fact-value">Web Programming</span></div>
+      <div class="course-fact"><span class="fact-label">Current module</span><span class="fact-value">Week 4 · JavaScript</span></div>
+      <div class="course-fact"><span class="fact-label">Student</span><span class="fact-value">Alisher Ulmasov</span></div>
+    </section>
+
+    <section aria-labelledby="topics-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">COURSE ROADMAP</p><h2 id="topics-title">What I’m learning</h2></div>
+        <p class="section-description">A growing set of skills from my university coursework.</p>
+      </div>
+      <div class="topic-grid">
+        <article class="topic-card"><div class="topic-top"><span class="topic-number">01</span><span class="topic-mark">↗</span></div><h3>Web development basics</h3><p>Understanding how websites are structured and how the browser brings a page to life.</p></article>
+        <article class="topic-card"><div class="topic-top"><span class="topic-number">02</span><span class="topic-mark">↗</span></div><h3>HTML foundations</h3><p>Using headings, links, images, lists, and semantic elements to organize content.</p></article>
+        <article class="topic-card"><div class="topic-top"><span class="topic-number">03</span><span class="topic-mark">↗</span></div><h3>CSS and layout</h3><p>Styling pages with colors, spacing, the box model, and responsive layouts.</p></article>
+        <article class="topic-card"><div class="topic-top"><span class="topic-number">04</span><span class="topic-mark">↗</span></div><h3>JavaScript in the browser</h3><p>Working with the DOM, responding to events, and adding useful interactivity.</p></article>
+      </div>
+    </section>
+
+    <div class="bottom-grid">
+      <section class="info-card" aria-labelledby="announcement-title">
+        <p class="eyebrow">CLASSROOM NOTES</p>
+        <h2 id="announcement-title">A reminder for this course</h2>
+        <div class="announcement"><span class="announcement-icon" aria-hidden="true">i</span><div><h3>Keep your work moving</h3><p>Review the assignment instructions, practice each topic, and submit your work on time. Check your university course channels for the latest class updates.</p></div></div>
+      </section>
+      <section class="info-card" aria-labelledby="university-title">
+        <p class="eyebrow">CAMPUS CONNECTION</p>
+        <h2 id="university-title">Gachon University</h2>
+        <p class="contact-intro">Computer Engineering student · Growing through practice and projects.</p>
+        <ul class="contact-list">
+          <li><span class="contact-icon" aria-hidden="true">↗</span><a href="https://www.gachon.ac.kr/" target="_blank" rel="noopener noreferrer">Visit university website</a></li>
+          <li><span class="contact-icon" aria-hidden="true">&lt;/&gt;</span><span>Web Programming Portfolio</span></li>
+        </ul>
+      </section>
     </div>
-    <H1>Grade Checker</H1>
-    <label for="grade">Enter your grade:</label>
-    <input type="number" id="grade" name="grade" min="0" max="100">
-    <button onclick="checkGrade()">Check Grade</button>
-    <p id="result"></p>
-    <script>
-        function checkGrade() {
-            const grade = document.getElementById('grade').value;
-            let resultText = '';
-            if (grade >= 90) {
-                resultText = 'Excellent! You got an A.';
-            } else if (grade >= 80) {
-                resultText = 'Good job! You got a B.';
-            } else if (grade >= 70) {
-                resultText = 'Not bad! You got a C.';
-            } else if (grade >= 60) {
-                resultText = 'You passed with a D.';
-            } else {
-                resultText = 'Unfortunately, you failed with an F.';
-            }
-            document.getElementById('result').textContent = resultText;
-        }
-    </script>
+
+    <section class="grade-card" aria-labelledby="grade-title">
+      <div class="grade-head"><div><p class="eyebrow">QUICK PRACTICE</p><h2 id="grade-title">Grade checker</h2></div><span class="grade-symbol" aria-hidden="true">%</span></div>
+      <form class="grade-form" id="grade-form">
+        <div class="grade-field"><label for="grade">Enter a score from 0 to 100</label><input id="grade" name="grade" type="number" min="0" max="100" step="1" placeholder="e.g. 85" required></div>
+        <button class="grade-button" type="submit">Check my grade</button>
+      </form>
+      <p id="grade-result" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content"><p class="footer-brand">ALISHER<span>.</span></p><p class="footer-note">Computer Engineering Student · Gachon University</p><p class="copyright">Web Programming Portfolio · 2026</p></div>
+  </footer>
+
+  <script>
+    const gradeForm = document.querySelector('#grade-form');
+    const gradeInput = document.querySelector('#grade');
+    const gradeResult = document.querySelector('#grade-result');
+
+    gradeForm.addEventListener('submit', event => {
+      event.preventDefault();
+      const grade = Number(gradeInput.value);
+      if (!Number.isFinite(grade) || gradeInput.value === '' || grade < 0 || grade > 100) {
+        gradeResult.textContent = 'Please enter a score between 0 and 100.';
+        gradeInput.focus();
+        return;
+      }
+
+      let message;
+      if (grade >= 90) message = 'Excellent! You got an A.';
+      else if (grade >= 80) message = 'Good job! You got a B.';
+      else if (grade >= 70) message = 'Not bad! You got a C.';
+      else if (grade >= 60) message = 'You passed with a D.';
+      else message = 'Unfortunately, you failed with an F.';
+      gradeResult.textContent = message;
+    });
+  </script>
 </body>
 </html>
