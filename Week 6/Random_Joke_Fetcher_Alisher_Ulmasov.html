@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Week 6 Random Joke Fetcher assignment by Alisher Ulmasov.">
+  <title>Week 6 Assignment — Random Joke Fetcher | Alisher Ulmasov</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{color-scheme:light;--ink:#172033;--muted:#64748b;--paper:#f5f5f3;--line:#e2e8f0;--accent:#4f46e5;--accent-dark:#3730a3;--card:#fff;--green:#15803d;--red:#b91c1c}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+    nav{height:68px;padding:0 clamp(18px,5vw,64px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:rgba(255,255,255,.8)}
+    nav a{color:var(--ink);text-decoration:none;font-size:13px;font-weight:700}
+    nav .brand{letter-spacing:.06em}
+    nav .brand span{color:var(--muted);font-weight:500}
+    main{width:min(100% - 32px,760px);margin:54px auto 64px;flex:1}
+    .eyebrow{font-size:11px;font-weight:800;letter-spacing:.15em;color:var(--accent);text-transform:uppercase;margin:0 0 14px}
+    h1{font-size:clamp(2.2rem,6vw,4rem);letter-spacing:-.06em;line-height:1.05;margin:0}
+    .intro{color:var(--muted);line-height:1.7;max-width:600px;margin:18px 0 30px}
+    .joke-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(22px,5vw,38px);box-shadow:0 18px 45px rgba(15,23,42,.06)}
+    .card-top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:24px}
+    .pill{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-dark);background:#eef2ff;border-radius:999px;padding:8px 11px}
+    .status{font-size:13px;color:var(--muted);min-height:20px;text-align:right}
+    .joke-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:var(--muted);margin:24px 0 9px}
+    .joke-text{font-size:clamp(1.1rem,3vw,1.45rem);font-weight:600;line-height:1.55;min-height:45px;margin:0;overflow-wrap:anywhere}
+    .punchline{color:var(--accent-dark)}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+    button{font:inherit;font-size:14px;font-weight:700;border:0;border-radius:11px;padding:13px 18px;cursor:pointer;transition:transform .15s,background .15s}
+    button:active{transform:scale(.98)}
+    button:focus-visible{outline:3px solid #a5b4fc;outline-offset:3px}
+    button:disabled{opacity:.6;cursor:wait}
+    .primary{background:var(--accent);color:white}.primary:hover:not(:disabled){background:var(--accent-dark)}
+    .secondary{background:#eef2f7;color:var(--ink)}.secondary:hover{background:#e2e8f0}
+    .favorite{background:#fff7ed;color:#9a3412}.favorite:hover{background:#ffedd5}
+    .message{font-size:13px;line-height:1.6;margin:16px 0 0;min-height:20px;color:var(--muted)}
+    .message.error{color:var(--red)}.message.success{color:var(--green)}
+    .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.45);border-top-color:white;border-radius:50%;vertical-align:-2px;margin-right:7px;animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .favorites{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
+    .favorites h2{font-size:16px;margin:0 0 14px}
+    .empty{color:var(--muted);font-size:13px;margin:0;line-height:1.6}
+    .favorite-list{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+    .favorite-item{padding:13px 0;border-top:1px solid var(--line);display:flex;align-items:flex-start;gap:12px;justify-content:space-between}
+    .favorite-item p{font-size:13px;line-height:1.55;margin:0;overflow-wrap:anywhere}
+    .favorite-item small{display:block;color:var(--muted);margin-top:4px}
+    .remove-btn{background:#f1f5f9;padding:7px 10px;font-size:12px;flex-shrink:0}
+    footer{border-top:1px solid var(--line);padding:22px clamp(18px,5vw,64px);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+    footer strong{color:var(--ink)}
+    @media(max-width:520px){nav{height:60px}.card-top{align-items:flex-start;flex-direction:column}.status{text-align:left}.actions button{flex:1 1 100%}footer{flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <nav aria-label="Main navigation">
+    <a class="brand" href="../index.html">ALISHER ULMASOV <span>/ WEEK 06</span></a>
+    <a href="index.html">← Week 6 assignments</a>
+  </nav>
+  <main>
+    <p class="eyebrow">Web Programming · Assignment 06</p>
+    <h1>Random Joke<br>Fetcher<span style="color:var(--accent)">.</span></h1>
+    <p class="intro">A small Fetch API project that requests a random joke from the internet, shows a loading state, handles errors, and lets you save favourites in this browser.</p>
+
+    <section class="joke-card" aria-labelledby="joke-heading">
+      <div class="card-top">
+        <span class="pill" id="joke-heading">Fetch API · async / await</span>
+        <span class="status" id="status" role="status" aria-live="polite">Ready when you are.</span>
+      </div>
+      <p class="joke-label">Setup</p>
+      <p class="joke-text" id="setup">Click “Load a Joke” to get started.</p>
+      <p class="joke-label">Punchline</p>
+      <p class="joke-text punchline" id="punchline">Your punchline will appear here.</p>
+      <div class="actions">
+        <button class="primary" id="loadButton" type="button">Load a Joke</button>
+        <button class="favorite" id="saveButton" type="button" disabled>♡ Save Favourite</button>
+      </div>
+      <p class="message" id="message" aria-live="polite">The page will show a friendly message if the request fails.</p>
+    </section>
+
+    <section class="favorites" aria-labelledby="favorites-heading">
+      <h2 id="favorites-heading">Saved favourites</h2>
+      <p class="empty" id="emptyFavorites">No favourites saved yet. Load a joke and save one you like.</p>
+      <ul class="favorite-list" id="favoriteList"></ul>
+    </section>
+  </main>
+  <footer><strong>© 2026 · Alisher Ulmasov</strong><span>Computer Engineering · Gachon University</span></footer>
+
+  <script>
+    const API_URL = 'https://official-joke-api.appspot.com/random_joke';
+    const STORAGE_KEY = 'alisher-week6-favorite-jokes';
+    const fallbackJoke = {
+      setup: 'Why do programmers prefer dark mode?',
+      punchline: 'Because light attracts bugs!'
+    };
+
+    const setupElement = document.getElementById('setup');
+    const punchlineElement = document.getElementById('punchline');
+    const statusElement = document.getElementById('status');
+    const messageElement = document.getElementById('message');
+    const loadButton = document.getElementById('loadButton');
+    const saveButton = document.getElementById('saveButton');
+    const favoriteList = document.getElementById('favoriteList');
+    const emptyFavorites = document.getElementById('emptyFavorites');
+
+    let currentJoke = null;
+
+    function readFavorites() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function showJoke(joke) {
+      setupElement.textContent = joke.setup;
+      punchlineElement.textContent = joke.punchline;
+      currentJoke = { setup: joke.setup, punchline: joke.punchline };
+      saveButton.disabled = false;
+      saveButton.textContent = '♡ Save Favourite';
+      messageElement.textContent = '';
+      messageElement.className = 'message';
+    }
+
+    function renderFavorites() {
+      const favorites = readFavorites();
+      favoriteList.replaceChildren();
+      emptyFavorites.hidden = favorites.length > 0;
+
+      favorites.forEach((joke, index) => {
+        const item = document.createElement('li');
+        item.className = 'favorite-item';
+
+        const textContainer = document.createElement('div');
+        const setup = document.createElement('p');
+        setup.textContent = joke.setup;
+        const punchline = document.createElement('small');
+        punchline.textContent = joke.punchline;
+        textContainer.append(setup, punchline);
+
+        const removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.className = 'remove-btn';
+        removeButton.textContent = 'Remove';
+        removeButton.setAttribute('aria-label', 'Remove saved joke ' + (index + 1));
+        removeButton.addEventListener('click', () => {
+          const updated = readFavorites();
+          updated.splice(index, 1);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+          renderFavorites();
+        });
+
+        item.append(textContainer, removeButton);
+        favoriteList.append(item);
+      });
+    }
+
+    async function loadJoke() {
+      loadButton.disabled = true;
+      saveButton.disabled = true;
+      loadButton.innerHTML = '<span class="spinner" aria-hidden="true"></span>Loading…';
+      statusElement.textContent = 'Request in progress…';
+      messageElement.textContent = 'Contacting the joke API. Please wait.';
+      messageElement.className = 'message';
+
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error('The server returned HTTP ' + response.status + '.');
+        }
+
+        const data = await response.json();
+        if (!data || typeof data.setup !== 'string' || typeof data.punchline !== 'string') {
+          throw new Error('The API response did not contain a valid joke.');
+        }
+
+        showJoke(data);
+        statusElement.textContent = '✓ Joke loaded from the internet';
+        messageElement.textContent = 'Success! You can save this joke to your favourites.';
+        messageElement.className = 'message success';
+      } catch (error) {
+        currentJoke = null;
+        setupElement.textContent = fallbackJoke.setup;
+        punchlineElement.textContent = fallbackJoke.punchline;
+        statusElement.textContent = 'Could not reach the API';
+        messageElement.textContent = 'Sorry, we could not load a joke right now. Check your internet connection and try again. (' + error.message + ')';
+        messageElement.className = 'message error';
+        saveButton.disabled = false;
+        saveButton.textContent = '♡ Save Demo Favourite';
+        currentJoke = { ...fallbackJoke };
+      } finally {
+        loadButton.disabled = false;
+        loadButton.textContent = 'Load a Joke';
+      }
+    }
+
+    saveButton.addEventListener('click', () => {
+      if (!currentJoke) return;
+
+      const favorites = readFavorites();
+      const alreadySaved = favorites.some(joke =>
+        joke.setup === currentJoke.setup && joke.punchline === currentJoke.punchline
+      );
+
+      if (alreadySaved) {
+        messageElement.textContent = 'That joke is already in your favourites.';
+        messageElement.className = 'message';
+        return;
+      }
+
+      favorites.unshift(currentJoke);
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+        renderFavorites();
+        messageElement.textContent = 'Saved! Your favourite will remain in this browser.';
+        messageElement.className = 'message success';
+      } catch (error) {
+        messageElement.textContent = 'The joke could not be saved in this browser.';
+        messageElement.className = 'message error';
+      }
+    });
+
+    loadButton.addEventListener('click', loadJoke);
+    renderFavorites();
+  </script>
+</body>
+</html>
