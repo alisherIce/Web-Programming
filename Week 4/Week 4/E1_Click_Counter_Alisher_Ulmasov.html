@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E1 - Click Counter - Alisher Ulmasov</title>
+  <style>
+    body{font-family:Arial,sans-serif;text-align:center;padding:40px;background:#f5f7fb;color:#222}
+    main{max-width:480px;margin:50px auto;background:white;padding:32px;border-radius:16px;box-shadow:0 8px 28px #17255418}
+    .student{color:#666;margin-bottom:28px}
+    #count{font-size:56px;font-weight:bold;margin:24px}
+    button{padding:14px 30px;font-size:18px;border:0;background:#1a56db;color:white;border-radius:10px;cursor:pointer}
+    button:hover{filter:brightness(.9)}
+    #reset{background:#64748b;margin-left:8px}
+    a{color:#1a56db}
+  </style>
+</head>
+<body>
+<main>
+  <h1>E1 — Click Counter</h1>
+  <p class="student">Student: Alisher Ulmasov | Gachon University</p>
+  <p>Click the button and watch the counter change color as the number increases.</p>
+  <div id="count" aria-live="polite">0</div>
+  <button id="clicker">Click me!</button><button id="reset">Reset</button>
+  <p><a href="../index.html">Back to Week 4</a></p>
+</main>
+<script>
+  let count = 0;
+  const countDisplay = document.querySelector("#count");
+  document.querySelector("#clicker").addEventListener("click", () => {
+    count++;
+    countDisplay.textContent = count;
+    countDisplay.style.color = count % 2 === 0 ? "#16a34a" : "#1a56db";
+  });
+  document.querySelector("#reset").addEventListener("click", () => {
+    count = 0;
+    countDisplay.textContent = count;
+    countDisplay.style.color = "#222";
+  });
+</script>
+</body>
+</html>
