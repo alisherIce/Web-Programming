@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 2 Exercise 1 — Semantic HTML | Alisher Ulmasov</title>
+<style>
+*{box-sizing:border-box}body{font-family:Arial,sans-serif;line-height:1.65;margin:0;background:#f5f6f8;color:#202938}header,nav,main,article,aside,footer{padding:16px}header,footer{background:#183153;color:white}nav{background:#dce7f5}nav a{margin-right:16px;color:#183153}main{display:grid;grid-template-columns:2fr 1fr;gap:20px;max-width:900px;margin:24px auto}article,aside{background:white;border:1px solid #d7deea;border-radius:10px}footer{text-align:center}a.back{display:inline-block;margin:20px;color:#1d4ed8}@media(max-width:600px){main{grid-template-columns:1fr;margin:12px}}
+</style>
+</head>
+<body>
+<header><h1>Gachon Blog</h1></header>
+<nav aria-label="Main navigation"><a href="#home">Home</a><a href="#posts">Posts</a></nav>
+<main id="home">
+<article id="posts"><h2>My First Post</h2><p>Today I learned about semantic HTML and how meaningful elements make a page easier to understand and maintain.</p></article>
+<aside aria-labelledby="recent-heading"><h2 id="recent-heading">Recent Posts</h2><ul><li>Intro to HTML</li></ul></aside>
+</main>
+<footer><p>&copy; 2026 Gachon Blog</p><p>Alisher Ulmasov | Gachon University</p></footer>
+<p><a class="back" href="index.html">← Back to Week 2 assignments</a></p>
+</body>
+</html>
