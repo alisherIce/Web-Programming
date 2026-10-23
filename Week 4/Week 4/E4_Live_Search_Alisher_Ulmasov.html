@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E4 - Live Search Filter - Alisher Ulmasov</title>
+  <style>
+    body{font-family:Arial,sans-serif;padding:30px;max-width:560px;margin:auto;color:#222;background:#f8fafc}
+    h1{color:#1a56db}.student{color:#666;margin-bottom:24px}
+    #search{width:100%;box-sizing:border-box;padding:12px 14px;font-size:16px;border:2px solid #1a56db;border-radius:8px;margin-bottom:18px}
+    ul{padding:0;list-style:none}li{padding:12px 14px;margin:8px 0;background:white;border:1px solid #e2e8f0;border-radius:8px}
+    #empty{color:#64748b;display:none}a{color:#1a56db}
+  </style>
+</head>
+<body>
+  <h1>E4 — Live Search Filter</h1>
+  <p class="student">Student: Alisher Ulmasov | Gachon University</p>
+  <p>Type in the search box to filter the programming topics instantly.</p>
+  <input id="search" type="search" placeholder="Search topics..." aria-label="Search topics">
+  <ul id="topics">
+    <li>HTML — page structure</li>
+    <li>CSS — styling and layout</li>
+    <li>JavaScript — programming basics</li>
+    <li>DOM — selecting page elements</li>
+    <li>Events — responding to user actions</li>
+    <li>Event delegation — handling events on parent elements</li>
+    <li>createElement — creating HTML elements</li>
+    <li>classList — changing CSS classes</li>
+  </ul>
+  <p id="empty">No matching topics found.</p>
+  <p><a href="../index.html">Back to Week 4</a></p>
+  <script>
+    const search = document.querySelector("#search");
+    const items = [...document.querySelectorAll("#topics li")];
+    const empty = document.querySelector("#empty");
+    search.addEventListener("input", () => {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      items.forEach(item => {
+        const matches = item.textContent.toLowerCase().includes(query);
+        item.hidden = !matches;
+        if (matches) visible++;
+      });
+      empty.style.display = visible ? "none" : "block";
+    });
+  </script>
+</body>
+</html>
