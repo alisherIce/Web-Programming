@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E6 · Flexbox Navigation Bar | Week 3</title>
+<link rel="stylesheet" href="../portfolio.css">
+<style>
+.assignment{max-width:900px;margin:48px auto;padding:0 22px}
+.assignment h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.08;margin:12px 0 18px}
+.assignment .eyebrow{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#15803d;font-weight:700}
+.assignment .task{background:#f0fdf4;border-left:4px solid #15803d;padding:16px 18px;border-radius:0 10px 10px 0;margin:20px 0 28px}
+.demo{background:#fff;border:1px solid #d8e0d9;border-radius:16px;padding:28px;margin:24px 0;box-shadow:0 12px 35px rgba(20,40,25,.06)}
+.back{display:inline-block;margin-top:24px;color:#15803d;font-weight:700}
+.nav-demo nav{display:flex;justify-content:space-between;align-items:center;background:#1e293b;padding:18px 22px;border-radius:10px;gap:20px}.demo-logo{color:#10B981;font-size:1.35rem;font-weight:800;text-decoration:none}.demo-links{display:flex;gap:22px;flex-wrap:wrap}.demo-links a{color:#cbd5e1;text-decoration:none;transition:color .2s}.demo-links a:hover{color:#10B981}
+</style>
+</head>
+<body>
+<nav class="site-nav" aria-label="Main navigation"><a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / PORTFOLIO</span></a><a class="nav-link" href="index.html">← Week 3</a></nav>
+<main class="assignment">
+<p class="eyebrow">Week 3 · CSS Introduction · Exercise</p>
+<h1>E6 · Flexbox Navigation Bar</h1>
+<div class="task"><strong>Exercise requirement</strong><br>Build a navigation bar with the logo on the left, links on the right, and a green hover state.</div>
+<section class="demo nav-demo"><nav aria-label="Demo navigation"><a class="demo-logo" href="#home">WebPro</a><div class="demo-links"><a href="#home">Home</a><a href="#topics">Topics</a><a href="#quiz">Quiz</a><a href="#about">About</a></div></nav><p style="padding:24px 4px 0;color:#64748b">Hover over the navigation links to see the color transition.</p></section><details><summary>View CSS solution</summary><pre>nav { display:flex; justify-content:space-between; align-items:center; }\n.demo-links { display:flex; gap:22px; }\n.demo-links a:hover { color:#10B981; }</pre></details>
+<a class="back" href="index.html">← Back to all Week 3 assignments</a>
+</main>
+<footer class="site-footer"><a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / PORTFOLIO</span></a><p>© 2026<br>Alisher Ulmasov | Gachon University</p></footer>
+</body>
+</html>
