@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JavaScript Practice Lab | Week 5</title>
+  <link rel="stylesheet" href="../portfolio.css">
+  <style>
+    .lab { width:min(850px, calc(100% - 2rem)); margin:2.5rem auto; }
+    .lab-header,.exercise { padding:1.3rem; margin-bottom:1rem; border:2px solid var(--ink); border-radius:12px; background:var(--white); }
+    .lab-header h1 { margin:.2rem 0; font-size:clamp(2rem,7vw,3.5rem); }
+    .exercise h2 { margin-top:0; font-size:1.25rem; }
+    input { max-width:100%; padding:.65rem .75rem; border:1px solid var(--muted); border-radius:6px; font:inherit; }
+    button { margin:.25rem; padding:.65rem .9rem; border:2px solid var(--ink); border-radius:7px; background:var(--sun); color:var(--ink); font:inherit; font-weight:700; cursor:pointer; }
+    output { display:block; min-height:1.5rem; margin-top:.75rem; color:var(--blue); font-weight:700; overflow-wrap:anywhere; }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Main navigation">
+    <a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / PORTFOLIO</span></a>
+    <a class="nav-link" href="index.html">← Week 5</a>
+  </nav>
+  <main class="lab">
+    <header class="lab-header">
+      <p class="eyebrow">WEEK 05 · EXERCISE 02</p>
+      <h1>JavaScript Practice Lab.</h1>
+      <p>Try each activity to practise DOM selection, user input, conditions, loops, and localStorage.</p>
+    </header>
+    <section class="exercise">
+      <h2>1. Variables and output</h2>
+      <p>Click the button to display a message built from JavaScript variables.</p>
+      <button type="button" id="show-message">Show message</button>
+      <output id="message-output" aria-live="polite"></output>
+    </section>
+    <section class="exercise">
+      <h2>2. Change a page element</h2>
+      <p id="change-target">This is the original text.</p>
+      <button type="button" id="change-text">Change text</button>
+    </section>
+    <section class="exercise">
+      <h2>3. Read user input</h2>
+      <label for="visitor-name">Your name </label>
+      <input id="visitor-name" type="text" maxlength="60" placeholder="Enter your name">
+      <button type="button" id="greet">Greet me</button>
+      <output id="greeting-output" aria-live="polite"></output>
+    </section>
+    <section class="exercise">
+      <h2>4. Conditions: score checker</h2>
+      <label for="score">Score (0–100) </label>
+      <input id="score" type="number" min="0" max="100" placeholder="e.g. 87">
+      <button type="button" id="check-score">Check score</button>
+      <output id="score-output" aria-live="polite"></output>
+    </section>
+    <section class="exercise">
+      <h2>5. Loops</h2>
+      <p>Generate the numbers from 1 to 10 using a loop.</p>
+      <button type="button" id="run-loop">Run loop</button>
+      <output id="loop-output" aria-live="polite"></output>
+    </section>
+    <section class="exercise">
+      <h2>6. Save a name in this browser</h2>
+      <label for="saved-name">Name </label>
+      <input id="saved-name" type="text" maxlength="60" placeholder="Name to save">
+      <button type="button" id="save-name">Save</button>
+      <button type="button" id="load-name">Load</button>
+      <button type="button" id="delete-name">Delete</button>
+      <output id="storage-output" aria-live="polite"></output>
+      <p class="hint">This demo stores data only in this browser on this device.</p>
+    </section>
+  </main>
+  <footer class="site-footer">© 2026<br>Alisher Ulmasov | Gachon University</footer>
+  <script>
+    "use strict";
+    const byId = (id) => document.getElementById(id);
+    byId("show-message").addEventListener("click", () => {
+      const topic = "JavaScript";
+      const week = 5;
+      byId("message-output").textContent = "Week " + week + " practice: learning " + topic + " step by step.";
+    });
+    byId("change-text").addEventListener("click", () => {
+      byId("change-target").textContent = "The text was updated with textContent!";
+    });
+    byId("greet").addEventListener("click", () => {
+      const name = byId("visitor-name").value.trim();
+      byId("greeting-output").textContent = name ? "Hello, " + name + "!" : "Please enter your name first.";
+    });
+    byId("check-score").addEventListener("click", () => {
+      const raw = byId("score").value;
+      const result = byId("score-output");
+      if (raw === "") { result.textContent = "Enter a score from 0 to 100."; return; }
+      const score = Number(raw);
+      if (!Number.isFinite(score) || score < 0 || score > 100) { result.textContent = "The score must be between 0 and 100."; return; }
+      const grade = score >= 90 ? "A" : score >= 80 ? "B" : score >= 70 ? "C" : score >= 60 ? "D" : "F";
+      result.textContent = "Your grade is " + grade + ".";
+    });
+    byId("run-loop").addEventListener("click", () => {
+      const numbers = [];
+      for (let i = 1; i <= 10; i += 1) numbers.push(i);
+      byId("loop-output").textContent = numbers.join(", ");
+    });
+    byId("save-name").addEventListener("click", () => {
+      const name = byId("saved-name").value.trim();
+      if (!name) { byId("storage-output").textContent = "Enter a name before saving."; return; }
+      try { localStorage.setItem("alisher-week5-name", name); byId("storage-output").textContent = "Name saved in this browser."; }
+      catch { byId("storage-output").textContent = "Browser storage is unavailable."; }
+    });
+    byId("load-name").addEventListener("click", () => {
+      try {
+        const name = localStorage.getItem("alisher-week5-name");
+        byId("storage-output").textContent = name ? "Saved name: " + name : "There is no saved name yet.";
+        if (name) byId("saved-name").value = name;
+      } catch { byId("storage-output").textContent = "Browser storage is unavailable."; }
+    });
+    byId("delete-name").addEventListener("click", () => {
+      try { localStorage.removeItem("alisher-week5-name"); byId("storage-output").textContent = "Saved name deleted."; }
+      catch { byId("storage-output").textContent = "Browser storage is unavailable."; }
+    });
+  </script>
+</body>
+</html>
