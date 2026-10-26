@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E8 · Full Style Sheet from Scratch | Week 3</title>
+<link rel="stylesheet" href="../portfolio.css">
+<style>
+.assignment{max-width:900px;margin:48px auto;padding:0 22px}
+.assignment h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.08;margin:12px 0 18px}
+.assignment .eyebrow{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#15803d;font-weight:700}
+.assignment .task{background:#f0fdf4;border-left:4px solid #15803d;padding:16px 18px;border-radius:0 10px 10px 0;margin:20px 0 28px}
+.demo{background:#fff;border:1px solid #d8e0d9;border-radius:16px;padding:28px;margin:24px 0;box-shadow:0 12px 35px rgba(20,40,25,.06)}
+.back{display:inline-block;margin-top:24px;color:#15803d;font-weight:700}
+.full-page{border:1px solid #d8e0d9;border-radius:12px;overflow:hidden}.full-page nav{display:flex;justify-content:space-between;align-items:center;gap:16px;background:#1e293b;padding:18px 24px}.full-page nav strong{color:#10B981;font-size:1.2rem}.full-page nav div{display:flex;gap:20px}.full-page nav a{color:#cbd5e1;text-decoration:none}.full-hero{background:linear-gradient(135deg,#f0fdf4,#dcfce7);padding:60px 24px;text-align:center}.full-hero h2{font-size:clamp(1.7rem,4vw,2.6rem);color:#15803d;margin:0 0 14px}.full-hero p{margin:0 0 24px;color:#475569}.full-hero>a{display:inline-block;background:#15803d;color:white;padding:12px 22px;border-radius:8px;text-decoration:none}.full-skills{padding:32px 24px}.full-skills h2{margin:0 0 18px}.full-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.full-grid article{border:1px solid #bbf7d0;border-radius:10px;padding:18px}.full-grid h3{color:#15803d;margin:0 0 8px}.full-grid p{font-size:.9rem;color:#475569}.full-page footer{background:#1e293b;color:#cbd5e1;text-align:center;padding:20px;font-size:.9rem}@media(max-width:600px){.full-grid{grid-template-columns:1fr}.full-page nav{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<nav class="site-nav" aria-label="Main navigation"><a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / PORTFOLIO</span></a><a class="nav-link" href="index.html">← Week 3</a></nav>
+<main class="assignment">
+<p class="eyebrow">Week 3 · CSS Introduction · Exercise</p>
+<h1>E8 · Full Style Sheet from Scratch</h1>
+<div class="task"><strong>Exercise requirement</strong><br>Build a complete personal page with reset, base styles, navigation, hero section, three-column skills grid, and footer.</div>
+<div class="full-page"><nav><strong>MyPortfolio</strong><div><a href="#skills">Skills</a><a href="#contact">Contact</a></div></nav><section class="full-hero"><h2>Hello, I am Learning CSS!</h2><p>Week 3 · CSS Introduction · Gachon University</p><a href="#skills">See My Skills</a></section><section class="full-skills" id="skills"><h2>What I Know</h2><div class="full-grid"><article><h3>HTML5</h3><p>Structure and semantics</p></article><article><h3>CSS3</h3><p>Styling and layout</p></article><article><h3>Flexbox</h3><p>Modern layout model</p></article></div></section><footer id="contact">© 2026 · Alisher Ulmasov | Gachon University</footer></div>
+<a class="back" href="index.html">← Back to all Week 3 assignments</a>
+</main>
+<footer class="site-footer"><a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / PORTFOLIO</span></a><p>© 2026<br>Alisher Ulmasov | Gachon University</p></footer>
+</body>
+</html>
