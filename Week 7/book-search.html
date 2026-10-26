@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Search books using the Open Library API.">
+  <title>Book Search — Week 7 | Alisher Ulmasov</title>
+  <link rel="stylesheet" href="../portfolio.css">
+  <style>
+    .book-hero { background: var(--blue); color: #fff; padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 5vw, 3rem); }
+    .book-hero-inner, .book-main { width: min(1050px, 100%); margin: auto; }
+    .book-hero h1 { margin: .3rem 0 .5rem; font-size: clamp(2.3rem, 7vw, 4.5rem); line-height: 1; letter-spacing: -.04em; }
+    .book-hero p { max-width: 650px; color: rgba(255,255,255,.82); }
+    .search-form { display: flex; gap: .7rem; margin-top: 1.5rem; }
+    .search-form input { flex: 1; min-width: 0; padding: .9rem 1rem; border: 1px solid var(--line); border-radius: 8px; background: var(--white); color: var(--ink); font: inherit; }
+    .search-form button, .retry-btn { border: 0; border-radius: 8px; padding: .85rem 1.2rem; background: var(--sun); color: #202B33; font: inherit; font-weight: 700; cursor: pointer; }
+    .search-form button:disabled { opacity: .65; cursor: wait; }
+    .book-main { padding: 2rem clamp(1rem, 5vw, 3rem) 3rem; flex: 1; }
+    .results-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .results-heading h2 { margin: 0; }
+    #status { color: var(--muted); min-height: 1.5rem; }
+    #status.error { color: #b42318; }
+    #results { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+    .book-card { overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    .book-cover, .cover-placeholder { display: grid; place-items: center; width: 100%; aspect-ratio: 2/3; object-fit: cover; background: var(--paper); color: var(--muted); text-align: center; padding: .8rem; }
+    .book-info { padding: .9rem; }
+    .book-info h3 { margin: 0; font-size: 1rem; line-height: 1.35; overflow-wrap: anywhere; }
+    .book-info p { margin: .45rem 0 0; color: var(--muted); font-size: .9rem; overflow-wrap: anywhere; }
+    .year { display: inline-block; margin-top: .7rem; padding: .25rem .55rem; border-radius: 99px; background: var(--paper); font-size: .8rem; }
+    .back-link { display: inline-block; margin-top: 1.5rem; color: var(--ink); }
+    @media (max-width: 560px) { .search-form { flex-direction: column; } .search-form button { width: 100%; } #results { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; } }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Main navigation">
+    <a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / WEEK 07</span></a>
+    <a class="nav-link" href="index.html">← Week 7</a>
+  </nav>
+  <header class="book-hero">
+    <div class="book-hero-inner">
+      <p class="hero-kicker">JAVASCRIPT · FETCH API · JSON</p>
+      <h1>Find your next read.</h1>
+      <p>Search the Open Library catalogue by book title, author, or topic. Results are loaded from a public API.</p>
+      <form class="search-form" id="search-form">
+        <input id="search-input" type="search" placeholder="Try “The Little Prince” or “Ursula Le Guin”" aria-label="Search books" required>
+        <button id="search-button" type="submit">Search books ↗</button>
+      </form>
+    </div>
+  </header>
+  <main class="book-main">
+    <div class="results-heading"><h2>Search results</h2><span id="result-count"></span></div>
+    <p id="status" role="status" aria-live="polite">Enter a title, author, or topic to begin.</p>
+    <section id="results" aria-label="Book results"></section>
+    <a class="back-link" href="index.html">← Back to Week 7</a>
+  </main>
+  <footer class="site-footer">© 2026<br>Alisher Ulmasov | Gachon University</footer>
+  <script>
+    const form = document.querySelector('#search-form');
+    const input = document.querySelector('#search-input');
+    const button = document.querySelector('#search-button');
+    const statusText = document.querySelector('#status');
+    const results = document.querySelector('#results');
+    const resultCount = document.querySelector('#result-count');
+
+    function setStatus(message, type = '') {
+      statusText.textContent = message;
+      statusText.className = type;
+    }
+
+    function makeBookCard(book) {
+      const card = document.createElement('article');
+      card.className = 'book-card';
+
+      if (book.cover_i) {
+        const cover = document.createElement('img');
+        cover.className = 'book-cover';
+        cover.src = 'https://covers.openlibrary.org/b/id/' + encodeURIComponent(book.cover_i) + '-M.jpg';
+        cover.alt = 'Cover of ' + (book.title || 'book');
+        cover.loading = 'lazy';
+        cover.addEventListener('error', () => {
+          const placeholder = document.createElement('div');
+          placeholder.className = 'cover-placeholder';
+          placeholder.textContent = 'Cover unavailable';
+          cover.replaceWith(placeholder);
+        }, { once: true });
+        card.appendChild(cover);
+      } else {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'cover-placeholder';
+        placeholder.textContent = 'No cover available';
+        card.appendChild(placeholder);
+      }
+
+      const info = document.createElement('div');
+      info.className = 'book-info';
+      const title = document.createElement('h3');
+      title.textContent = book.title || 'Untitled book';
+      const author = document.createElement('p');
+      author.textContent = (book.author_name && book.author_name.length)
+        ? book.author_name.slice(0, 2).join(', ')
+        : 'Author not listed';
+      const year = document.createElement('span');
+      year.className = 'year';
+      year.textContent = book.first_publish_year ? 'First published ' + book.first_publish_year : 'Year not listed';
+      info.append(title, author, year);
+      card.appendChild(info);
+      return card;
+    }
+
+    async function searchBooks(query) {
+      button.disabled = true;
+      button.textContent = 'Searching…';
+      results.replaceChildren();
+      resultCount.textContent = '';
+      setStatus('Searching the catalogue…');
+
+      try {
+        const url = 'https://openlibrary.org/search.json?q=' + encodeURIComponent(query) + '&limit=16';
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('The catalogue returned an error.');
+        const data = await response.json();
+        const books = Array.isArray(data.docs) ? data.docs : [];
+
+        if (books.length === 0) {
+          setStatus('No books found. Try a different title, author, or topic.');
+          return;
+        }
+
+        const fragment = document.createDocumentFragment();
+        books.forEach(book => fragment.appendChild(makeBookCard(book)));
+        results.appendChild(fragment);
+        resultCount.textContent = books.length + ' results';
+        setStatus('Showing books for “' + query + '”.');
+      } catch (error) {
+        setStatus('Could not load books. Check your internet connection and try again.', 'error');
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Search books ↗';
+      }
+    }
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const query = input.value.trim();
+      if (!query) {
+        setStatus('Please enter a title, author, or topic.', 'error');
+        input.focus();
+        return;
+      }
+      searchBooks(query);
+    });
+  </script>
+</body>
+</html>
