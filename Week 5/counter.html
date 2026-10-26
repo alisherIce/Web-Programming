@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interactive Counter | Week 5</title>
+  <link rel="stylesheet" href="../portfolio.css">
+  <style>
+    .lab { width:min(640px, calc(100% - 2rem)); margin:3rem auto; padding:2rem; border:2px solid var(--ink); border-radius:16px; background:var(--white); text-align:center; }
+    .lab h1 { margin-top:0; font-size:clamp(2rem,7vw,3.5rem); }
+    .count { margin:1rem 0 1.5rem; font-size:4rem; font-weight:800; color:var(--blue); font-variant-numeric:tabular-nums; }
+    .controls { display:flex; justify-content:center; flex-wrap:wrap; gap:.7rem; }
+    button { padding:.75rem 1rem; border:2px solid var(--ink); border-radius:8px; background:var(--sun); color:var(--ink); font:700 1rem inherit; cursor:pointer; }
+    button:hover { transform:translateY(-2px); }
+    .hint { color:var(--muted); }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Main navigation">
+    <a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / PORTFOLIO</span></a>
+    <a class="nav-link" href="index.html">← Week 5</a>
+  </nav>
+  <main class="lab">
+    <p class="eyebrow">WEEK 05 · EXERCISE 01</p>
+    <h1>Interactive Counter</h1>
+    <p>Use the buttons to change the count. The reset button returns it to zero.</p>
+    <output class="count" id="count" aria-live="polite">0</output>
+    <div class="controls">
+      <button type="button" id="decrease">− Decrease</button>
+      <button type="button" id="reset">Reset</button>
+      <button type="button" id="increase">+ Increase</button>
+    </div>
+    <p class="hint" id="message">The counter is ready.</p>
+  </main>
+  <footer class="site-footer">© 2026<br>Alisher Ulmasov | Gachon University</footer>
+  <script>
+    "use strict";
+    let count = 0;
+    const countOutput = document.querySelector("#count");
+    const message = document.querySelector("#message");
+    function renderCount() {
+      countOutput.textContent = String(count);
+      message.textContent = count === 0 ? "The count is zero." : count > 0 ? "You are above zero." : "You are below zero.";
+    }
+    document.querySelector("#increase").addEventListener("click", () => { count += 1; renderCount(); });
+    document.querySelector("#decrease").addEventListener("click", () => { count -= 1; renderCount(); });
+    document.querySelector("#reset").addEventListener("click", () => { count = 0; renderCount(); });
+  </script>
+</body>
+</html>
