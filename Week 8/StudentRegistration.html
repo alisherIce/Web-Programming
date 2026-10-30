@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Student registration form assignment by Alisher Ulmasov.">
+  <title>Student Registration Form | Week 8</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f1f5f9;
+      padding: 30px 16px;
+      margin: 0;
+      color: #172033;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #1a56db;
+      margin-top: 0;
+    }
+
+    fieldset {
+      border: 2px solid #c8d4f0;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    legend {
+      font-weight: bold;
+      color: #1a56db;
+      padding: 0 6px;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    input:not([type="checkbox"]):not([type="range"]),
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #c8d4f0;
+      border-radius: 6px;
+      font-size: 14px;
+      background: white;
+    }
+
+    input:not([type="checkbox"]):not([type="range"]):valid:not(:placeholder-shown) {
+      border-color: green;
+    }
+
+    input:not([type="checkbox"]):not([type="range"]):invalid:not(:placeholder-shown) {
+      border-color: red;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: #1a56db;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #1a56db;
+    }
+
+    .terms {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .terms input {
+      width: auto;
+    }
+
+    .terms label {
+      display: inline;
+      margin: 0;
+    }
+
+    .range-value {
+      font-weight: bold;
+      color: #1a56db;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #1a56db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1644a8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Student Registration</h2>
+
+    <form method="post" action="/register">
+      <fieldset>
+        <legend>Personal Info</legend>
+
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname"
+               placeholder="Enter your full name" required>
+
+        <label for="studentid">Student ID</label>
+        <input type="text" id="studentid" name="student_id"
+               pattern="\d{9}" required
+               title="Enter exactly 9 digits"
+               placeholder="202112345">
+
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob">
+
+        <label for="major">Major</label>
+        <select id="major" name="major" required>
+          <option value="">Select your major</option>
+          <option value="Computer Engineering">Computer Engineering</option>
+          <option value="Computer Science">Computer Science</option>
+          <option value="Business Administration">Business Administration</option>
+          <option value="Electrical Engineering">Electrical Engineering</option>
+          <option value="Mechanical Engineering">Mechanical Engineering</option>
+        </select>
+
+        <label for="experience">Years of Coding Experience</label>
+        <input type="range" id="experience" name="experience"
+               min="0" max="10" value="0"
+               oninput="document.getElementById('rangeValue').textContent = this.value">
+        <p>Experience: <span id="rangeValue" class="range-value">0</span> years</p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Account Info</legend>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email"
+               placeholder="name@gachon.ac.kr" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password"
+               minlength="8" required
+               placeholder="At least 8 characters">
+
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" name="phone"
+               pattern="\d{3}-\d{4}-\d{4}"
+               title="Format: 010-1234-5678"
+               placeholder="010-1234-5678">
+      </fieldset>
+
+      <div class="terms">
+        <input type="checkbox" id="terms" name="terms" required>
+        <label for="terms">I agree to the terms</label>
+      </div>
+
+      <br>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+</body>
+</html>
