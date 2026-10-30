@@ -1,7 +1,375 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Country Explorer | Week 6</title><link rel="stylesheet" href="../portfolio.css"><style>main{width:min(800px,100%);margin:auto;padding:2rem clamp(1rem,4vw,2rem);flex:1}.panel{padding:1.3rem;background:var(--white);border:1px solid var(--line);border-radius:14px}.controls{display:flex;gap:.6rem}.controls input{flex:1;min-width:0;padding:.8rem;border:1px solid var(--line);border-radius:8px;background:var(--white);color:var(--ink);font:inherit}.controls button{padding:.8rem 1rem;border:0;border-radius:8px;background:var(--blue);color:#fff;font:inherit;font-weight:700;cursor:pointer}#country{margin-top:1rem}#country img{width:160px;max-width:100%;border:1px solid var(--line)}#status{color:var(--muted)}.back{display:inline-block;margin-top:1.5rem}</style></head>
-<body><nav class="site-nav"><a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / WEEK 06</span></a><a class="nav-link" href="index.html">← Week 6</a></nav>
-<main><header class="archive-intro"><div class="archive-meta"><span>06.06 · FETCH API</span><span>REST COUNTRIES</span></div><h1>Country Explorer.</h1><p>Search for a country and display its flag, region, capital, population, and languages.</p></header><section class="panel"><form id="form" class="controls"><input id="country-name" value="South Korea" aria-label="Country name" placeholder="Enter a country" required><button type="submit">Find country</button></form><p id="status" role="status" aria-live="polite">Enter a country name to begin.</p><div id="country"></div></section><a class="back" href="index.html">← Back to Week 6</a></main><footer class="site-footer">© 2026<br>Alisher Ulmasov | Gachon University</footer>
-<script>
-const form=document.querySelector('#form'),input=document.querySelector('#country-name'),status=document.querySelector('#status'),output=document.querySelector('#country');form.addEventListener('submit',async event=>{event.preventDefault();const name=input.value.trim();if(!name)return;status.textContent='Looking up country…';output.replaceChildren();try{const response=await fetch('https://restcountries.com/v3.1/name/'+encodeURIComponent(name)+'?fields=name,flags,capital,region,subregion,population,languages,currencies');if(!response.ok){if(response.status===404){status.textContent='No country found. Try another name.';return}throw new Error()}const data=await response.json(),c=data[0];const flag=document.createElement('img');flag.src=c.flags.svg||c.flags.png;flag.alt=c.flags.alt||'Flag of '+c.name.common;const title=document.createElement('h2');title.textContent=c.name.common;const details=document.createElement('p');const languages=c.languages?Object.values(c.languages).join(', '):'Not listed';const capital=c.capital?.join(', ')||'Not listed';details.textContent='Capital: '+capital+' · Region: '+c.region+' · Population: '+Number(c.population).toLocaleString()+' · Languages: '+languages;output.append(flag,title,details);status.textContent='Country details loaded.'}catch(error){status.textContent='Could not load country information. Please try again.'}});
-</script></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore countries around the world with live data, flags, capitals, population, currencies, and more.">
+  <meta name="theme-color" content="#f4f5ef">
+  <title>Atlas — Country Explorer | Week 6</title>
+  <link rel="stylesheet" href="../portfolio.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--atlas-ink:#202b25;--atlas-muted:#758078;--atlas-green:#41664f;--atlas-green-dark:#2e4c39;--atlas-line:#e3e8df;--atlas-paper:#f4f5ef;--atlas-card:#fff}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(ellipse at 8% 10%,rgba(211,226,207,.7),transparent 34%),radial-gradient(ellipse at 93% 43%,rgba(232,228,207,.7),transparent 32%),var(--atlas-paper);color:var(--atlas-ink);font-family:"DM Sans",sans-serif}
+    .site-nav{background:rgba(248,249,244,.78);backdrop-filter:blur(16px);border-bottom:1px solid rgba(220,227,216,.8)}
+    .atlas-main{width:min(1180px,calc(100% - 44px));margin:0 auto;padding:64px 0 100px}
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:35px;align-items:end;margin-bottom:38px}
+    .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.18em;color:var(--atlas-green);text-transform:uppercase}
+    h1{font-family:Manrope,sans-serif;font-size:clamp(3rem,7vw,6.1rem);line-height:.96;letter-spacing:-.075em;margin:17px 0 20px;font-weight:700}
+    h1 span{color:var(--atlas-green)}
+    .hero-copy{max-width:610px;color:var(--atlas-muted);font-size:1.02rem;line-height:1.8;margin:0}
+    .hero-aside{justify-self:end;text-align:right;padding-bottom:8px}
+    .world-mark{font-size:3.6rem;line-height:1;margin-bottom:12px}
+    .hero-aside strong{display:block;font-family:Manrope,sans-serif;font-size:1.65rem;letter-spacing:-.05em}
+    .hero-aside span{color:var(--atlas-muted);font-size:.8rem}
+    .toolbar{display:grid;grid-template-columns:minmax(220px,1fr) 190px 190px;gap:12px;padding:14px;background:rgba(255,255,255,.78);border:1px solid var(--atlas-line);border-radius:19px;box-shadow:0 12px 35px rgba(50,68,47,.045)}
+    .search-wrap{position:relative}
+    .search-wrap svg{position:absolute;left:17px;top:50%;transform:translateY(-50%);color:#8b968b;pointer-events:none}
+    .search-wrap input,.toolbar select{width:100%;height:52px;border:1px solid #e6eae2;background:#fbfcf9;border-radius:12px;padding:0 15px;color:var(--atlas-ink);font:inherit;outline:none}
+    .search-wrap input{padding-left:47px}
+    .search-wrap input:focus,.toolbar select:focus{border-color:#89a58c;box-shadow:0 0 0 3px rgba(65,102,79,.1)}
+    .toolbar select{cursor:pointer}
+    .quick-row{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:19px 0 31px}
+    .quick-label{font-size:.75rem;color:var(--atlas-muted);margin-right:4px}
+    .quick-chip{border:1px solid #dce4d9;background:rgba(255,255,255,.58);color:#526553;border-radius:999px;padding:8px 14px;font:inherit;font-size:.78rem;cursor:pointer;transition:.2s}
+    .quick-chip:hover,.quick-chip.active{background:var(--atlas-green);border-color:var(--atlas-green);color:white}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:16px}
+    .section-head h2{font-family:Manrope,sans-serif;font-size:1.35rem;letter-spacing:-.045em;margin:0}
+    .section-head p{font-size:.8rem;color:var(--atlas-muted);margin:0}
+    .results-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+    .country-card{display:flex;flex-direction:column;text-align:left;min-width:0;padding:0;border:1px solid var(--atlas-line);border-radius:18px;overflow:hidden;background:rgba(255,255,255,.9);color:inherit;cursor:pointer;box-shadow:0 8px 22px rgba(42,58,41,.035);transition:transform .22s,box-shadow .22s,border-color .22s}
+    .country-card:hover{transform:translateY(-4px);box-shadow:0 18px 35px rgba(42,58,41,.1);border-color:#c5d3c2}
+    .flag-wrap{height:160px;background:#edf1e9;display:grid;place-items:center;overflow:hidden;position:relative}
+    .flag-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
+    .country-card:hover .flag-wrap img{transform:scale(1.035)}
+    .flag-code{position:absolute;right:12px;top:12px;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);padding:6px 9px;border-radius:8px;font-size:.66rem;letter-spacing:.08em;font-weight:700;color:#465747}
+    .country-info{padding:17px 18px 18px}
+    .country-info h3{font-family:Manrope,sans-serif;font-size:1.05rem;letter-spacing:-.035em;margin:0 0 6px}
+    .country-region{font-size:.76rem;color:var(--atlas-green);font-weight:600;margin:0 0 14px}
+    .card-meta{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #edf0e9;padding-top:12px;color:var(--atlas-muted);font-size:.72rem}
+    .card-meta strong{color:#48564a;font-weight:600}
+    .status-area{min-height:105px;display:grid;place-items:center;text-align:center;color:var(--atlas-muted);font-size:.9rem;padding:28px}
+    .spinner{width:25px;height:25px;border:2px solid #dfe7dc;border-top-color:var(--atlas-green);border-radius:50%;animation:spin .75s linear infinite;margin:0 auto 12px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .retry{margin-top:12px;border:0;border-radius:999px;background:var(--atlas-green);color:white;padding:10px 17px;font:inherit;cursor:pointer}
+    .load-more-wrap{text-align:center;margin-top:25px}
+    .load-more{border:1px solid #cbd8c8;border-radius:999px;background:rgba(255,255,255,.65);color:var(--atlas-green-dark);padding:12px 22px;font:inherit;font-weight:600;cursor:pointer}
+    .load-more:hover{background:white}
+    .detail-overlay{position:fixed;inset:0;z-index:20;background:rgba(24,34,27,.48);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;padding:22px}
+    .detail-overlay.open{display:flex}
+    .detail-modal{width:min(720px,100%);max-height:min(88vh,850px);overflow:auto;background:#fbfcf8;border-radius:24px;box-shadow:0 30px 100px rgba(0,0,0,.22);position:relative}
+    .modal-close{position:absolute;right:16px;top:16px;width:40px;height:40px;border:0;border-radius:50%;background:rgba(255,255,255,.94);color:#26352a;font-size:1.35rem;cursor:pointer;z-index:2}
+    .detail-flag{height:230px;background:#e9eee5}
+    .detail-flag img{width:100%;height:100%;object-fit:cover}
+    .detail-content{padding:28px}
+    .detail-title-row{display:flex;justify-content:space-between;gap:16px;align-items:start}
+    .detail-title-row h2{font-family:Manrope,sans-serif;font-size:2rem;letter-spacing:-.06em;margin:0}
+    .official-name{font-size:.83rem;color:var(--atlas-muted);margin:7px 0 22px;line-height:1.5}
+    .detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .detail-stat{padding:14px;background:#f0f3ed;border-radius:13px;min-width:0}
+    .detail-stat span{display:block;color:var(--atlas-muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}
+    .detail-stat strong{font-size:.9rem;line-height:1.45;overflow-wrap:anywhere}
+    .detail-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+    .detail-links a{color:var(--atlas-green-dark);font-size:.82rem;font-weight:700;text-decoration:none;border-bottom:1px solid #a9bca8;padding-bottom:3px}
+    .detail-links a:hover{color:#1f3827}
+    .no-results{grid-column:1/-1;background:rgba(255,255,255,.7);border:1px dashed #cbd8c8;border-radius:16px;padding:40px 20px;text-align:center;color:var(--atlas-muted)}
+    .site-footer{background:rgba(255,255,255,.35)}
+    @media(max-width:850px){.hero{grid-template-columns:1fr}.hero-aside{display:none}.toolbar{grid-template-columns:1fr 1fr}.search-wrap{grid-column:1/-1}.results-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:540px){.atlas-main{width:min(100% - 30px,1180px);padding-top:42px}.toolbar{grid-template-columns:1fr}.search-wrap{grid-column:auto}.results-grid{grid-template-columns:1fr}.flag-wrap{height:185px}.section-head{align-items:start;flex-direction:column}.detail-grid{grid-template-columns:1fr}.detail-content{padding:21px}.detail-flag{height:175px}.detail-title-row h2{font-size:1.6rem}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Main navigation">
+    <a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / PORTFOLIO</span></a>
+    <a class="nav-link" href="index.html">← Week 6</a>
+  </nav>
+
+  <main class="atlas-main">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">06.06 · FETCH API · REST COUNTRIES</p>
+        <h1>Explore the<br><span>whole world.</span></h1>
+        <p class="hero-copy">A little window into every corner of the planet. Discover countries, compare places, and explore the details that make each one unique.</p>
+      </div>
+      <div class="hero-aside" aria-hidden="true"><div class="world-mark">🌍</div><strong>One planet.</strong><span>Hundreds of stories to discover.</span></div>
+    </header>
+
+    <section class="toolbar" aria-label="Country filters">
+      <label class="search-wrap">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+        <input id="searchInput" type="search" placeholder="Search a country, capital, or language…" autocomplete="off" aria-label="Search countries">
+      </label>
+      <select id="regionFilter" aria-label="Filter by region">
+        <option value="all">All regions</option><option>Africa</option><option>Americas</option><option>Asia</option><option>Europe</option><option>Oceania</option>
+      </select>
+      <select id="sortSelect" aria-label="Sort countries">
+        <option value="name">Sort: A to Z</option><option value="population">Largest population</option><option value="area">Largest area</option>
+      </select>
+    </section>
+
+    <div class="quick-row" aria-label="Quick searches">
+      <span class="quick-label">Discover:</span>
+      <button class="quick-chip active" data-region="all" type="button">All countries</button>
+      <button class="quick-chip" data-region="Asia" type="button">Asia</button>
+      <button class="quick-chip" data-region="Europe" type="button">Europe</button>
+      <button class="quick-chip" data-region="Africa" type="button">Africa</button>
+      <button class="quick-chip" data-region="Americas" type="button">Americas</button>
+      <button class="quick-chip" data-region="Oceania" type="button">Oceania</button>
+    </div>
+
+    <section aria-labelledby="resultsTitle">
+      <div class="section-head">
+        <h2 id="resultsTitle">Countries of the world</h2>
+        <p id="resultCount">Loading country data…</p>
+      </div>
+      <div id="results" class="results-grid" aria-live="polite">
+        <div class="status-area" style="grid-column:1/-1"><div><div class="spinner"></div>Gathering countries from around the world…</div></div>
+      </div>
+      <div class="load-more-wrap"><button class="load-more" id="loadMore" type="button" hidden>Show more countries ↓</button></div>
+    </section>
+  </main>
+
+  <div class="detail-overlay" id="detailOverlay" role="dialog" aria-modal="true" aria-labelledby="detailName">
+    <article class="detail-modal">
+      <button class="modal-close" id="closeModal" type="button" aria-label="Close country details">×</button>
+      <div class="detail-flag"><img id="detailFlag" alt=""></div>
+      <div class="detail-content">
+        <div class="detail-title-row"><h2 id="detailName"></h2></div>
+        <p class="official-name" id="officialName"></p>
+        <div class="detail-grid" id="detailGrid"></div>
+        <div class="detail-links" id="detailLinks"></div>
+      </div>
+    </article>
+  </div>
+
+  <footer class="site-footer">© 2026<br>Alisher Ulmasov | Gachon University</footer>
+
+  <script>
+    const API_URL = "https://restcountries.com/v3.1/all?fields=name,cca2,cca3,flags,capital,region,subregion,population,languages,currencies,area,latlng,borders,maps,continents,unMember";
+    const results = document.getElementById("results");
+    const searchInput = document.getElementById("searchInput");
+    const regionFilter = document.getElementById("regionFilter");
+    const sortSelect = document.getElementById("sortSelect");
+    const resultCount = document.getElementById("resultCount");
+    const loadMoreButton = document.getElementById("loadMore");
+    const overlay = document.getElementById("detailOverlay");
+    const PAGE_SIZE = 18;
+    let allCountries = [];
+    let filteredCountries = [];
+    let visibleCount = PAGE_SIZE;
+
+    const number = value => typeof value === "number" ? value.toLocaleString() : "Not available";
+    const list = value => Array.isArray(value) && value.length ? value.join(", ") : "Not available";
+    const safeText = value => value == null || value === "" ? "Not available" : String(value);
+
+    function showLoading() {
+      results.innerHTML = '<div class="status-area" style="grid-column:1/-1"><div><div class="spinner"></div>Gathering countries from around the world…</div></div>';
+      resultCount.textContent = "Loading country data…";
+      loadMoreButton.hidden = true;
+    }
+
+    async function fetchCountries() {
+      showLoading();
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error("The country service returned an error.");
+        const data = await response.json();
+        if (!Array.isArray(data) || data.length === 0) throw new Error("No country data was returned.");
+        allCountries = data.filter(country => country.name && country.name.common).sort((a,b) => a.name.common.localeCompare(b.name.common));
+        applyFilters();
+      } catch (error) {
+        results.innerHTML = "";
+        const message = document.createElement("div");
+        message.className = "no-results";
+        const title = document.createElement("strong");
+        title.textContent = "We couldn't load the world right now.";
+        const detail = document.createElement("p");
+        detail.textContent = "Please check your internet connection and try again.";
+        const retry = document.createElement("button");
+        retry.className = "retry";
+        retry.type = "button";
+        retry.textContent = "Try again";
+        retry.addEventListener("click", fetchCountries);
+        message.append(title, detail, retry);
+        results.append(message);
+        resultCount.textContent = "Unable to load countries";
+      }
+    }
+
+    function applyFilters() {
+      const query = searchInput.value.trim().toLocaleLowerCase();
+      const region = regionFilter.value;
+      filteredCountries = allCountries.filter(country => {
+        const languages = country.languages ? Object.values(country.languages).join(" ") : "";
+        const capital = (country.capital || []).join(" ");
+        const matchesText = [country.name.common, country.name.official, capital, country.region, country.subregion, languages, country.cca2, country.cca3].join(" ").toLocaleLowerCase().includes(query);
+        return matchesText && (region === "all" || country.region === region);
+      });
+
+      const sort = sortSelect.value;
+      filteredCountries.sort((a,b) => {
+        if (sort === "population") return (b.population || 0) - (a.population || 0);
+        if (sort === "area") return (b.area || 0) - (a.area || 0);
+        return a.name.common.localeCompare(b.name.common);
+      });
+      visibleCount = PAGE_SIZE;
+      renderCountries();
+    }
+
+    function renderCountries() {
+      results.replaceChildren();
+      const visible = filteredCountries.slice(0, visibleCount);
+      resultCount.textContent = filteredCountries.length.toLocaleString() + (filteredCountries.length === 1 ? " country found" : " countries found");
+      loadMoreButton.hidden = visibleCount >= filteredCountries.length;
+
+      if (!visible.length) {
+        const empty = document.createElement("div");
+        empty.className = "no-results";
+        empty.textContent = "No countries match your search. Try a different name or region.";
+        results.append(empty);
+        return;
+      }
+
+      visible.forEach(country => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "country-card";
+        card.setAttribute("aria-label", "View details for " + country.name.common);
+
+        const flagWrap = document.createElement("div");
+        flagWrap.className = "flag-wrap";
+        const flag = document.createElement("img");
+        flag.src = country.flags && (country.flags.svg || country.flags.png) || "";
+        flag.alt = country.flags && country.flags.alt || "Flag of " + country.name.common;
+        flag.loading = "lazy";
+        flagWrap.append(flag);
+
+        const code = document.createElement("span");
+        code.className = "flag-code";
+        code.textContent = country.cca3 || country.cca2 || "—";
+        flagWrap.append(code);
+
+        const info = document.createElement("div");
+        info.className = "country-info";
+        const title = document.createElement("h3");
+        title.textContent = country.name.common;
+        const region = document.createElement("p");
+        region.className = "country-region";
+        region.textContent = [country.region, country.subregion].filter(Boolean).join(" · ") || "Region unavailable";
+        const meta = document.createElement("div");
+        meta.className = "card-meta";
+        const capital = document.createElement("span");
+        capital.textContent = "Capital";
+        const capitalValue = document.createElement("strong");
+        capitalValue.textContent = country.capital && country.capital[0] || "—";
+        const population = document.createElement("span");
+        population.textContent = "Population";
+        const populationValue = document.createElement("strong");
+        populationValue.textContent = number(country.population);
+        const left = document.createElement("div");
+        left.append(capital, capitalValue);
+        const right = document.createElement("div");
+        right.style.textAlign = "right";
+        right.append(population, populationValue);
+        meta.append(left, right);
+        info.append(title, region, meta);
+        card.append(flagWrap, info);
+        card.addEventListener("click", () => openDetails(country));
+        results.append(card);
+      });
+    }
+
+    function addStat(label, value) {
+      const box = document.createElement("div");
+      box.className = "detail-stat";
+      const name = document.createElement("span");
+      name.textContent = label;
+      const content = document.createElement("strong");
+      content.textContent = safeText(value);
+      box.append(name, content);
+      document.getElementById("detailGrid").append(box);
+    }
+
+    function openDetails(country) {
+      const flag = document.getElementById("detailFlag");
+      flag.src = country.flags && (country.flags.svg || country.flags.png) || "";
+      flag.alt = country.flags && country.flags.alt || "Flag of " + country.name.common;
+      document.getElementById("detailName").textContent = country.name.common;
+      document.getElementById("officialName").textContent = country.name.official || country.name.common;
+      const grid = document.getElementById("detailGrid");
+      const links = document.getElementById("detailLinks");
+      grid.replaceChildren();
+      links.replaceChildren();
+
+      const currencies = country.currencies ? Object.values(country.currencies).map(item => item.name + (item.symbol ? " (" + item.symbol + ")" : "")).join(", ") : "Not available";
+      const languages = country.languages ? Object.values(country.languages).join(", ") : "Not available";
+      addStat("Capital", list(country.capital));
+      addStat("Region", [country.region, country.subregion].filter(Boolean).join(" · "));
+      addStat("Population", number(country.population));
+      addStat("Area", typeof country.area === "number" ? number(Math.round(country.area)) + " km²" : "Not available");
+      addStat("Currency", currencies);
+      addStat("Languages", languages);
+      addStat("Country code", [country.cca2, country.cca3].filter(Boolean).join(" / "));
+      addStat("Continents", list(country.continents));
+      addStat("Land borders", country.borders ? country.borders.length + " neighbouring countries" : "No land borders listed");
+
+      if (country.maps && country.maps.googleMaps) {
+        const map = document.createElement("a");
+        map.href = country.maps.googleMaps;
+        map.target = "_blank";
+        map.rel = "noopener noreferrer";
+        map.textContent = "Explore on Google Maps ↗";
+        links.append(map);
+      }
+      if (country.unMember) {
+        const member = document.createElement("span");
+        member.textContent = "✓ United Nations member";
+        member.style.color = "var(--atlas-green)";
+        member.style.fontSize = ".82rem";
+        member.style.fontWeight = "700";
+        links.append(member);
+      }
+
+      overlay.classList.add("open");
+      document.body.style.overflow = "hidden";
+      document.getElementById("closeModal").focus();
+    }
+
+    function closeDetails() {
+      overlay.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    searchInput.addEventListener("input", applyFilters);
+    regionFilter.addEventListener("change", () => {
+      document.querySelectorAll(".quick-chip").forEach(chip => chip.classList.toggle("active", chip.dataset.region === regionFilter.value));
+      applyFilters();
+    });
+    sortSelect.addEventListener("change", applyFilters);
+    document.querySelectorAll(".quick-chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        regionFilter.value = chip.dataset.region;
+        document.querySelectorAll(".quick-chip").forEach(item => item.classList.toggle("active", item === chip));
+        applyFilters();
+      });
+    });
+    loadMoreButton.addEventListener("click", () => {
+      visibleCount += PAGE_SIZE;
+      renderCountries();
+    });
+    document.getElementById("closeModal").addEventListener("click", closeDetails);
+    overlay.addEventListener("click", event => {
+      if (event.target === overlay) closeDetails();
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && overlay.classList.contains("open")) closeDetails();
+    });
+
+    fetchCountries();
+  </script>
+</body>
+</html>
