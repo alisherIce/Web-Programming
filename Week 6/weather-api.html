@@ -60,7 +60,7 @@ main{width:min(900px,100%);margin:0 auto;padding:30px 20px 55px;min-height:calc(
 <footer class="site-footer">© 2026<br>Alisher Ulmasov | Gachon University</footer>
 <script>
 const form=document.querySelector('#form'),cityInput=document.querySelector('#city'),button=document.querySelector('#search'),status=document.querySelector('#status'),output=document.querySelector('#weather');
-const weatherInfo=code=>{if(code===0)return ['Clear sky','☀️'];if([1,2].includes(code))return ['Mainly clear','🌤️'];if(code===3)return ['Overcast','☁️'];if([45,48].includes(code))return ['Foggy','🌫️'];if([51,53,55,56,57].includes(code))return ['Drizzle','🌦️'];if([61,63,65,66,67,80,81,82].includes(code))return ['Rain','🌧️'];if([71,73,75,77,85,86].includes(code))return ['Snow','❄️'];if([ thunderstorm = 95,96,99 ].includes(code))return ['Thunderstorm','⛈️'];return ['Cloudy','☁️'];};
+const weatherInfo=code=>{if(code===0)return ['Clear sky','☀️'];if([1,2].includes(code))return ['Mainly clear','🌤️'];if(code===3)return ['Overcast','☁️'];if([45,48].includes(code))return ['Foggy','🌫️'];if([51,53,55,56,57].includes(code))return ['Drizzle','🌦️'];if([61,63,65,66,67,80,81,82].includes(code))return ['Rain','🌧️'];if([71,73,75,77,85,86].includes(code))return ['Snow','❄️'];if([95,96,99].includes(code))return ['Thunderstorm','⛈️'];return ['Cloudy','☁️'];};
 const el=(tag,className,text)=>{const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node};
 const formatHour=value=>{const d=new Date(value);return d.toLocaleTimeString([],{hour:'numeric'})};
 const formatDay=(value,index)=>index===0?'Today':new Date(value+'T12:00:00').toLocaleDateString([],{weekday:'short'}) ;
