@@ -2,29 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Week 7 Book Search project by Alisher Ulmasov.">
-  <title>Week 07 — Book Search | Alisher Ulmasov</title>
-  <link rel="stylesheet" href="../portfolio.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Week 7 Web Programming exercises by Alisher Ulmasov.">
+  <meta name="theme-color" content="#f3f3f6">
+  <title>Week 7 — Book Search Tasks | Alisher Ulmasov</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root { color-scheme: light; --ink:#17191c; --muted:#686b72; --line:#e2e5eb; --accent:#176578; }
+    body {
+      margin:0; min-height:100vh; padding:50px 20px 24px;
+      background:#f3f3f6; color:var(--ink);
+      font-family:Arial, Helvetica, sans-serif;
+      display:flex; flex-direction:column;
+    }
+    main { width:min(560px,100%); margin:0 auto; flex:1; text-align:center; }
+    header { margin-bottom:36px; }
+    .eyebrow { margin:0 0 8px; color:#666; font-size:1rem; letter-spacing:.2px; }
+    h1 { margin:0 0 10px; font-size:clamp(2.25rem,7vw,3rem); letter-spacing:-1.5px; }
+    .intro { margin:0; color:#666; font-size:1.15rem; line-height:1.55; }
+    .task-list { margin:0; padding:0; list-style:none; }
+    .task-list li { margin:14px 0; }
+    .task-list a {
+      display:flex; min-height:62px; align-items:center; justify-content:space-between;
+      gap:16px; padding:14px 20px; border:1px solid var(--line); border-radius:14px;
+      background:#fff; color:#222; text-decoration:none;
+      box-shadow:0 3px 8px rgba(0,0,0,.08);
+      transition:background-color .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+    .task-list a:hover { background:#e9e9eb; transform:translateY(-2px); box-shadow:0 6px 12px rgba(0,0,0,.1); }
+    .task-list a:focus-visible { outline:3px solid #31869a; outline-offset:3px; }
+    .task-number { color:#222; font-size:1rem; font-weight:600; }
+    .task-description { margin-left:auto; color:#85878d; font-size:.85rem; text-align:right; }
+    .arrow { color:var(--accent); font-size:1.15rem; }
+    .back-link { display:inline-block; margin-top:20px; color:var(--accent); text-decoration:none; }
+    .back-link:hover { text-decoration:underline; }
+    footer { padding-top:24px; color:#777; text-align:center; font-size:.9rem; line-height:1.65; }
+    @media(max-width:520px) {
+      body { padding:34px 16px 20px; }
+      header { margin-bottom:28px; }
+      .intro { font-size:1rem; }
+      .task-list a { min-height:58px; padding:13px 15px; }
+      .task-description { font-size:.75rem; }
+    }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { transition:none!important; } }
+  </style>
 </head>
 <body>
-  <nav class="site-nav" aria-label="Main navigation">
-    <a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / PORTFOLIO</span></a>
-    <a class="nav-link" href="../index.html">← All weeks</a>
-  </nav>
   <main>
-    <header class="archive-intro">
-      <div class="archive-meta"><span>COURSE ARCHIVE · WEEK 07</span><span>GACHON UNIVERSITY</span></div>
-      <h1>Book Search.</h1>
-      <p>Use the Open Library API to search for books, explore authors and publication years, and practice asynchronous JavaScript, JSON, and error handling.</p>
+    <header>
+      <p class="eyebrow">Web Programming · Week 7</p>
+      <h1>Book Search Tasks</h1>
+      <p class="intro">Practice searching books, exploring details, and working with data from the Open Library API.</p>
     </header>
-    <section class="archive-content" aria-labelledby="assignment-heading">
-      <div class="archive-content-head"><h2>Project</h2><p>Select the project to try it</p></div>
-      <div class="assignment-list">
-        <a class="assignment-link" href="book-search.html"><span class="assignment-index">07.01</span><span class="assignment-title">Book Search App</span><span class="assignment-arrow">↗</span></a>
-      </div>
-    </section>
+    <nav aria-label="Week 7 tasks">
+      <ol class="task-list">
+        <li>
+          <a href="book-search.html">
+            <span class="task-number">Exercise 1</span>
+            <span class="task-description">Book Search App</span>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      </ol>
+    </nav>
+    <a class="back-link" href="../index.html">← Back to all weeks</a>
   </main>
-  <footer class="site-footer">© 2026<br>Alisher Ulmasov | Gachon University</footer>
+  <footer>© 2026<br>Alisher Ulmasov | Gachon University</footer>
 </body>
 </html>
