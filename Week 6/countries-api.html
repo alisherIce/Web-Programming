@@ -149,7 +149,10 @@
   <footer class="site-footer">© 2026<br>Alisher Ulmasov | Gachon University</footer>
 
   <script>
-    const API_URL = "https://restcountries.com/v3.1/all?fields=name,cca2,cca3,flags,capital,region,subregion,population,languages,currencies,area,latlng,borders,maps,continents,unMember";
+    const API_URLS = [
+      "https://raw.githubusercontent.com/mledoze/countries/master/countries.json",
+      "https://pw-d20261017a29.plainwork-apps.workers.dev/v3.1/all?fields=name,cca2,cca3,flags,capital,region,subregion,population,languages,currencies,area,borders,continents,unMember,maps"
+    ];
     const results = document.getElementById("results");
     const searchInput = document.getElementById("searchInput");
     const regionFilter = document.getElementById("regionFilter");
@@ -165,6 +168,7 @@
     const number = value => typeof value === "number" ? value.toLocaleString() : "Not available";
     const list = value => Array.isArray(value) && value.length ? value.join(", ") : "Not available";
     const safeText = value => value == null || value === "" ? "Not available" : String(value);
+    const normalizeText = value => String(value ?? "").normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLocaleLowerCase();
 
     function showLoading() {
       results.innerHTML = '<div class="status-area" style="grid-column:1/-1"><div><div class="spinner"></div>Gathering countries from around the world…</div></div>';
@@ -175,11 +179,34 @@
     async function fetchCountries() {
       showLoading();
       try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error("The country service returned an error.");
-        const data = await response.json();
-        if (!Array.isArray(data) || data.length === 0) throw new Error("No country data was returned.");
-        allCountries = data.filter(country => country.name && country.name.common).sort((a,b) => a.name.common.localeCompare(b.name.common));
+        let data = null;
+        let lastError = null;
+
+        for (const url of API_URLS) {
+          try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Country source returned " + response.status);
+            const payload = await response.json();
+            data = Array.isArray(payload) ? payload : payload?.data?.objects;
+            if (Array.isArray(data) && data.length) break;
+            throw new Error("Country source returned an unexpected response.");
+          } catch (error) {
+            lastError = error;
+          }
+        }
+
+        if (!Array.isArray(data) || data.length === 0) throw lastError || new Error("No country data was returned.");
+
+        allCountries = data
+          .filter(country => country.name && country.name.common)
+          .map(country => ({
+            ...country,
+            cca3: country.cca3 || country.cca3Code || "",
+            flags: country.flags || {},
+            maps: country.maps || {},
+            continents: country.continents || (country.region ? [country.region] : [])
+          }))
+          .sort((a,b) => a.name.common.localeCompare(b.name.common));
         applyFilters();
       } catch (error) {
         results.innerHTML = "";
@@ -201,12 +228,12 @@
     }
 
     function applyFilters() {
-      const query = searchInput.value.trim().toLocaleLowerCase();
+      const query = normalizeText(searchInput.value.trim());
       const region = regionFilter.value;
       filteredCountries = allCountries.filter(country => {
         const languages = country.languages ? Object.values(country.languages).join(" ") : "";
         const capital = (country.capital || []).join(" ");
-        const matchesText = [country.name.common, country.name.official, capital, country.region, country.subregion, languages, country.cca2, country.cca3].join(" ").toLocaleLowerCase().includes(query);
+        const matchesText = normalizeText([country.name.common, country.name.official, capital, country.region, country.subregion, languages, country.cca2, country.cca3].join(" ")).includes(query);
         return matchesText && (region === "all" || country.region === region);
       });
 
