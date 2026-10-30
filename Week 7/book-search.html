@@ -133,7 +133,7 @@ function getSaved(){try{return JSON.parse(localStorage.getItem(storageKey)||'[]'
 function setSaved(list){try{localStorage.setItem(storageKey,JSON.stringify(list))}catch{}updateSavedCount()}
 function updateSavedCount(){count.textContent=getSaved().length}
 function node(tag,className,text){const n=document.createElement(tag);if(className)n.className=className;if(text!==undefined)n.textContent=text;return n}
-function coverUrl(book){const raw=book.volumeInfo?.imageLinks?.thumbnail||book.volumeInfo?.imageLinks?.smallThumbnail;return raw?raw.replace(/^http:/,'https:').replace('&edge=curl',''):''}
+function coverUrl(book){const raw=book.volumeInfo?.imageLinks?.thumbnail||book.volumeInfo?.imageLinks?.smallThumbnail;return raw?raw.replace(/^http:/,'https:').replace('&edge=curl',''):book.coverId?'https://covers.openlibrary.org/b/id/'+book.coverId+'-M.jpg?default=false':''}
 function makeFallback(title){const box=node('div','cover-fallback');box.append(node('span','',title||'A good book'),node('small','','Bookroom selection'));return box}
 function createCard(book){
  const info=book.volumeInfo||{},card=node('article','book-card');card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label','View details for '+(info.title||'book'));card.dataset.id=book.id;
@@ -149,22 +149,71 @@ function emptyState(icon,title,description){const box=node('div','empty-state');
 function renderSaved(){showingSaved=true;results.replaceChildren();loadMore.hidden=true;const list=getSaved();statusText.textContent=list.length?list.length+' saved '+(list.length===1?'book':'books')+'.':'Your saved shelf is waiting.';document.querySelector('#subtitle').textContent='Your personal collection, all in one place.';if(!list.length){results.append(emptyState('♡','No saved books yet','Tap the heart on any book cover to keep it here.'));return}list.forEach(book=>results.append(createCard(book)))}
 function setGenreActive(value){document.querySelectorAll('.genre').forEach(b=>b.classList.toggle('active',b.dataset.genre===value))}
 async function searchBooks(query,append=false){
- const id=++requestNumber;if(!append){startIndex=0;books=[];results.replaceChildren()}showingSaved=false;savedToggle.classList.remove('active');savedToggle.setAttribute('aria-pressed','false');searchButton.disabled=true;searchButton.textContent='Searching…';loadMore.disabled=true;statusText.className='';statusText.textContent='Looking through the catalogue…';
- const params=new URLSearchParams({q:query,maxResults:String(pageSize),startIndex:String(startIndex),printType:'books',orderBy:sortSelect.value});
- try{const response=await fetch('https://www.googleapis.com/books/v1/volumes?'+params.toString());if(!response.ok)throw new Error('Search service unavailable');const data=await response.json();if(id!==requestNumber)return;const found=Array.isArray(data.items)?data.items:[];totalItems=data.totalItems||0;
- if(!append)results.replaceChildren();if(!found.length&&!append){statusText.textContent='No books found. Try another title, author, or subject.';results.append(emptyState('⌕','No matches this time','Try a broader search or choose another shelf.'));document.querySelector('#subtitle').textContent='Try a different search to discover more.';loadMore.hidden=true;return}
- books=append?books.concat(found):found;const fragment=document.createDocumentFragment();found.forEach(book=>fragment.append(createCard(book)));results.append(fragment);
- statusText.textContent='Showing '+books.length.toLocaleString()+' of '+totalItems.toLocaleString()+' books';document.querySelector('#subtitle').textContent='Good books for curious minds.';loadMore.hidden=books.length>=totalItems||found.length<pageSize;
- }catch(error){if(id!==requestNumber)return;statusText.className='error';statusText.textContent='Could not load books. Check your connection and try again.';if(!append)results.append(emptyState('↻','The shelves are taking a moment','Please try your search again.'))}
- finally{if(id===requestNumber){searchButton.disabled=false;searchButton.textContent='Discover books';loadMore.disabled=false}}
+ const id=++requestNumber;
+ if(!append){startIndex=0;books=[];results.replaceChildren()}
+ showingSaved=false;savedToggle.classList.remove('active');savedToggle.setAttribute('aria-pressed','false');
+ searchButton.disabled=true;searchButton.textContent='Searching…';loadMore.disabled=true;
+ statusText.className='';statusText.textContent='Looking through the catalogue…';
+ const params=new URLSearchParams({q:query,limit:String(pageSize),offset:String(startIndex),fields:'key,title,author_name,first_publish_year,cover_i,ratings_average,ratings_count,edition_count,subject,number_of_pages_median,first_sentence'});
+ if(sortSelect.value==='newest')params.set('sort','new');
+ try{
+   const response=await fetch('https://openlibrary.org/search.json?'+params.toString(),{headers:{'Accept':'application/json'}});
+   if(!response.ok)throw new Error('Open Library returned '+response.status);
+   const data=await response.json();
+   if(id!==requestNumber)return;
+   const found=(Array.isArray(data.docs)?data.docs:[]).map(doc=>({
+     id:doc.key||'book-'+Math.random().toString(36).slice(2),
+     coverId:doc.cover_i||null,
+     workKey:doc.key||'',
+     volumeInfo:{
+       title:doc.title||'Untitled',
+       authors:doc.author_name||['Author unknown'],
+       publishedDate:doc.first_publish_year?String(doc.first_publish_year):'',
+       averageRating:doc.ratings_average||null,
+       ratingsCount:doc.ratings_count||0,
+       publisher:'',
+       pageCount:doc.number_of_pages_median||null,
+       description:Array.isArray(doc.first_sentence)?doc.first_sentence.join(' '):(doc.first_sentence||''),
+       previewLink:doc.key?'https://openlibrary.org'+doc.key:'',
+       infoLink:doc.key?'https://openlibrary.org'+doc.key:'',
+       imageLinks:doc.cover_i?{thumbnail:'https://covers.openlibrary.org/b/id/'+doc.cover_i+'-M.jpg'}:{}
+     }
+   }));
+   totalItems=data.numFound||0;
+   if(!append)results.replaceChildren();
+   if(!found.length&&!append){
+     statusText.textContent='No books found. Try another title, author, or subject.';
+     results.append(emptyState('⌕','No matches this time','Try a broader search or choose another shelf.'));
+     document.querySelector('#subtitle').textContent='Try a different search to discover more.';
+     loadMore.hidden=true;return;
+   }
+   books=append?books.concat(found):found;
+   const fragment=document.createDocumentFragment();found.forEach(book=>fragment.append(createCard(book)));results.append(fragment);
+   statusText.textContent='Showing '+books.length.toLocaleString()+' of '+totalItems.toLocaleString()+' books';
+   document.querySelector('#subtitle').textContent='Good books for curious minds.';
+   loadMore.hidden=books.length>=totalItems||found.length<pageSize;
+ }catch(error){
+   if(id!==requestNumber)return;
+   statusText.className='error';statusText.textContent='Could not load books. Check your connection and try again.';
+   if(!append)results.append(emptyState('↻','The shelves are taking a moment','Please try your search again.'));
+ }finally{
+   if(id===requestNumber){searchButton.disabled=false;searchButton.textContent='Discover books';loadMore.disabled=false}
+ }
 }
 function openDetails(book){
  const info=book.volumeInfo||{};detailContent.replaceChildren();const cover=coverUrl(book),img=node('img','detail-cover');let detailCover;if(cover){img.src=cover;img.alt='Cover of '+(info.title||'book');img.onerror=()=>img.replaceWith(makeFallback(info.title));detailCover=img}else{detailCover=makeFallback(info.title)}
  const copy=node('div','detail-copy'),close=node('button','detail-close','×');close.type='button';close.setAttribute('aria-label','Close details');close.addEventListener('click',()=>dialog.close());copy.append(close,node('div','eyebrow','A closer look'),node('h2','',info.title||'Untitled book'),node('p','detail-author',(info.authors||['Author unknown']).join(', ')));
  const meta=[info.publisher,info.publishedDate,info.pageCount?info.pageCount+' pages':''].filter(Boolean).join(' · ');if(meta)copy.append(node('p','detail-author',meta));
  if(info.averageRating)copy.append(node('p','detail-rating','★ '+Number(info.averageRating).toFixed(1)+(info.ratingsCount?' · '+info.ratingsCount.toLocaleString()+' ratings':'')));
- copy.append(node('p','detail-description',info.description?info.description.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim():'No description is available for this title.'));
+ copy.append(node('p','detail-description',info.description?String(info.description).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim():'Loading book description…'));
  const links=node('div','detail-links');if(info.previewLink){const a=node('a','','Preview book ↗');a.href=info.previewLink;a.target='_blank';a.rel='noopener noreferrer';links.append(a)}if(info.infoLink){const a=node('a','secondary','More information ↗');a.href=info.infoLink;a.target='_blank';a.rel='noopener noreferrer';links.append(a)}const save=node('a','secondary',getSaved().some(item=>item.id===book.id)?'♥ Saved':'♡ Save book');save.href='#';save.addEventListener('click',event=>{event.preventDefault();toggleSaved(book);save.textContent=getSaved().some(item=>item.id===book.id)?'♥ Saved':'♡ Save book'});links.append(save);copy.append(links);detailContent.append(detailCover,copy);dialog.showModal();
+ if(!info.description&&book.workKey){
+   const descriptionNode=copy.querySelector('.detail-description');
+   fetch('https://openlibrary.org'+book.workKey+'.json')
+     .then(response=>{if(!response.ok)throw new Error('Description unavailable');return response.json()})
+     .then(work=>{if(dialog.open&&descriptionNode.isConnected){const value=typeof work.description==='string'?work.description:work.description?.value;descriptionNode.textContent=value||'No description is available for this title.'}})
+     .catch(()=>{if(descriptionNode.isConnected)descriptionNode.textContent='No description is available for this title.'});
+ }
 }
 form.addEventListener('submit',event=>{event.preventDefault();const q=input.value.trim();if(!q)return;currentQuery=q;setGenreActive('__none__');searchBooks(q)});
 document.querySelectorAll('[data-query]').forEach(btn=>btn.addEventListener('click',()=>{input.value=btn.dataset.query;currentQuery=btn.dataset.query;setGenreActive('__none__');searchBooks(currentQuery)}));
