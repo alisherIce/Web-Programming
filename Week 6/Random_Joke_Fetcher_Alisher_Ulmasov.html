@@ -90,11 +90,6 @@
   <script>
     const API_URL = 'https://official-joke-api.appspot.com/random_joke';
     const STORAGE_KEY = 'alisher-week6-favorite-jokes';
-    const fallbackJoke = {
-      setup: 'Why do programmers prefer dark mode?',
-      punchline: 'Because light attracts bugs!'
-    };
-
     const setupElement = document.getElementById('setup');
     const punchlineElement = document.getElementById('punchline');
     const statusElement = document.getElementById('status');
@@ -183,14 +178,13 @@
         messageElement.className = 'message success';
       } catch (error) {
         currentJoke = null;
-        setupElement.textContent = fallbackJoke.setup;
-        punchlineElement.textContent = fallbackJoke.punchline;
+        setupElement.textContent = 'No joke available right now.';
+        punchlineElement.textContent = 'Please try loading another joke in a moment.';
         statusElement.textContent = 'Could not reach the API';
-        messageElement.textContent = 'Sorry, we could not load a joke right now. Check your internet connection and try again. (' + error.message + ')';
+        messageElement.textContent = 'Sorry, we could not load a joke right now. Check your internet connection and try again.';
         messageElement.className = 'message error';
-        saveButton.disabled = false;
-        saveButton.textContent = '♡ Save Demo Favourite';
-        currentJoke = { ...fallbackJoke };
+        saveButton.disabled = true;
+        saveButton.textContent = '♡ Save Favourite';
       } finally {
         loadButton.disabled = false;
         loadButton.textContent = 'Load a Joke';
