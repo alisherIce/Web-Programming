@@ -1,9 +1,92 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Weather Lookup | Week 6</title><link rel="stylesheet" href="../portfolio.css">
-<style>main{width:min(800px,100%);margin:auto;padding:2rem clamp(1rem,4vw,2rem);flex:1}.panel{padding:1.3rem;background:var(--white);border:1px solid var(--line);border-radius:14px}.controls{display:flex;gap:.6rem;flex-wrap:wrap}input,button{padding:.8rem 1rem;border-radius:8px;font:inherit}input{flex:1;min-width:180px;border:1px solid var(--line);background:var(--white);color:var(--ink)}button{border:0;background:var(--blue);color:#fff;font-weight:700;cursor:pointer}button:disabled{opacity:.6}#status{color:var(--muted)}.weather{margin-top:1rem;padding:1rem;border-radius:10px;background:var(--paper)}.back{display:inline-block;margin-top:1.5rem}</style></head>
-<body><nav class="site-nav"><a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / WEEK 06</span></a><a class="nav-link" href="index.html">← Week 6</a></nav>
-<main><header class="archive-intro"><div class="archive-meta"><span>06.03 · FETCH API</span><span>OPEN-METEO</span></div><h1>Weather Lookup.</h1><p>Search a city and request current weather using geocoding and forecast APIs.</p></header><section class="panel"><form id="form" class="controls"><input id="city" value="Seoul" aria-label="City name" placeholder="Enter a city" required><button id="search" type="submit">Get weather</button></form><p id="status" role="status" aria-live="polite">Enter a city to check the weather.</p><div id="weather"></div></section><a class="back" href="index.html">← Back to Week 6</a></main><footer class="site-footer">© 2026<br>Alisher Ulmasov | Gachon University</footer>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172b55">
+<title>Weather | Week 6</title>
+<link rel="stylesheet" href="../portfolio.css">
+<style>
+:root{--sky-top:#173d79;--sky-mid:#3979b9;--sky-bottom:#8eb9d9}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:#fff;background:linear-gradient(155deg,var(--sky-top) 0%,var(--sky-mid) 48%,var(--sky-bottom) 100%);background-attachment:fixed;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
+.site-nav{background:rgba(12,29,58,.22)!important;border-bottom:1px solid rgba(255,255,255,.12)!important;backdrop-filter:blur(18px)}
+.site-nav .wordmark,.site-nav .nav-link{color:#fff!important}
+main{width:min(900px,100%);margin:0 auto;padding:30px 20px 55px;min-height:calc(100vh - 130px)}
+.weather-app{max-width:720px;margin:auto}
+.searchbar{display:flex;gap:10px;padding:8px;border-radius:18px;background:rgba(12,35,75,.28);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(18px);box-shadow:0 10px 35px rgba(10,28,60,.12)}
+.searchbar input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:white;padding:10px 12px;font:inherit;font-size:16px}
+.searchbar input::placeholder{color:rgba(255,255,255,.65)}
+.searchbar button{border:0;border-radius:13px;padding:0 19px;color:#16345f;background:rgba(255,255,255,.92);font:inherit;font-weight:650;cursor:pointer}
+.searchbar button:disabled{opacity:.6;cursor:wait}
+#status{text-align:center;color:rgba(255,255,255,.78);font-size:13px;min-height:20px;margin:13px 0}
+.hero{text-align:center;padding:25px 12px 27px;text-shadow:0 3px 20px rgba(13,34,72,.15)}
+.location{font-size:clamp(27px,5vw,38px);font-weight:550;letter-spacing:-1px;margin:0}
+.country{font-size:14px;color:rgba(255,255,255,.75);margin:5px 0 0}
+.big-icon{font-size:76px;line-height:1.2;margin:15px 0 0;filter:drop-shadow(0 8px 16px rgba(12,32,65,.16))}
+.temperature{font-size:clamp(76px,16vw,112px);font-weight:200;letter-spacing:-8px;line-height:1.05;margin:0}
+.condition{font-size:21px;color:rgba(255,255,255,.94);margin:7px 0 4px}
+.high-low{font-size:15px;color:rgba(255,255,255,.8);margin:0}
+.glass{background:rgba(17,43,82,.25);border:1px solid rgba(255,255,255,.19);border-radius:22px;backdrop-filter:blur(22px);box-shadow:0 12px 34px rgba(10,28,60,.09);overflow:hidden;margin-top:15px}
+.section-title{font-size:12px;text-transform:uppercase;letter-spacing:1.15px;font-weight:650;color:rgba(255,255,255,.72);padding:17px 18px 11px;margin:0}
+.hourly{display:flex;overflow-x:auto;gap:0;padding:0 8px 17px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.35) transparent}
+.hour{flex:0 0 75px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;padding:7px 3px;color:rgba(255,255,255,.92);font-size:13px}
+.hour .symbol{font-size:25px;height:31px}
+.hour .degrees{font-size:17px;font-weight:600}
+.daily{padding:0 18px 12px}
+.day-row{display:grid;grid-template-columns:1fr 35px 34px minmax(90px,1.2fr) 34px;align-items:center;gap:8px;min-height:49px;border-top:1px solid rgba(255,255,255,.12);font-size:14px}
+.day-name{font-weight:550}.day-icon{text-align:center;font-size:21px}.day-low,.day-high{color:rgba(255,255,255,.82);text-align:right;font-variant-numeric:tabular-nums}
+.range{height:5px;border-radius:9px;background:rgba(255,255,255,.17);position:relative;overflow:hidden}
+.range span{position:absolute;top:0;bottom:0;left:var(--left);width:var(--width);border-radius:9px;background:linear-gradient(90deg,#a9d5ff,#ffe19a)}
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.12)}
+.metric{padding:17px 18px;background:rgba(22,48,86,.22);min-height:91px}
+.metric-label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.66);margin-bottom:9px}
+.metric-value{font-size:22px;font-weight:550}
+.metric-sub{font-size:12px;color:rgba(255,255,255,.65);margin-top:3px}
+.back{display:block;width:max-content;margin:26px auto 0;color:white!important;text-decoration:none;opacity:.85}
+.site-footer{background:transparent!important;color:rgba(255,255,255,.7)!important;border-top:1px solid rgba(255,255,255,.12)!important;text-align:center}
+@media(min-width:600px){.metrics{grid-template-columns:repeat(4,1fr)}.metric{min-height:105px}}
+@media(max-width:420px){main{padding:22px 13px 40px}.day-row{grid-template-columns:1fr 28px 30px minmax(60px,1fr) 30px;gap:5px}.daily{padding-left:12px;padding-right:12px}.temperature{letter-spacing:-5px}}
+</style>
+</head>
+<body>
+<nav class="site-nav"><a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / WEEK 06</span></a><a class="nav-link" href="index.html">← Week 6</a></nav>
+<main><div class="weather-app">
+<form id="form" class="searchbar"><input id="city" value="Seoul" aria-label="City name" placeholder="Search for a city…" required><button id="search" type="submit">Search</button></form>
+<p id="status" role="status" aria-live="polite">Loading weather for Seoul…</p>
+<section id="weather" aria-live="polite"></section>
+<a class="back" href="index.html">← Back to Week 6</a>
+</div></main>
+<footer class="site-footer">© 2026<br>Alisher Ulmasov | Gachon University</footer>
 <script>
 const form=document.querySelector('#form'),cityInput=document.querySelector('#city'),button=document.querySelector('#search'),status=document.querySelector('#status'),output=document.querySelector('#weather');
-form.addEventListener('submit',async event=>{event.preventDefault();const city=cityInput.value.trim();if(!city)return;button.disabled=true;status.textContent='Finding city and loading weather…';output.replaceChildren();try{const geoResponse=await fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(city)+'&count=1&language=en&format=json');if(!geoResponse.ok)throw new Error();const geo=await geoResponse.json();if(!geo.results?.length){status.textContent='City not found. Try another name.';return}const place=geo.results[0];const weatherResponse=await fetch('https://api.open-meteo.com/v1/forecast?latitude='+place.latitude+'&longitude='+place.longitude+'&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m');if(!weatherResponse.ok)throw new Error();const data=await weatherResponse.json(),current=data.current;const card=document.createElement('section');card.className='weather';const heading=document.createElement('h2');heading.textContent=place.name+(place.country?', '+place.country:'');const details=document.createElement('p');details.textContent='Temperature: '+current.temperature_2m+' '+data.current_units.temperature_2m+' · Feels like: '+current.apparent_temperature+' '+data.current_units.apparent_temperature+' · Humidity: '+current.relative_humidity_2m+'% · Wind: '+current.wind_speed_10m+' '+data.current_units.wind_speed_10m;card.append(heading,details);output.append(card);status.textContent='Current weather loaded.'}catch(error){status.textContent='Weather data could not be loaded. Please try again.'}finally{button.disabled=false}});
-</script></body></html>
+const weatherInfo=code=>{if(code===0)return ['Clear sky','☀️'];if([1,2].includes(code))return ['Mainly clear','🌤️'];if(code===3)return ['Overcast','☁️'];if([45,48].includes(code))return ['Foggy','🌫️'];if([51,53,55,56,57].includes(code))return ['Drizzle','🌦️'];if([61,63,65,66,67,80,81,82].includes(code))return ['Rain','🌧️'];if([71,73,75,77,85,86].includes(code))return ['Snow','❄️'];if([ thunderstorm = 95,96,99 ].includes(code))return ['Thunderstorm','⛈️'];return ['Cloudy','☁️'];};
+const el=(tag,className,text)=>{const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node};
+const formatHour=value=>{const d=new Date(value);return d.toLocaleTimeString([],{hour:'numeric'})};
+const formatDay=(value,index)=>index===0?'Today':new Date(value+'T12:00:00').toLocaleDateString([],{weekday:'short'}) ;
+async function loadWeather(city){
+button.disabled=true;status.textContent='Finding city and loading forecast…';output.replaceChildren();
+try{
+const geoResponse=await fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(city)+'&count=1&language=en&format=json');
+if(!geoResponse.ok)throw new Error('Could not find location');
+const geo=await geoResponse.json();if(!geo.results?.length){status.textContent='City not found. Try another name.';return}
+const place=geo.results[0];
+const url='https://api.open-meteo.com/v1/forecast?latitude='+place.latitude+'&longitude='+place.longitude+'&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&forecast_days=7&timezone=auto';
+const response=await fetch(url);if(!response.ok)throw new Error('Weather service unavailable');const data=await response.json(),now=data.current,desc=weatherInfo(now.weather_code);
+const hero=el('section','hero');hero.append(el('h1','location',place.name),el('p','country',[place.admin1,place.country].filter(Boolean).join(' · ')),el('div','big-icon',desc[1]),el('p','temperature',Math.round(now.temperature_2m)+'°'),el('p','condition',desc[0]),el('p','high-low','H: '+Math.round(data.daily.temperature_2m_max[0])+'°  ·  L: '+Math.round(data.daily.temperature_2m_min[0])+'°'));output.append(hero);
+const hourlyPanel=el('section','glass');hourlyPanel.append(el('h2','section-title','Hourly forecast'));const hours=el('div','hourly');
+const currentHour=data.hourly.time.findIndex(t=>new Date(t).getTime()>=new Date(now.time).getTime());const start=Math.max(0,currentHour);
+for(let i=start;i<Math.min(start+24,data.hourly.time.length);i++){const info=weatherInfo(data.hourly.weather_code[i]);const item=el('div','hour');item.append(el('span','',i===start?'Now':formatHour(data.hourly.time[i])),el('span','symbol',info[1]),el('span','degrees',Math.round(data.hourly.temperature_2m[i])+'°'));hours.append(item)}hourlyPanel.append(hours);output.append(hourlyPanel);
+const dailyPanel=el('section','glass');dailyPanel.append(el('h2','section-title','7-day forecast'));const list=el('div','daily');const lows=data.daily.temperature_2m_min,highs=data.daily.temperature_2m_max,globalMin=Math.min(...lows),globalMax=Math.max(...highs),span=Math.max(1,globalMax-globalMin);
+for(let i=0;i<data.daily.time.length;i++){const info=weatherInfo(data.daily.weather_code[i]),row=el('div','day-row');row.append(el('span','day-name',formatDay(data.daily.time[i],i)),el('span','day-icon',info[1]),el('span','day-low',Math.round(lows[i])+'°'));const range=el('div','range');const bar=el('span');bar.style.setProperty('--left',((lows[i]-globalMin)/span*100)+'%');bar.style.setProperty('--width',((highs[i]-lows[i])/span*100)+'%');range.append(bar);row.append(range,el('span','day-high',Math.round(highs[i])+'°'));list.append(row)}dailyPanel.append(list);output.append(dailyPanel);
+const metrics=el('section','glass');metrics.append(el('h2','section-title','Weather details'));const grid=el('div','metrics');
+const values=[['FEELS LIKE',Math.round(now.apparent_temperature)+'°',''],['HUMIDITY',now.relative_humidity_2m+'%',''],['WIND',Math.round(now.wind_speed_10m)+' km/h',''],['LOCAL TIME',new Date(now.time).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}),place.timezone||'']];
+values.forEach(v=>{const card=el('div','metric');card.append(el('div','metric-label',v[0]),el('div','metric-value',v[1]),el('div','metric-sub',v[2]));grid.append(card)});metrics.append(grid);output.append(metrics);
+status.textContent='Updated just now · Weather data by Open-Meteo';
+}catch(error){status.textContent='Weather data could not be loaded. Check your connection and try again.'}
+finally{button.disabled=false}
+}
+form.addEventListener('submit',event=>{event.preventDefault();const city=cityInput.value.trim();if(city)loadWeather(city)});
+loadWeather('Seoul');
+</script>
+</body></html>
