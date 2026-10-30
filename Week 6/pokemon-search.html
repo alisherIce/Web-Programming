@@ -1,7 +1,194 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Pokémon Search | Week 6</title><link rel="stylesheet" href="../portfolio.css"><style>main{width:min(750px,100%);margin:auto;padding:2rem clamp(1rem,4vw,2rem);flex:1}.panel{padding:1.3rem;background:var(--white);border:1px solid var(--line);border-radius:14px}.controls{display:flex;gap:.6rem}.controls input{flex:1;min-width:0;padding:.8rem;border:1px solid var(--line);border-radius:8px;background:var(--white);color:var(--ink);font:inherit}.controls button{padding:.8rem 1rem;border:0;border-radius:8px;background:var(--blue);color:#fff;font:inherit;font-weight:700;cursor:pointer}#pokemon{text-align:center;margin-top:1rem}#pokemon img{width:180px;max-width:100%;image-rendering:pixelated}#status{color:var(--muted)}.back{display:inline-block;margin-top:1.5rem}</style></head>
-<body><nav class="site-nav"><a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / WEEK 06</span></a><a class="nav-link" href="index.html">← Week 6</a></nav>
-<main><header class="archive-intro"><div class="archive-meta"><span>06.05 · FETCH API</span><span>POKÉAPI</span></div><h1>Pokémon Search.</h1><p>Look up a Pokémon by name or Pokédex number and inspect its types and stats.</p></header><section class="panel"><form id="form" class="controls"><input id="query" value="pikachu" aria-label="Pokémon name or number" placeholder="e.g. pikachu or 25" required><button type="submit">Search</button></form><p id="status" role="status" aria-live="polite">Search for a Pokémon to begin.</p><div id="pokemon"></div></section><a class="back" href="index.html">← Back to Week 6</a></main><footer class="site-footer">© 2026<br>Alisher Ulmasov | Gachon University</footer>
-<script>
-const form=document.querySelector('#form'),queryInput=document.querySelector('#query'),status=document.querySelector('#status'),output=document.querySelector('#pokemon');form.addEventListener('submit',async event=>{event.preventDefault();const query=queryInput.value.trim().toLowerCase();if(!query)return;status.textContent='Searching…';output.replaceChildren();try{const response=await fetch('https://pokeapi.co/api/v2/pokemon/'+encodeURIComponent(query));if(!response.ok){if(response.status===404){status.textContent='Pokémon not found. Check the spelling or number.';return}throw new Error()}const p=await response.json();const img=document.createElement('img');img.src=p.sprites.other?.['official-artwork']?.front_default||p.sprites.front_default||'';img.alt=p.name;const title=document.createElement('h2');title.textContent='#'+p.id+' '+p.name[0].toUpperCase()+p.name.slice(1);const types=document.createElement('p');types.textContent='Type: '+p.types.map(item=>item.type.name).join(', ');const stats=document.createElement('p');stats.textContent=p.stats.map(item=>item.stat.name+': '+item.base_stat).join(' · ');output.append(img,title,types,stats);status.textContent='Pokémon data loaded.'}catch(error){status.textContent='Could not connect to PokéAPI. Try again.'}});
-</script></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore Pokémon using the PokéAPI — Week 6 Fetch API project by Alisher Ulmasov.">
+  <title>PokéAPI Explorer | Week 6</title>
+  <link rel="stylesheet" href="../portfolio.css">
+  <style>
+    :root{--poke-ink:#20243a;--poke-muted:#72788d;--poke-red:#ef5350;--poke-yellow:#ffcb05;--poke-blue:#3761a8}
+    main{width:min(980px,100%);margin:auto;padding:2rem clamp(1rem,4vw,2rem) 3.5rem;flex:1}
+    .explorer{margin-top:1.5rem;padding:clamp(1rem,3vw,2rem);border:1px solid var(--line);border-radius:22px;background:var(--white);box-shadow:0 18px 50px rgba(20,30,60,.08)}
+    .api-label{display:flex;align-items:center;gap:.55rem;color:var(--muted);font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    .api-dot{width:9px;height:9px;border-radius:50%;background:#43a66b;box-shadow:0 0 0 4px rgba(67,166,107,.12)}
+    .search-row{display:flex;gap:.65rem;margin-top:1rem}
+    .search-row input{flex:1;min-width:0;padding:.9rem 1rem;border:1px solid var(--line);border-radius:12px;background:var(--white);color:var(--ink);font:inherit;outline:none}
+    .search-row input:focus{border-color:var(--poke-blue);box-shadow:0 0 0 3px rgba(55,97,168,.13)}
+    .action{border:0;border-radius:12px;padding:.85rem 1.1rem;font:inherit;font-weight:800;cursor:pointer;transition:transform .15s,filter .15s}
+    .action:hover,.quick:hover{transform:translateY(-2px);filter:brightness(.97)}
+    .primary{background:var(--poke-red);color:white}.random{background:var(--poke-yellow);color:#302b1b;white-space:nowrap}
+    .quick-title{margin:1.5rem 0 .65rem;color:var(--poke-muted);font-size:.75rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    .quick-list{display:flex;flex-wrap:wrap;gap:.5rem}
+    .quick{padding:.55rem .8rem;border:1px solid var(--line);border-radius:999px;background:var(--white);color:var(--ink);font:inherit;font-size:.86rem;font-weight:700;cursor:pointer;transition:transform .15s}
+    .result{display:grid;grid-template-columns:minmax(0, .9fr) minmax(0,1.1fr);gap:1.5rem;align-items:center;margin-top:1.6rem;padding:clamp(1rem,3vw,1.5rem);border-radius:18px;background:linear-gradient(145deg,#f4f7fc,#edf1f8);color:var(--poke-ink);min-height:290px}
+    .art{display:grid;place-items:center;min-height:240px;position:relative}
+    .art:before{content:"";position:absolute;width:min(80%,250px);aspect-ratio:1;border-radius:50%;background:rgba(255,203,5,.23)}
+    .art img{position:relative;width:min(100%,280px);max-height:280px;object-fit:contain;filter:drop-shadow(0 12px 12px rgba(30,40,70,.15))}
+    .details{min-width:0}.dex{color:var(--poke-muted);font-size:.8rem;font-weight:900;letter-spacing:.13em}
+    .pokemon-name{margin:.25rem 0 .7rem;font-size:clamp(2rem,5vw,3.2rem);line-height:1;text-transform:capitalize;color:var(--poke-ink)}
+    .types{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1rem}
+    .type{padding:.35rem .75rem;border-radius:999px;background:var(--poke-blue);color:white;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+    .measurements{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}
+    .measure{padding:.65rem .8rem;border:1px solid rgba(32,36,58,.1);border-radius:12px;background:rgba(255,255,255,.7);min-width:90px}
+    .measure strong{display:block;font-size:1.05rem}.measure span{color:var(--poke-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.07em}
+    .stats-title{margin:1rem 0 .55rem;font-size:.8rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+    .stat{display:grid;grid-template-columns:95px 1fr 30px;gap:.55rem;align-items:center;margin:.45rem 0;font-size:.78rem;text-transform:capitalize}
+    .bar{height:8px;border-radius:99px;background:#dce2ed;overflow:hidden}.bar span{display:block;height:100%;border-radius:99px;background:var(--poke-red)}
+    .tools{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:1rem}
+    .shiny-label{display:flex;align-items:center;gap:.55rem;color:var(--ink);font-size:.9rem;font-weight:700;cursor:pointer}
+    .shiny-label input{width:17px;height:17px;accent-color:var(--poke-red)}
+    #status{min-height:1.4em;margin:.8rem 0 0;color:var(--muted);font-size:.85rem}
+    .error{color:#c33!important}.empty{grid-column:1/-1;text-align:center;padding:2rem 1rem;color:var(--poke-muted)}
+    .empty strong{display:block;margin-bottom:.4rem;color:var(--poke-ink);font-size:1.1rem}
+    .code-note{margin-top:1.5rem;padding:1rem 1.2rem;border-left:3px solid var(--poke-yellow);background:var(--white);color:var(--muted);font-size:.88rem}
+    .back{display:inline-block;margin-top:1.5rem}
+    @media(max-width:650px){.result{grid-template-columns:1fr;gap:.3rem}.art{min-height:190px}.art img{max-height:210px}.search-row{flex-wrap:wrap}.search-row input{flex-basis:100%}.search-row .action{flex:1}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Main navigation">
+    <a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / WEEK 06</span></a>
+    <a class="nav-link" href="index.html">← Week 6</a>
+  </nav>
+  <main>
+    <header class="archive-intro">
+      <div class="archive-meta"><span>06.05 · FETCH API POKÉAPI</span><span>INTERACTIVE EXPLORER</span></div>
+      <h1>PokéAPI Explorer.</h1>
+      <p>Discover Pokémon, explore their official artwork, elemental types, abilities, and base combat stats.</p>
+    </header>
+
+    <section class="explorer" aria-label="Pokémon search explorer">
+      <div class="api-label"><span class="api-dot" aria-hidden="true"></span> Live data · pokeapi.co/api/v2</div>
+      <form id="form" class="search-row">
+        <input id="query" type="search" placeholder="Enter Pokémon name or ID (e.g. pikachu, charizard, 150)" aria-label="Enter Pokémon name or Pokédex number" autocomplete="off" required>
+        <button class="action primary" type="submit">Search</button>
+        <button class="action random" id="random" type="button">🎲 Random</button>
+      </form>
+
+      <p class="quick-title">Popular Pokémon</p>
+      <div class="quick-list" aria-label="Popular Pokémon">
+        <button class="quick" type="button" data-pokemon="pikachu">⚡ Pikachu</button>
+        <button class="quick" type="button" data-pokemon="charizard">🔥 Charizard</button>
+        <button class="quick" type="button" data-pokemon="gengar">👻 Gengar</button>
+        <button class="quick" type="button" data-pokemon="mewtwo">🔮 Mewtwo</button>
+        <button class="quick" type="button" data-pokemon="eevee">🦊 Eevee</button>
+        <button class="quick" type="button" data-pokemon="lucario">🥋 Lucario</button>
+        <button class="quick" type="button" data-pokemon="snorlax">💤 Snorlax</button>
+      </div>
+
+      <div class="tools">
+        <label class="shiny-label"><input id="shiny" type="checkbox"> ✨ Show shiny variant</label>
+        <span id="status" role="status" aria-live="polite">Search for a Pokémon or choose one of the popular picks.</span>
+      </div>
+
+      <div id="pokemon" class="result" aria-live="polite">
+        <div class="empty"><strong>Your Pokédex is ready.</strong>Search for a Pokémon to see its official artwork and stats.</div>
+      </div>
+    </section>
+
+    <div class="code-note"><strong>How it works:</strong> This project uses JavaScript <code>fetch()</code> and <code>async/await</code> to request Pokémon data from the public PokéAPI. It also handles loading states, missing Pokémon, and network errors.</div>
+    <a class="back" href="index.html">← Back to Week 6</a>
+  </main>
+  <footer class="site-footer">© 2026<br>Alisher Ulmasov | Gachon University</footer>
+
+  <script>
+    const form = document.querySelector('#form');
+    const queryInput = document.querySelector('#query');
+    const statusText = document.querySelector('#status');
+    const output = document.querySelector('#pokemon');
+    const randomButton = document.querySelector('#random');
+    const shinyToggle = document.querySelector('#shiny');
+    let currentPokemon = null;
+
+    const capitalize = value => value.charAt(0).toUpperCase() + value.slice(1);
+    const formatStat = value => value.replace('-', ' ');
+
+    function showLoading(message = 'Searching the Pokédex…') {
+      statusText.classList.remove('error');
+      statusText.textContent = message;
+      output.innerHTML = '<div class="empty"><strong>Loading Pokémon…</strong>Please wait while we contact the PokéAPI.</div>';
+    }
+
+    function renderPokemon(pokemon) {
+      currentPokemon = pokemon;
+      const artwork = shinyToggle.checked
+        ? pokemon.sprites.other?.['official-artwork']?.front_shiny || pokemon.sprites.front_shiny
+        : pokemon.sprites.other?.['official-artwork']?.front_default || pokemon.sprites.front_default;
+      const types = pokemon.types.map(item => '<span class="type">' + item.type.name + '</span>').join('');
+      const stats = pokemon.stats.map(item => {
+        const score = item.base_stat;
+        const width = Math.min(score / 180 * 100, 100);
+        return '<div class="stat"><span>' + formatStat(item.stat.name) + '</span><div class="bar"><span style="width:' + width + '%"></span></div><strong>' + score + '</strong></div>';
+      }).join('');
+      const abilities = pokemon.abilities.map(item => capitalize(item.ability.name.replace('-', ' ')) + (item.is_hidden ? ' (Hidden)' : '')).join(', ');
+      const imageMarkup = artwork
+        ? '<img src="' + artwork + '" alt="Official artwork of ' + pokemon.name + '" onerror="this.style.display=\'none\'">'
+        : '<div class="empty">Artwork unavailable</div>';
+
+      output.innerHTML = `
+        <div class="art">${imageMarkup}</div>
+        <div class="details">
+          <div class="dex">NATIONAL POKÉDEX · #${String(pokemon.id).padStart(3, '0')}</div>
+          <h2 class="pokemon-name">${pokemon.name}</h2>
+          <div class="types">${types}</div>
+          <div class="measurements">
+            <div class="measure"><strong>${(pokemon.height / 10).toFixed(1)} m</strong><span>Height</span></div>
+            <div class="measure"><strong>${(pokemon.weight / 10).toFixed(1)} kg</strong><span>Weight</span></div>
+            <div class="measure"><strong>${pokemon.base_experience ?? '—'}</strong><span>Base EXP</span></div>
+          </div>
+          <div class="stats-title">Base stats</div>
+          ${stats}
+          <p><strong>Abilities:</strong> ${abilities || 'Not available'}</p>
+        </div>`;
+      statusText.classList.remove('error');
+      statusText.textContent = 'Loaded ' + capitalize(pokemon.name) + ' successfully.';
+    }
+
+    async function fetchPokemon(nameOrId) {
+      const search = String(nameOrId).trim().toLowerCase();
+      if (!search) return;
+      showLoading();
+      try {
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon/' + encodeURIComponent(search));
+        if (!response.ok) {
+          if (response.status === 404) throw new Error('Pokémon not found. Check the spelling or Pokédex number.');
+          throw new Error('The PokéAPI returned an error. Please try again.');
+        }
+        const pokemon = await response.json();
+        renderPokemon(pokemon);
+      } catch (error) {
+        currentPokemon = null;
+        output.innerHTML = '<div class="empty"><strong>Could not load Pokémon.</strong>' + (error.message || 'Check your internet connection and try again.') + '</div>';
+        statusText.classList.add('error');
+        statusText.textContent = error.message || 'Network error. Please try again.';
+      }
+    }
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      fetchPokemon(queryInput.value);
+    });
+
+    randomButton.addEventListener('click', () => {
+      const randomId = Math.floor(Math.random() * 1025) + 1;
+      queryInput.value = randomId;
+      fetchPokemon(randomId);
+    });
+
+    document.querySelectorAll('[data-pokemon]').forEach(button => {
+      button.addEventListener('click', () => {
+        queryInput.value = button.dataset.pokemon;
+        fetchPokemon(button.dataset.pokemon);
+      });
+    });
+
+    shinyToggle.addEventListener('change', () => {
+      if (currentPokemon) renderPokemon(currentPokemon);
+    });
+
+    fetchPokemon('pikachu');
+  </script>
+</body>
+</html>
