@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Web Programming course archive of Alisher Ulmasov, Computer Engineering student at Gachon University.">
+  <meta name="theme-color" content="#f5f5f3">
+  <title>Web Programming | Accessibility</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="portfolio.css">
+</head>
+<body>
+  <nav class="bar" aria-label="Main navigation">
+    <a class="bar-brand" href="../index.html">Web Programming<span> / ALISHER ULMASOV</span></a>
+    <a class="bar-home" href="../index.html">Back to home <span aria-hidden="true">←</span></a>
+    <a class="bar-link" href="https://www.gachon.ac.kr/" target="_blank" rel="noopener noreferrer">Gachon University <span aria-hidden="true">↗</span></a>
+  </nav>
+  <main>
+    <section class="audit-gallery" aria-labelledby="audit-title">
+      <p class="eyebrow">Week 09 / Quality check</p>
+      <h1 id="audit-title">Accessibility Audit Results</h1>
+      <p class="intro">A visual record of the accessibility improvements made to the project.</p>
+
+      <div class="audit-grid">
+        <figure>
+          <img src="Pic/Screenshot 2026-11-02 at 12.16.41 AM.png"
+               alt="Initial Lighthouse score">
+          <figcaption>Initial Lighthouse score</figcaption>
+        </figure>
+
+        <figure>
+          <img src="Pic/Screenshot 2026-11-02 at 12.20.44 AM.png"
+               alt="Accessibility issues">
+          <figcaption>Accessibility issues found</figcaption>
+        </figure>
+
+        <figure>
+          <img src="Pic/Screenshot 2026-11-02 at 12.24.50 AM.png"
+               alt="Final Lighthouse score">
+          <figcaption>Final Lighthouse score</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>Gachon University <span aria-hidden="true">·</span> 2026 <span aria-hidden="true">·</span> Alisher Ulmasov</p>
+  </footer>
+</body>
+</html>
