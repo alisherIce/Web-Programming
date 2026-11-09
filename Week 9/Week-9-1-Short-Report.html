@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Short report on Week 9_1 web accessibility and Lighthouse audit by Alisher Ulmasov.">
+<title>Week 9_1 · Accessibility Short Report | Alisher Ulmasov</title>
+<link rel="stylesheet" href="../portfolio.css">
+<style>
+:root{--report-panel:#1b272e;--report-line:#34434b;--report-muted:#a9b8bf;--report-gold:#e6b65d}
+main{width:min(900px,calc(100% - 40px));margin:auto;padding:38px 0 76px}
+.kicker{font-size:.75rem;letter-spacing:.16em;font-weight:800;color:var(--report-gold);margin:26px 0 12px}
+h1{font-size:clamp(2.6rem,7vw,4.8rem);line-height:1;letter-spacing:-.055em;margin:0 0 18px}
+.lead{font-size:1.08rem;line-height:1.75;color:var(--report-muted);max-width:760px}
+.report-card{background:var(--report-panel);border:1px solid var(--report-line);border-radius:16px;padding:clamp(20px,4vw,30px);margin:18px 0}
+h2{font-size:1.35rem;margin:0 0 12px}p,li{line-height:1.75}.muted{color:var(--report-muted)}
+ul,ol{padding-left:22px}li{margin:7px 0}
+.callout{border-left:4px solid var(--report-gold);padding:13px 16px;background:#29291f;border-radius:0 10px 10px 0;margin:16px 0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.actions a,.print-button{display:inline-block;padding:11px 15px;border:1px solid var(--report-gold);border-radius:9px;color:var(--report-gold);background:transparent;text-decoration:none;font:inherit;font-weight:700;cursor:pointer}
+.actions a:hover,.print-button:hover{background:var(--report-gold);color:#172126}
+footer{border-top:1px solid var(--report-line);padding:24px;text-align:center;color:var(--report-muted)}
+@media print{body{background:white!important;color:black!important}.report-card{background:white!important;color:black!important;border:1px solid #bbb;break-inside:avoid}.muted,.lead{color:#333!important}.callout{background:#f5f5f5!important}}
+</style>
+</head>
+<body>
+<nav class="site-nav" aria-label="Main navigation">
+<a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / WEB PROGRAMMING</span></a>
+<a class="nav-link" href="index.html">← Week 9</a>
+</nav>
+<main>
+<p class="kicker">WEEK 09_1 · SHORT REPORT</p>
+<h1>Web Accessibility &amp; Lighthouse Audit<span style="color:var(--sun)">.</span></h1>
+<p class="lead">This short report summarizes the Week 9_1 lesson on making web pages easier to use for people with different abilities, including people who navigate with a keyboard or use screen readers.</p>
+
+<section class="report-card">
+<h2>1. Aim of the activity</h2>
+<p>The aim was to understand basic web accessibility principles and use Google Lighthouse to review a web page. An accessibility audit helps identify barriers in page structure, text alternatives, navigation, form controls, and visual presentation.</p>
+</section>
+
+<section class="report-card">
+<h2>2. Method</h2>
+<ol>
+<li>Open the project page in Google Chrome and launch Developer Tools.</li>
+<li>Select Lighthouse, choose the Accessibility category, and run an audit.</li>
+<li>Review the audit recommendations and inspect the relevant HTML and CSS.</li>
+<li>Improve the page using semantic elements, accessible names, keyboard-friendly controls, and readable contrast where needed.</li>
+<li>Run the audit again and compare the new result with the initial test.</li>
+</ol>
+<p class="muted">The before, issue, and after screenshots are available in the <a href="Accessability.html">Week 9 accessibility evidence gallery</a>.</p>
+</section>
+
+<section class="report-card">
+<h2>3. Main concepts learned</h2>
+<ul>
+<li><strong>Semantic HTML:</strong> use meaningful elements such as <code>header</code>, <code>nav</code>, <code>main</code>, <code>section</code>, and <code>footer</code> so assistive technologies can understand the page structure.</li>
+<li><strong>Keyboard navigation:</strong> interactive elements should work with a keyboard. Native <code>button</code> and <code>a</code> elements are preferable to clickable generic <code>div</code> elements.</li>
+<li><strong>Alternative text:</strong> meaningful images need concise <code>alt</code> descriptions; decorative images should not create unnecessary announcements.</li>
+<li><strong>ARIA attributes:</strong> use labels and live-region attributes when native HTML alone does not provide enough accessible information. ARIA should support semantic HTML, not replace it.</li>
+<li><strong>Color contrast and focus:</strong> text should be readable, and keyboard users should be able to see which element currently has focus.</li>
+</ul>
+</section>
+
+<section class="report-card">
+<h2>4. Connection to Week 8_2: JavaScript form validation</h2>
+<p>Week 8_2 covered client-side form validation. Accessibility is also important in forms: every input needs a clear label, validation errors should explain how to correct the problem, and dynamic feedback should be announced to assistive technology when appropriate. For example, an <code>aria-live</code> message can announce a validation result without forcing the user to search the page for it.</p>
+<p>The main lesson is that a form should not only reject invalid data; it should clearly help the user understand and correct the error.</p>
+<div class="actions"><a href="../Week%208/StudentRegistration-JS.html">Review my Week 8 JavaScript validation task ↗</a></div>
+</section>
+
+<section class="report-card">
+<h2>5. Results and evidence</h2>
+<p>The Week 9 evidence gallery contains three screenshots showing the initial Lighthouse score, the accessibility issues view, and the final Lighthouse score. These screenshots provide a visual record of the audit process and the comparison after improvements.</p>
+<div class="callout"><strong>Note:</strong> This short report does not state a numerical score because the score should be copied directly from the original Lighthouse screenshots. The screenshots are the source of truth for the measured result.</div>
+</section>
+
+<section class="report-card">
+<h2>6. Conclusion</h2>
+<p>This activity showed me that accessibility should be considered while building a website, not added only at the end. Semantic HTML, keyboard support, useful alternative text, clear form feedback, and sufficient contrast make a website more inclusive and easier for everyone to use. Lighthouse is useful for finding possible problems, but manual keyboard and screen-reader checks are also important.</p>
+<div class="actions">
+<a href="Accessability.html">Open audit screenshots ↗</a>
+<a href="Lighthouse-Accessibility-Homework.html">Open detailed audit worksheet ↗</a>
+</div>
+<p><button class="print-button" type="button" onclick="window.print()">Print / Save as PDF</button></p>
+</section>
+</main>
+<footer>© 2026<br>Alisher Ulmasov | Gachon University</footer>
+<script src="../theme.js" defer></script>
+</body>
+</html>
