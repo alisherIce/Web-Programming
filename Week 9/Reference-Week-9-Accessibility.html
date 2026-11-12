@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f1e7">
+  <title>Week 9 Accessibility Audit · Reference Copy</title>
+  <link rel="preload" href="https://rahimjonkomiljonov.github.io/Web-Programming/assets/fonts/BricolageGrotesque.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://rahimjonkomiljonov.github.io/Web-Programming/assets/fonts/IBMPlexSans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="https://rahimjonkomiljonov.github.io/Web-Programming/assets/frame.css">
+  <link rel="stylesheet" href="https://rahimjonkomiljonov.github.io/Web-Programming/assets/site.css">
+<style>.reference-credit{max-width:980px;margin:20px auto 0;padding:16px 20px;border:1px solid #b77936;border-left:5px solid #b77936;border-radius:12px;background:#fff5df;color:#342719;font:500 14px/1.6 system-ui,sans-serif}.reference-credit a{color:#8b4b12;font-weight:700}@media(max-width:700px){.reference-credit{margin:14px 16px 0}}</style></head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">WP</span>Web Programming</a>
+    <div class="crumbs" role="navigation" aria-label="Breadcrumb">
+      <span aria-current="page">Week 9</span>
+    </div>
+  </header>
+  <aside class="reference-credit" role="note"><strong>Reference copy · Original work by Rahimjon Komiljonov</strong><br>This page is preserved as a study example from <a href="https://rahimjonkomiljonov.github.io/Web-Programming/" target="_blank" rel="noopener noreferrer">the original course archive</a>. The first-person descriptions, screenshots, Lighthouse scores, terminal output, dates and repository links below belong to the original author; they are not Alisher's results or submissions. Use this as a guide and replace the evidence with your own work before submitting.</aside><main class="wrap">
+    <div class="page-head">
+      <p class="eyebrow">K0126002 · Week 09 · Homework</p>
+      <h1>Accessibility <span class="marker">Audit</span></h1>
+      <p class="intro">I ran Lighthouse (Accessibility) in Chrome DevTools on my site and fixed the pages that didn't score 100. This is the first Week 9 homework.</p>
+    </div>
+
+    <aside class="callout" aria-labelledby="part2-heading">
+      <h2 id="part2-heading">Part 2: Performance</h2>
+      <p>I also ran a Lighthouse Performance audit and sped up the site.</p>
+      <a href="Reference-Week-9-Performance.html">Open the performance report <span aria-hidden="true">→</span></a>
+    </aside>
+
+    <h2 class="section-title">What I found</h2>
+    <p>12 pages scored below 100 on my Week 2 and Week 3 exercises. The screenshots below are from my own Chrome, on the live site, and the URL is in the address bar of each one. Both the before and after screenshots use the same URLs.</p>
+    <p>I took screenshots for 4 pages. The other 8 pages (week2/ex4, week2/ex7, week3/ex1, ex2, ex4, ex5, ex6 and ex7) had the same missing title problem, and the Week 2 ones also had no lang. They score 100 now too.</p>
+
+    <h2 class="section-title">Before and after</h2>
+    <section class="card shots-card">
+      <h3>week2/ex2.html: 84 → 100</h3>
+      <p class="muted">Problem: no title, no lang, no main landmark.</p>
+      <div class="shots">
+        <figure><a href="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/before-week2-ex2.png"><img src="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/before-week2-ex2.webp" width="960" height="499" loading="lazy" decoding="async" alt="Lighthouse in Chrome DevTools on week2/ex2.html before the fix, accessibility 84"></a><figcaption>Before (84)</figcaption></figure>
+        <figure><a href="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/after-week2-ex2.png"><img src="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/after-week2-ex2.webp" width="960" height="500" loading="lazy" decoding="async" alt="Lighthouse in Chrome DevTools on week2/ex2.html after the fix, accessibility 100"></a><figcaption>After (100)</figcaption></figure>
+      </div>
+    </section>
+    <section class="card shots-card">
+      <h3>week2/ex3.html: 79 → 100</h3>
+      <p class="muted">Problem: no title, no lang, links too small, no main landmark.</p>
+      <div class="shots">
+        <figure><a href="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/before-week2-ex3.png"><img src="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/before-week2-ex3.webp" width="960" height="457" loading="lazy" decoding="async" alt="Lighthouse in Chrome DevTools on week2/ex3.html before the fix, accessibility 79"></a><figcaption>Before (79)</figcaption></figure>
+        <figure><a href="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/after-week2-ex3.png"><img src="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/after-week2-ex3.webp" width="960" height="425" loading="lazy" decoding="async" alt="Lighthouse in Chrome DevTools on week2/ex3.html after the fix, accessibility 100"></a><figcaption>After (100)</figcaption></figure>
+      </div>
+    </section>
+    <section class="card shots-card">
+      <h3>week3/ex3.html: 84 → 100</h3>
+      <p class="muted">Problem: low contrast, no title, no main landmark.</p>
+      <div class="shots">
+        <figure><a href="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/before-week3-ex3.png"><img src="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/before-week3-ex3.webp" width="960" height="500" loading="lazy" decoding="async" alt="Lighthouse in Chrome DevTools on week3/ex3.html before the fix, accessibility 84"></a><figcaption>Before (84)</figcaption></figure>
+        <figure><a href="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/after-week3-ex3.png"><img src="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/after-week3-ex3.webp" width="960" height="499" loading="lazy" decoding="async" alt="Lighthouse in Chrome DevTools on week3/ex3.html after the fix, accessibility 100"></a><figcaption>After (100)</figcaption></figure>
+      </div>
+    </section>
+    <section class="card shots-card">
+      <h3>week3/ex8.html: 92 → 100</h3>
+      <p class="muted">Problem: low contrast in the footer.</p>
+      <div class="shots">
+        <figure><a href="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/before-week3-ex8.png"><img src="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/before-week3-ex8.webp" width="960" height="501" loading="lazy" decoding="async" alt="Lighthouse in Chrome DevTools on week3/ex8.html before the fix, accessibility 92"></a><figcaption>Before (92)</figcaption></figure>
+        <figure><a href="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/after-week3-ex8.png"><img src="https://rahimjonkomiljonov.github.io/Web-Programming/week9/img/after-week3-ex8.webp" width="960" height="502" loading="lazy" decoding="async" alt="Lighthouse in Chrome DevTools on week3/ex8.html after the fix, accessibility 100"></a><figcaption>After (100)</figcaption></figure>
+      </div>
+    </section>
+
+    <h2 class="section-title">What I changed (code)</h2>
+    <p>These are the exact changes, with the file each one was made in. Each fix removes a failing Lighthouse audit.</p>
+    <article class="card fix">
+      <header class="fix-head">
+        <span class="fix-num">01</span>
+        <h3>Missing page title</h3>
+        <span class="fix-audit">document-title</span>
+      </header>
+      <p class="fix-pages"><strong>Where:</strong> 11 pages: week2/ex2, ex3, ex4, ex7 and week3/ex1 to ex7</p>
+      <p><strong>Problem:</strong> The pages had no &lt;title&gt;, so the browser tab and screen readers had nothing to announce as the name of the page.</p>
+      <p><strong>Fix:</strong> Added a descriptive &lt;title&gt; inside &lt;head&gt;.</p>
+      <div class="diff">
+        <figure class="diff-side bad">
+          <figcaption><span>Before</span><code>week3/ex1.html</code></figcaption>
+          <pre><code>&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;style&gt;
+    h1 { ... }</code></pre>
+        </figure>
+        <figure class="diff-side good">
+          <figcaption><span>After</span><code>week3/ex1.html</code></figcaption>
+          <pre><code>&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;CSS is Beautiful | Week 3&lt;/title&gt;
+  &lt;style&gt;
+    h1 { ... }</code></pre>
+        </figure>
+      </div>
+    </article>
+    <article class="card fix">
+      <header class="fix-head">
+        <span class="fix-num">02</span>
+        <h3>Page was only a fragment: no html, head or lang</h3>
+        <span class="fix-audit">html-has-lang</span>
+      </header>
+      <p class="fix-pages"><strong>Where:</strong> 4 pages: week2/ex2, ex3, ex4, ex7</p>
+      <p><strong>Problem:</strong> These Week 2 files were bare fragments with no &lt;html&gt; tag, so there was no lang attribute (screen readers could not pick a pronunciation) and no &lt;head&gt; to hold a title.</p>
+      <p><strong>Fix:</strong> Turned each one into a full document with &lt;html lang=&quot;en&quot;&gt;, a &lt;head&gt; with charset, viewport and title, and a &lt;body&gt;.</p>
+      <div class="diff">
+        <figure class="diff-side bad">
+          <figcaption><span>Before</span><code>week2/ex2.html</code></figcaption>
+          <pre><code>&lt;h1&gt;My Favourite Sport&lt;/h1&gt;
+&lt;h2&gt;Why I Love It&lt;/h2&gt;
+&lt;p&gt;I have played &lt;strong&gt;football&lt;/strong&gt; ...&lt;/p&gt;
+&lt;script src=&quot;../site-nav.js&quot; defer&gt;&lt;/script&gt;</code></pre>
+        </figure>
+        <figure class="diff-side good">
+          <figcaption><span>After</span><code>week2/ex2.html</code></figcaption>
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;My Favourite Sport | Week 2&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;main&gt;
+    &lt;h1&gt;My Favourite Sport&lt;/h1&gt;
+    &lt;h2&gt;Why I Love It&lt;/h2&gt;
+    &lt;p&gt;I have played &lt;strong&gt;football&lt;/strong&gt; ...&lt;/p&gt;
+  &lt;/main&gt;
+  &lt;script src=&quot;../site-nav.js&quot; defer&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </figure>
+      </div>
+    </article>
+    <article class="card fix">
+      <header class="fix-head">
+        <span class="fix-num">03</span>
+        <h3>Low text contrast on the colour boxes</h3>
+        <span class="fix-audit">color-contrast</span>
+      </header>
+      <p class="fix-pages"><strong>Where:</strong> week3/ex3.html</p>
+      <p><strong>Problem:</strong> White labels on the red, amber, green and blue boxes measured between 2.14:1 and 3.76:1 in Lighthouse. Text needs at least 4.5:1.</p>
+      <p><strong>Fix:</strong> Changed the label colour from white to black, which passes on all five boxes.</p>
+      <div class="diff">
+        <figure class="diff-side bad">
+          <figcaption><span>Before</span><code>week3/ex3.html</code></figcaption>
+          <pre><code>.swatch {
+  ...
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+}</code></pre>
+        </figure>
+        <figure class="diff-side good">
+          <figcaption><span>After</span><code>week3/ex3.html</code></figcaption>
+          <pre><code>.swatch {
+  ...
+  color: #000;
+  font-weight: bold;
+  font-size: 13px;
+}</code></pre>
+        </figure>
+      </div>
+    </article>
+    <article class="card fix">
+      <header class="fix-head">
+        <span class="fix-num">04</span>
+        <h3>Low text contrast in the footer</h3>
+        <span class="fix-audit">color-contrast</span>
+      </header>
+      <p class="fix-pages"><strong>Where:</strong> week3/ex8.html</p>
+      <p><strong>Problem:</strong> The footer text from site-nav.js was #587078 on the page&#x27;s dark #1e293b footer, which is 2.78:1.</p>
+      <p><strong>Fix:</strong> Added a rule on this page that makes the footer text light (#cbd5e1) so it is readable on the dark background.</p>
+      <div class="diff">
+        <figure class="diff-side bad">
+          <figcaption><span>Before</span><code>site-nav.js</code></figcaption>
+          <pre><code>#wp-site-footer {
+  ...
+  color: #587078;   /* 2.78:1 on #1e293b */
+  ...
+}</code></pre>
+        </figure>
+        <figure class="diff-side good">
+          <figcaption><span>After</span><code>week3/ex8.html</code></figcaption>
+          <pre><code>.footer { ... }
+#wp-site-footer.footer { color: #cbd5e1; border-top-color: #334155; }</code></pre>
+        </figure>
+      </div>
+    </article>
+    <article class="card fix">
+      <header class="fix-head">
+        <span class="fix-num">05</span>
+        <h3>Touch targets too small</h3>
+        <span class="fix-audit">target-size</span>
+      </header>
+      <p class="fix-pages"><strong>Where:</strong> week2/ex3.html</p>
+      <p><strong>Problem:</strong> The menu links were only 17px tall. Lighthouse needs touch targets of at least 24px by 24px.</p>
+      <p><strong>Fix:</strong> Made the links inline-block with a minimum height of 24px and a little padding.</p>
+      <div class="diff">
+        <figure class="diff-side bad">
+          <figcaption><span>Before</span><code>week2/ex3.html</code></figcaption>
+          <pre><code>&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+    ...
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+        </figure>
+        <figure class="diff-side good">
+          <figcaption><span>After</span><code>week2/ex3.html</code></figcaption>
+          <pre><code>&lt;style&gt;
+  nav a { display: inline-block; min-height: 24px; padding: 4px 0; }
+&lt;/style&gt;
+...
+&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+    ...
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+        </figure>
+      </div>
+    </article>
+    <article class="card fix">
+      <header class="fix-head">
+        <span class="fix-num">06</span>
+        <h3>No main landmark</h3>
+        <span class="fix-audit">landmark-one-main</span>
+      </header>
+      <p class="fix-pages"><strong>Where:</strong> the 22 Week 2 and Week 3 exercise pages that were edited</p>
+      <p><strong>Problem:</strong> DevTools flagged &quot;Document does not have a main landmark&quot;. Screen reader users could not jump straight to the content.</p>
+      <p><strong>Fix:</strong> Wrapped the page content in a &lt;main&gt; element.</p>
+      <div class="diff">
+        <figure class="diff-side bad">
+          <figcaption><span>Before</span><code>week3/ex1.html</code></figcaption>
+          <pre><code>&lt;body&gt;
+  &lt;h1&gt;CSS is Beautiful&lt;/h1&gt;
+  &lt;p&gt;With just a few lines of CSS ...&lt;/p&gt;
+&lt;/body&gt;</code></pre>
+        </figure>
+        <figure class="diff-side good">
+          <figcaption><span>After</span><code>week3/ex1.html</code></figcaption>
+          <pre><code>&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;CSS is Beautiful&lt;/h1&gt;
+  &lt;p&gt;With just a few lines of CSS ...&lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;</code></pre>
+        </figure>
+      </div>
+    </article>
+    <article class="card fix">
+      <header class="fix-head">
+        <span class="fix-num">07</span>
+        <h3>Skip link</h3>
+        <span class="fix-audit">WCAG 2.4.1 Bypass Blocks</span>
+      </header>
+      <p class="fix-pages"><strong>Where:</strong> every page that has a &lt;main&gt; (added once, in site-nav.js)</p>
+      <p><strong>Problem:</strong> Keyboard users had to Tab through every link before reaching the content, and there was no way to skip them.</p>
+      <p><strong>Fix:</strong> site-nav.js now adds a &quot;Skip to main content&quot; link at the top of every page. It stays off-screen until it gets keyboard focus.</p>
+      <div class="diff">
+        <figure class="diff-side bad">
+          <figcaption><span>Before</span><code>site-nav.js</code></figcaption>
+          <pre><code>(() =&gt; {
+  const script = document.currentScript;
+  if (!script || !document.body) return;
+
+  const homeUrl = new URL(&#x27;./index.html&#x27;, script.src);</code></pre>
+        </figure>
+        <figure class="diff-side good">
+          <figcaption><span>After</span><code>site-nav.js</code></figcaption>
+          <pre><code>(() =&gt; {
+  const script = document.currentScript;
+  if (!script || !document.body) return;
+
+  // Skip link for pages that do not ship their own (WCAG 2.4.1)
+  const main = document.querySelector(&#x27;main&#x27;);
+  if (main &amp;&amp; !document.querySelector(&#x27;.skip-link&#x27;)) {
+    if (!main.id) main.id = &#x27;main-content&#x27;;
+    const skip = document.createElement(&#x27;a&#x27;);
+    skip.className = &#x27;skip-link&#x27;;
+    skip.href = &#x27;#&#x27; + main.id;
+    skip.textContent = &#x27;Skip to main content&#x27;;
+    document.body.prepend(skip);
+  }
+
+  const homeUrl = new URL(&#x27;./index.html&#x27;, script.src);</code></pre>
+        </figure>
+      </div>
+    </article>
+  </main>
+  
+</body>
+</html>
