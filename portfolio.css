@@ -1,11 +1,11 @@
 :root {
-  --ink: #202B33;
-  --paper: #F3F5F5;
-  --blue: #496B7C;
-  --sun: #E3B86F;
-  --white: #fff;
-  --muted: #596770;
-  --line: #D3DADD;
+  --ink: #EDF2F4;
+  --paper: #10171C;
+  --blue: #203D49;
+  --sun: #E6B65D;
+  --white: #1B272E;
+  --muted: #A9B8BF;
+  --line: #34434B;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -46,8 +46,8 @@ a { color: inherit; }
   gap: .5rem;
   justify-content: space-between;
   padding: .7rem clamp(1rem, 5vw, 3rem);
-  background: #202B33;
-  color: #fff;
+  background: #0B1216;
+  color: #EDF2F4;
   font: 600 .95rem system-ui, sans-serif;
 }
 .bar a, .site-nav a { color: #fff; text-decoration: none; opacity: .84; }
@@ -121,7 +121,7 @@ a { color: inherit; }
   place-items: center;
   border-radius: 10px;
   background: var(--sun);
-  color: #202B33;
+  color: #172126;
   font-size: 2.25rem;
   font-weight: 800;
   line-height: 1;

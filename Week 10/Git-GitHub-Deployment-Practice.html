@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Week 10 Git, GitHub, branching, pull requests, GitHub Pages and custom 404 practice by Alisher Ulmasov.">
+<meta name="theme-color" content="#10171c">
+<title>Git, GitHub &amp; Deployment Practice | Week 10</title>
+<link rel="stylesheet" href="../portfolio.css">
+<style>
+:root{--panel:#1b272e;--line:#34434b;--muted:#a9b8bf;--gold:#e6b65d}
+main{width:min(960px,calc(100% - 40px));margin:auto;padding:36px 0 80px}
+.kicker{margin:30px 0 12px;color:var(--gold);font-size:.74rem;letter-spacing:.16em;font-weight:800}
+h1{font-size:clamp(2.7rem,7vw,5rem);line-height:.98;letter-spacing:-.06em;margin:0 0 16px}
+.lead{max-width:740px;color:var(--muted);font-size:1.08rem;line-height:1.7}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:clamp(18px,4vw,30px);margin:18px 0}
+h2{margin:0 0 12px;font-size:1.45rem}h3{margin:18px 0 8px}
+p,li{line-height:1.7}.muted{color:var(--muted)}
+pre{overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;background:#080e12;color:#edf2f4;padding:16px;border-radius:10px;line-height:1.65}
+code{font-size:.92em}.tag{display:inline-block;padding:4px 9px;border-radius:99px;background:#34434b;color:#edf2f4;font-size:.76rem;font-weight:700}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.actions a{display:inline-block;padding:10px 14px;border:1px solid var(--gold);border-radius:8px;color:var(--gold);text-decoration:none;font-weight:700}
+.actions a:hover{background:var(--gold);color:#172126}
+.checklist{padding-left:22px}.checklist li{margin:8px 0}
+footer{border-top:1px solid var(--line);padding:24px;text-align:center;color:var(--muted)}
+@media print{body{background:white!important;color:black!important}.panel{break-inside:avoid;background:white!important;color:black!important}}
+</style></head>
+<body>
+<nav class="site-nav"><a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / PORTFOLIO</span></a><a class="nav-link" href="index.html">← Week 10</a></nav>
+<main>
+<p class="kicker">WEEK 10 · PRACTICE NOTES</p>
+<h1>Git, GitHub &amp; Deployment<span style="color:var(--sun)">.</span></h1>
+<p class="lead">A practical guide to the Week 10 workflow: track changes with Git, work safely with branches, collaborate through pull requests, publish a website with GitHub Pages, and create a helpful custom 404 page. The commands below are learning examples—run them in your own project and record your actual results.</p>
+
+<section class="panel">
+<h2>1. Create a Git repository and make your first commit</h2>
+<p>Git records snapshots of your project. A commit is a named checkpoint that lets you review changes and return to earlier versions.</p>
+<pre><code>mkdir my-first-git
+cd my-first-git
+git init
+echo "&lt;h1&gt;Hello Git&lt;/h1&gt;" &gt; index.html
+git status
+git add index.html
+git commit -m "Initial commit: add index.html"
+git log --oneline</code></pre>
+<p><strong>What to understand:</strong> <code>git init</code> creates the local repository, <code>git status</code> shows changed and untracked files, <code>git add</code> stages selected changes, and <code>git commit</code> saves a checkpoint.</p>
+</section>
+
+<section class="panel">
+<h2>2. Create a branch, make a change, and merge it</h2>
+<p>Branches let you work on a feature without changing the main version until the work is ready.</p>
+<pre><code>git switch -c feature-style
+# Make a change, for example create style.css
+git add style.css
+git commit -m "Add basic stylesheet"
+git switch main
+git merge feature-style
+git log --oneline --graph --all</code></pre>
+<p><strong>Key idea:</strong> merging brings the branch's changes into <code>main</code>. Review the graph and confirm that the expected files are present.</p>
+</section>
+
+<section class="panel">
+<h2>3. Connect the local repository to GitHub</h2>
+<p>Create an empty repository on GitHub, then connect it as the remote named <code>origin</code>.</p>
+<pre><code>git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+git remote -v
+git push -u origin main</code></pre>
+<p>For later updates, the usual sequence is:</p>
+<pre><code>git status
+git add .
+git commit -m "Describe the change"
+git push</code></pre>
+<p class="muted">Replace the placeholder URL with your own repository URL. Do not copy another student's remote URL or commit hashes.</p>
+</section>
+
+<section class="panel">
+<h2>4. Collaborate with a pull request</h2>
+<ol class="checklist">
+<li>Create a feature branch, for example <code>add-readme</code>.</li>
+<li>Make a focused change and commit it with a clear message.</li>
+<li>Push the branch to GitHub.</li>
+<li>Open a pull request from the feature branch into <code>main</code>.</li>
+<li>Review the changed files and description, then merge when ready.</li>
+<li>Switch back to <code>main</code> and pull the merged changes.</li>
+</ol>
+<pre><code>git switch -c add-readme
+# Create or edit README.md
+git add README.md
+git commit -m "Add README"
+git push -u origin add-readme
+# Open and review the pull request on GitHub
+git switch main
+git pull origin main</code></pre>
+<p>A pull request is a review-and-merge workflow. It is useful even for individual projects because it makes changes easier to inspect before merging.</p>
+</section>
+
+<section class="panel">
+<h2>5. Publish a website with GitHub Pages</h2>
+<ol class="checklist">
+<li>Make sure the repository contains an <code>index.html</code> entry page.</li>
+<li>Push the website files to GitHub.</li>
+<li>Open the repository's <strong>Settings → Pages</strong>.</li>
+<li>Choose <strong>Deploy from a branch</strong>, select <code>main</code> and the correct folder (usually <code>/(root)</code>), then save.</li>
+<li>Wait for the deployment to finish and open the published URL.</li>
+<li>Test navigation, images, CSS, and links on the live site—not only on your computer.</li>
+</ol>
+<div class="actions"><a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages documentation ↗</a><a href="https://alisherice.github.io/Web-Programming/" target="_blank" rel="noopener noreferrer">My live portfolio ↗</a><a href="https://github.com/alisherIce/Web-Programming" target="_blank" rel="noopener noreferrer">My repository ↗</a></div>
+</section>
+
+<section class="panel">
+<h2>6. Understand and create a custom 404 page</h2>
+<p>A 404 page appears when a visitor opens a URL that does not exist. A useful page explains the problem and provides a clear route back to the site.</p>
+<p>For a GitHub Pages site, add a file named <code>404.html</code> in the published folder. A simple starting point:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Page Not Found&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;main&gt;
+    &lt;h1&gt;404 — Page not found&lt;/h1&gt;
+    &lt;p&gt;Sorry, this page does not exist.&lt;/p&gt;
+    &lt;a href="./"&gt;Back to home&lt;/a&gt;
+  &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>After publishing, test a deliberately incorrect URL and confirm that your custom page appears. Keep its design consistent with the rest of your portfolio.</p>
+</section>
+
+<section class="panel">
+<h2>7. Apply the workflow to my own projects</h2>
+<ul class="checklist">
+<li><strong>Web Programming portfolio:</strong> <a href="https://github.com/alisherIce/Web-Programming" target="_blank" rel="noopener noreferrer">repository</a> and <a href="https://alisherice.github.io/Web-Programming/" target="_blank" rel="noopener noreferrer">live website</a>.</li>
+<li><strong>Book Search exercise:</strong> review the Week 7 page in my portfolio, check its API behavior, and confirm the links work after deployment.</li>
+<li><strong>Theme switch:</strong> test light and dark mode on the live website and confirm the preference is remembered.</li>
+<li><strong>404 test:</strong> create and publish a custom <code>404.html</code> if required, then test a missing URL.</li>
+</ul>
+</section>
+
+<section class="panel">
+<h2>My evidence and reflection</h2>
+<p class="muted">Complete this section using your own screenshots, terminal output, and repository links. Do not enter example commit IDs as if they were yours.</p>
+<h3>Evidence checklist</h3>
+<ul class="checklist">
+<li>Screenshot of my repository file structure</li>
+<li>Screenshot of my actual commit history</li>
+<li>Screenshot of branch or pull request workflow, if completed</li>
+<li>Screenshot of GitHub Pages settings or successful deployment</li>
+<li>Screenshot of my live website and custom 404 page, if completed</li>
+</ul>
+<h3>Reflection prompts</h3>
+<ul class="checklist">
+<li>What is the difference between Git and GitHub?</li>
+<li>Why should commits have short, descriptive messages?</li>
+<li>When would I use a branch instead of editing <code>main</code>?</li>
+<li>What did I check after deploying my site?</li>
+<li>What would I improve in my workflow next time?</li>
+</ul>
+<button type="button" onclick="window.print()">Print / Save as PDF</button>
+</section>
+</main>
+<footer>© 2026<br>Alisher Ulmasov | Gachon University</footer>
+<script src="../theme.js" defer></script>
+</body></html>
