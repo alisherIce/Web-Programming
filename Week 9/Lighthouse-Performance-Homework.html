@@ -47,17 +47,47 @@ footer{background:#0b1216!important;color:#a9b8bf!important;border-color:#34434b
 a{color:#e6c27e}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #e6b65d;outline-offset:3px}
 @media print{body{background:white!important;color:black!important}.panel{background:white!important;color:black!important}}
+.evidence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.evidence-card{margin:0;min-width:0;background:#111b21;border:1px solid #34434b;border-radius:14px;overflow:hidden}
+.evidence-card img{display:block;width:100%;height:auto;max-height:680px;object-fit:contain;background:#f4f5f6}
+.evidence-card figcaption{padding:14px 16px;color:#c5d1d6;line-height:1.6;font-size:.94rem}
+.evidence-card figcaption strong{display:block;color:#f4f7f8;margin-bottom:5px}
+.score-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}
+.score-chip{padding:14px 10px;text-align:center;border:1px solid #34434b;border-radius:12px;background:#111b21}
+.score-chip b{display:block;color:#57d68a;font-size:1.8rem}
+.score-chip span{font-size:.82rem;color:#a9b8bf}
+@media(max-width:650px){.evidence-grid{grid-template-columns:1fr}.score-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style></head>
 <body>
 <nav aria-label="Main navigation"><a class="navbrand" href="../index.html">ALISHER ULMASOV / WEB PROGRAMMING</a><a class="back" href="index.html">← Back to week</a></nav>
 <main>
-<p class="kicker">WEEK 09-2 · HOMEWORK 02</p>
+<p class="kicker">WEEK 09-2 · HOMEWORK 02 · SUBMISSION 9-02</p>
 <h1>Lighthouse Performance Audit<span style="color:var(--accent)">.</span></h1>
 
 <p class="lead">Measure your own website's performance, identify the largest bottlenecks, apply meaningful optimizations, and compare results using Lighthouse.</p>
 <div class="callout"><strong>Important:</strong> Performance scores and Core Web Vitals vary by device and network. This page deliberately leaves results blank until you run your own tests.</div>
 <section class="panel"><h2>Test information</h2><div class="grid"><div><label for="site">Website URL</label><input id="site" type="url" placeholder="https://your-project.example"></div><div><label for="profile">Test profile</label><select id="profile"><option>Mobile · Slow 4G</option><option>Desktop</option></select></div><div><label for="lcp-before">LCP before (seconds)</label><input id="lcp-before" type="number" step=".1" placeholder="Measured value"></div><div><label for="lcp-after">LCP after (seconds)</label><input id="lcp-after" type="number" step=".1" placeholder="Measured value"></div><div><label for="score-before">Performance score before</label><input id="score-before" type="number" min="0" max="100"></div><div><label for="score-after">Performance score after</label><input id="score-after" type="number" min="0" max="100"></div></div></section>
 <section class="panel"><h2>Find and fix five opportunities</h2><p>Run Lighthouse and use the Opportunities and Diagnostics sections to select improvements that actually apply to your project.</p><div class="grid"><div><label for="perf1">1. Images</label><textarea id="perf1" rows="3" placeholder="Oversized images, format, dimensions, lazy loading…"></textarea></div><div><label for="perf2">2. CSS / render blocking</label><textarea id="perf2" rows="3" placeholder="Unused CSS, render-blocking styles…"></textarea></div><div><label for="perf3">3. JavaScript</label><textarea id="perf3" rows="3" placeholder="Defer non-critical scripts, reduce unused JS…"></textarea></div><div><label for="perf4">4. Fonts / network</label><textarea id="perf4" rows="3" placeholder="Preconnect, font loading, request chains…"></textarea></div><div><label for="perf5">5. Caching / delivery</label><textarea id="perf5" rows="3" placeholder="Cache policy, compression, CDN…"></textarea></div><div><label for="reflection">Reflection</label><textarea id="reflection" rows="3" placeholder="Which change had the largest measured impact and why?"></textarea></div></div></section>
+
+<section class="panel" aria-labelledby="evidence-title">
+<h2 id="evidence-title">Lighthouse evidence · Submission 9-02</h2>
+<p>These screenshots were uploaded to the repository's Week 9/Pic folder. Each image keeps its original aspect ratio and scales to the page width for clear viewing on desktop and mobile.</p>
+<div class="score-strip" aria-label="Recorded Lighthouse category scores">
+<div class="score-chip"><b>99</b><span>Performance</span></div>
+<div class="score-chip"><b>100</b><span>Accessibility</span></div>
+<div class="score-chip"><b>100</b><span>Best Practices</span></div>
+<div class="score-chip"><b>100</b><span>SEO</span></div>
+</div>
+<div class="evidence-grid">
+<figure class="evidence-card"><img src="Pic/Screenshot%202026-11-13%20at%202.07.34%E2%80%AFPM.png" alt="Lighthouse audit screenshot captured at 2:07:34 PM on November 13, 2026" loading="lazy"><figcaption><strong>Evidence 01 · Initial audit capture</strong>First saved Lighthouse report from the audit session, documenting the starting report view.</figcaption></figure>
+<figure class="evidence-card"><img src="Pic/Screenshot%202026-11-13%20at%202.07.50%E2%80%AFPM.png" alt="Lighthouse audit screenshot captured at 2:07:50 PM on November 13, 2026" loading="lazy"><figcaption><strong>Evidence 02 · Audit detail capture</strong>Second saved report view from the same session, retained as supporting evidence.</figcaption></figure>
+<figure class="evidence-card"><img src="Pic/Screenshot%202026-11-13%20at%205.16.28%E2%80%AFPM.png" alt="Lighthouse report screenshot captured at 5:16:28 PM on November 13, 2026" loading="lazy"><figcaption><strong>Evidence 03 · Final Lighthouse overview</strong>The report overview records Performance 99, Accessibility 100, Best Practices 100, and SEO 100.</figcaption></figure>
+<figure class="evidence-card"><img src="Pic/Screenshot%202026-11-13%20at%205.16.38%E2%80%AFPM.png" alt="Lighthouse category detail screenshot captured at 5:16:38 PM on November 13, 2026" loading="lazy"><figcaption><strong>Evidence 04 · Accessibility category</strong>Supporting report screenshot for the Accessibility category and its final score.</figcaption></figure>
+<figure class="evidence-card"><img src="Pic/Screenshot%202026-11-13%20at%205.16.47%E2%80%AFPM.png" alt="Lighthouse category detail screenshot captured at 5:16:47 PM on November 13, 2026" loading="lazy"><figcaption><strong>Evidence 05 · Best Practices category</strong>Supporting report screenshot for Best Practices, with a recorded score of 100.</figcaption></figure>
+<figure class="evidence-card"><img src="Pic/Screenshot%202026-11-13%20at%205.16.57%E2%80%AFPM.png" alt="Lighthouse category detail screenshot captured at 5:16:57 PM on November 13, 2026" loading="lazy"><figcaption><strong>Evidence 06 · SEO category</strong>Supporting report screenshot for SEO, with a recorded score of 100.</figcaption></figure>
+</div>
+</section>
+
 <section class="panel"><h2>Submission checklist</h2><ol><li>Before Lighthouse screenshots for the same test profile.</li><li>List of the five biggest issues identified.</li><li>Code snippets showing the optimizations you applied.</li><li>After screenshots taken under the same conditions.</li><li>Reflection explaining the most effective optimization.</li></ol><button type="button" onclick="window.print()">Print / Save as PDF</button></section>
 </main>
 <footer>© 2026<br>Alisher Ulmasov | Gachon University</footer>
