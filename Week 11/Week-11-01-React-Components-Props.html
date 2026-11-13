@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Week 11-01 React components and props exercises by Alisher Ulmasov.">
+<title>11-01 · React Components & Props | Alisher Ulmasov</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#10171c;--panel:#1b272e;--panel2:#202f37;--line:#34434b;--ink:#edf2f4;--muted:#a9b8bf;--gold:#e6b65d;--cyan:#61dafb;--green:#75d69c}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 Manrope,system-ui,sans-serif}
+a{color:var(--gold)}.top{position:sticky;top:0;z-index:5;background:#0b1216;border-bottom:1px solid var(--line);padding:13px max(22px,calc((100% - 1060px)/2));display:flex;justify-content:space-between;gap:14px;align-items:center}.brand{font-weight:800;letter-spacing:.04em}.back{color:var(--muted);text-decoration:none;font-size:14px}
+main{width:min(1060px,calc(100% - 36px));margin:0 auto;padding:55px 0 90px}.eyebrow{color:var(--gold);font:12px 'DM Mono',monospace;letter-spacing:.15em}.hero{padding:30px 0 38px;border-bottom:1px solid var(--line)}h1{font-size:clamp(42px,8vw,76px);line-height:1.02;letter-spacing:-.06em;margin:12px 0 18px}.hero p{max-width:700px;color:var(--muted)}.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.pill{border:1px solid var(--line);border-radius:99px;padding:5px 12px;color:var(--muted);font-size:12px}
+section{margin-top:42px}.section-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}h2{font-size:27px;letter-spacing:-.04em;margin:0 0 16px}.number{font:13px 'DM Mono';color:var(--gold)}.desc{color:var(--muted);max-width:780px}.layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;min-width:0}.panel h3{margin:0 0 12px;font-size:17px}.demo{background:#f0f9ff;color:#0c2a40;border-radius:12px;padding:18px;min-height:170px}.demo *{color:inherit}.profile{display:flex;gap:14px;align-items:center}.avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;background:#bae6fd}.profile h4{margin:0;font-size:19px}.profile p{margin:3px 0;color:#426176}.profile a{color:#087e9b}.notif{padding:10px 12px;border-radius:9px;background:#fff;margin:8px 0;border:1px solid #d5e6ef}.card-demo{background:white;border:1px solid #bae6fd;border-radius:10px;padding:15px;margin-bottom:12px}.card-demo h4{margin:0 0 6px}.code{background:#08151d;border:1px solid #263d4a;border-radius:12px;padding:16px;overflow:auto;color:#c7e5f2;font:12px/1.65 'DM Mono',monospace;white-space:pre;tab-size:2}.code .comment{color:#79a18b}.note{border-left:3px solid var(--gold);padding:10px 14px;background:#27271f;color:#e9dfc5;border-radius:0 8px 8px 0;margin-top:16px}.tag{font:11px 'DM Mono';color:var(--cyan);letter-spacing:.1em}.summary{background:var(--panel);border:1px solid var(--line);padding:22px;border-radius:16px}.summary li{margin:7px 0;color:var(--muted)}footer{text-align:center;border-top:1px solid var(--line);padding:25px;color:var(--muted);font-size:13px}
+@media(max-width:720px){.layout{grid-template-columns:1fr}.top{position:static}.panel{padding:17px}.code{font-size:11px}}
+</style>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+<nav class="top"><a class="brand" href="../index.html" style="color:var(--ink);text-decoration:none">ALISHER ULMASOV / WEB PROGRAMMING</a><a class="back" href="index.html">← Week 11</a></nav>
+<main>
+<header class="hero"><p class="eyebrow">WEEK 11 · HOMEWORK 01 · SUBMISSION 11-01</p><h1>React Components<br>&amp; Props<span style="color:var(--gold)">.</span></h1><p>Three completed practice exercises demonstrating reusable functional components, props with default values, conditional rendering, list keys, and component composition with <code>props.children</code>.</p><div class="meta"><span class="pill">Gachon University</span><span class="pill">Web Programming · K0126_002</span><span class="pill">React 18 + JSX</span></div></header>
+
+<section id="exercise-1"><div class="section-head"><span class="number">EXERCISE 01</span><h2>ProfileCard component</h2></div><p class="desc">Built a reusable profile card that receives name, role, and email props. The optional avatarUrl prop has a default image, and the email is a working mailto link.</p>
+<div class="layout"><div class="panel"><span class="tag">LIVE OUTPUT</span><div id="profile-root" class="demo" style="margin-top:12px"></div></div><div class="panel"><h3>Implementation</h3><pre class="code"><code>function ProfileCard({
+  name,
+  role,
+  email,
+  avatarUrl = DEFAULT_AVATAR
+}) {
+  return (
+    &lt;article className="profile-card"&gt;
+      &lt;img src={avatarUrl} alt={name} /&gt;
+      &lt;h2&gt;{name}&lt;/h2&gt;
+      &lt;p&gt;{role}&lt;/p&gt;
+      &lt;a href={`mailto:${email}`}&gt;
+        {email}
+      &lt;/a&gt;
+    &lt;/article&gt;
+  );
+}
+
+&lt;ProfileCard
+  name="Dr. Toshpulatov"
+  role="Professor"
+  email="muhiddin@gachon.ac.kr"
+/&gt;</code></pre></div></div></section>
+
+<section id="exercise-2"><div class="section-head"><span class="number">EXERCISE 02</span><h2>Notification list</h2></div><p class="desc">Rendered an array of notification objects with .map(). Each item receives a stable unique key. A conditional expression selects the correct icon for success, warning, or informational messages.</p>
+<div class="layout"><div class="panel"><span class="tag">LIVE OUTPUT</span><div id="notifications-root" class="demo" style="margin-top:12px"></div></div><div class="panel"><h3>Implementation</h3><pre class="code"><code>const notifications = [
+  { id: 1, type: "success",
+    message: "Profile updated successfully" },
+  { id: 2, type: "warning",
+    message: "Password expires in 3 days" },
+  { id: 3, type: "info",
+    message: "New lecture materials available" }
+];
+
+function NotificationItem({ type, message }) {
+  const icon = type === "success" ? "✓"
+    : type === "warning" ? "⚠" : "ⓘ";
+  return &lt;li&gt;{icon} {message}&lt;/li&gt;;
+}
+
+function NotificationList() {
+  return (
+    &lt;ul&gt;
+      {notifications.map(item =&gt; (
+        &lt;NotificationItem
+          key={item.id}
+          type={item.type}
+          message={item.message}
+        /&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</code></pre></div></div></section>
+
+<section id="exercise-3"><div class="section-head"><span class="number">EXERCISE 03</span><h2>Card with props.children</h2></div><p class="desc">Created a reusable Card component. Its title prop controls the heading, while props.children allows any nested JSX content to be placed inside the card. Two different content sections use the same component.</p>
+<div class="layout"><div class="panel"><span class="tag">LIVE OUTPUT</span><div id="cards-root" class="demo" style="margin-top:12px"></div></div><div class="panel"><h3>Implementation</h3><pre class="code"><code>function Card({ title, children }) {
+  return (
+    &lt;section className="card"&gt;
+      &lt;h3&gt;{title}&lt;/h3&gt;
+      {children}
+    &lt;/section&gt;
+  );
+}
+
+&lt;Card title="Lecture Topics"&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Components&lt;/li&gt;
+    &lt;li&gt;Props&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/Card&gt;
+
+&lt;Card title="Homework"&gt;
+  &lt;p&gt;Build a student portfolio component&lt;/p&gt;
+&lt;/Card&gt;</code></pre></div></div></section>
+
+<section><div class="summary"><span class="tag">WHAT I PRACTICED</span><h2 style="margin-top:8px">Learning reflection</h2><ul><li>Functional components return JSX and component names begin with a capital letter.</li><li>Props pass data from parent components to child components and are treated as read-only.</li><li>Default parameter values make optional props safe to use.</li><li>.map() renders collections, and stable unique keys help React track list items.</li><li>Conditional rendering chooses UI based on data, while props.children makes components flexible and reusable.</li></ul><p class="note">All three exercises are implemented as working React components below. The examples are intentionally separated into small components so each has one clear responsibility.</p></div></section>
+</main><footer>© 2026<br>Alisher Ulmasov | Gachon University</footer>
+<script type="text/babel">
+const { createElement: h } = React;
+const DEFAULT_AVATAR = "https://placehold.co/100x100/e0f2fe/0c2a40?text=Profile";
+function ProfileCard({name,role,email,avatarUrl=DEFAULT_AVATAR}) {
+  return <div className="profile"><img className="avatar" src={avatarUrl} alt={name+" profile"} /><div><h4>{name}</h4><p>{role}</p><a href={`mailto:${email}`}>{email}</a></div></div>;
+}
+function NotificationItem({type,message}) {
+  const icon = type === "success" ? "✓" : type === "warning" ? "⚠" : "ⓘ";
+  return <li className="notif" style={{listStyle:"none"}}><strong>{icon}</strong> {message}</li>;
+}
+const notifications=[{id:1,type:"success",message:"Profile updated successfully"},{id:2,type:"warning",message:"Password expires in 3 days"},{id:3,type:"info",message:"New lecture materials available"}];
+function NotificationList(){return <ul style={{padding:0,margin:0}}>{notifications.map(item=><NotificationItem key={item.id} type={item.type} message={item.message}/>)}</ul>}
+function Card({title,children}){return <section className="card-demo"><h4>{title}</h4>{children}</section>}
+ReactDOM.createRoot(document.getElementById("profile-root")).render(<ProfileCard name="Dr. Toshpulatov" role="Professor · Gachon University" email="muhiddin@gachon.ac.kr"/>);
+ReactDOM.createRoot(document.getElementById("notifications-root")).render(<NotificationList/>);
+ReactDOM.createRoot(document.getElementById("cards-root")).render(<><Card title="Lecture Topics"><ul><li>Components</li><li>Props</li></ul></Card><Card title="Homework"><p>Build a student portfolio component</p></Card></>);
+</script>
+</body></html>
