@@ -34,7 +34,7 @@
 
 <section class="block" id="portfolio">
 <div class="section-head"><div><div class="section-no">01 / PROJECTS</div><h2>Portfolio Gallery</h2></div></div>
-<p class="section-intro">These cards now point to your actual GitHub repositories. FindIt AI and your Web Programming portfolio also link to their live GitHub Pages websites.</p>
+<p class="section-intro">Each project card shows its technology stack, GitHub repository, and live demo when available. The gallery uses the project data to build its technology filters automatically.</p>
 <div id="portfolio-root"></div>
 </section>
 
@@ -200,14 +200,11 @@ function Dashboard({ user }) {
 <script type="text/babel">
 const {useState} = React;
 const projects = [
- {id:1,title:"FindIt AI",description:"Your lost-and-found web application for creating reports, searching items, and suggesting possible matches.",tech:["React","TypeScript","Supabase"],url:"https://alisherice.github.io/FindIt-AI/",repo:"https://github.com/alisherIce/FindIt-AI",mark:"AI",live:true},
- {id:2,title:"Web Programming Portfolio",description:"Your Gachon University course portfolio with weekly web programming assignments and exercises.",tech:["HTML","CSS","JavaScript","React"],url:"https://alisherice.github.io/Web-Programming/",repo:"https://github.com/alisherIce/Web-Programming",mark:"WP",live:true},
- {id:3,title:"Cloud Design & Implementation",description:"Your course project repository for cloud application development and deployment with Docker, Kubernetes, and Jenkins.",tech:["Docker","Kubernetes","Jenkins"],url:"https://github.com/alisherIce/Cloud-Design",repo:"https://github.com/alisherIce/Cloud-Design",mark:"CD",live:false},
- {id:4,title:"StartUp",description:"Your StartUp GitHub repository. Open the repository to see the current project files and development.",tech:["GitHub","Project"],url:"https://github.com/alisherIce/StartUp",repo:"https://github.com/alisherIce/StartUp",mark:"ST",live:false},
- {id:5,title:"Web Programming KR",description:"Your separate Web-Programming.kr repository.",tech:["Web Programming"],url:"https://github.com/alisherIce/Web-Programming.kr",repo:"https://github.com/alisherIce/Web-Programming.kr",mark:"KR",live:false},
- {id:6,title:"VS Code",description:"Your VS-Code repository.",tech:["Developer Tools"],url:"https://github.com/alisherIce/VS-Code",repo:"https://github.com/alisherIce/VS-Code",mark:"VS",live:false}
+ {id:1,title:"FindIt AI",description:"A smart lost-and-found application with image-based item matching and a web interface.",tech:["React","TypeScript","Python","AI"],github:"https://github.com/alisherIce/FindIt-AI",demo:"https://alisherice.github.io/FindIt-AI/",mark:"AI"},
+ {id:2,title:"Web Programming Portfolio",description:"My Gachon University web programming coursework, weekly assignments, and interactive exercises.",tech:["HTML","CSS","JavaScript","React"],github:"https://github.com/alisherIce/Web-Programming",demo:"https://alisherice.github.io/Web-Programming/",mark:"WP"},
+ {id:3,title:"Cloud Design & Implementation",description:"My course project for designing and implementing a cloud-based application with containerization and deployment tools.",tech:["Docker","Kubernetes","Jenkins","Python"],github:"https://github.com/alisherIce/Cloud-Design",demo:null,mark:"CD"}
 ];
-function ProjectCard({project}) { return <article className="project"><div className="project-top"><span className="project-icon">{project.mark}</span><span className="mono">PROJECT / 0{project.id}</span></div><h3>{project.title}</h3><p>{project.description}</p><div className="tags">{project.tech.map(t=><span className="tag" key={t}>{t}</span>)}</div><div className="project-links"><a href={project.url} target="_blank" rel="noreferrer">{project.live?"Open live website ↗":"Open GitHub repository ↗"}</a>{project.live&&<a href={project.repo} target="_blank" rel="noreferrer">Source code ↗</a>}</div></article>; }
+function ProjectCard({project}) { return <article className="project"><div className="project-top"><span className="project-icon">{project.mark}</span><span className="mono">PROJECT / 0{project.id}</span></div><h3>{project.title}</h3><p>{project.description}</p><div className="tags">{project.tech.map(t=><span className="tag" key={t}>{t}</span>)}</div><div className="project-links"><a href={project.github} target="_blank" rel="noopener noreferrer">GitHub repository ↗</a>{project.demo&&<a href={project.demo} target="_blank" rel="noopener noreferrer">Live demo ↗</a>}</div></article>; }
 function FilterBar({items,active,onChange}) { return <div className="project-tools" aria-label="Filter projects">{items.map(item=><button className="filter" key={item} aria-pressed={active===item} onClick={()=>onChange(item)}>{item}</button>)}</div>; }
 function ProjectList({projects}) { return <div className="projects">{projects.map(project=><ProjectCard key={project.id} project={project}/>)}</div>; }
 function PortfolioGallery() { const [filter,setFilter]=useState("All"); const filters=["All",...new Set(projects.flatMap(p=>p.tech))]; const visible=filter==="All"?projects:projects.filter(p=>p.tech.includes(filter)); return <><FilterBar items={filters} active={filter} onChange={setFilter}/><ProjectList projects={visible}/></>; }
