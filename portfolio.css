@@ -367,3 +367,62 @@ html[data-theme="light"] .rdf-root .rdf-tag, html[data-theme="light"] .rdf-root 
 @media (max-width: 680px) {
   .rdf-feedback .feedback-inner { grid-template-columns: 1fr; }
 }
+
+
+/* Match the footer and feedback layout to the main archive's content margins. */
+.rdf-root {
+  --rdf-paper: var(--paper);
+  --rdf-ink: var(--ink);
+  --rdf-muted: var(--muted);
+  --rdf-line: var(--line);
+  --rdf-accent: var(--sun);
+  background: var(--paper);
+  color: var(--ink);
+}
+.rdf-top,
+.rdf-bar {
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 5vw, 3rem);
+}
+.rdf-top {
+  grid-template-columns: minmax(0, 1.8fr) repeat(3, minmax(0, 1fr));
+}
+.rdf-feedback.feedback-section {
+  padding-inline: 0;
+  background: transparent;
+}
+.rdf-feedback .feedback-inner {
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 5vw, 3rem);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  gap: 1.5rem 3rem;
+}
+.rdf-feedback .feedback-card {
+  background: color-mix(in srgb, var(--ink) 5%, var(--paper));
+  border-color: var(--line);
+}
+.rdf-feedback .feedback-question,
+.rdf-feedback .feedback-label,
+.rdf-feedback .feedback-copy h2 {
+  color: var(--ink);
+}
+.rdf-feedback .feedback-copy > p:last-child,
+.rdf-feedback .feedback-choice {
+  color: var(--muted);
+}
+.rdf-feedback .feedback-choice,
+.rdf-feedback .feedback-text {
+  border-color: var(--line);
+}
+.rdf-feedback .feedback-text {
+  background: var(--paper);
+  color: var(--ink);
+}
+.rdf-feedback .feedback-text::placeholder { color: var(--muted); }
+@media (max-width: 680px) {
+  .rdf-feedback .feedback-inner { grid-template-columns: 1fr; }
+}
