@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10171c">
+  <meta name="description" content="Week 12.01 React useState shopping cart by Alisher Ulmasov.">
+  <title>Week 12.01 | Shopping Cart</title>
+  <link rel="stylesheet" href="week12.css">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <nav class="topbar"><a class="brand" href="../index.html">ALISHER ULMASOV · WEB PROGRAMMING</a><a class="back" href="index.html">← Week 12</a></nav>
+  <main class="shell">
+    <header class="hero"><div class="eyebrow">WEEK 12 · MONDAY · ASSIGNMENT 01</div><h1>Interactive<br><em>Shopping Cart.</em></h1><p class="lead">A small React shop for practicing state updates. Add products, adjust quantities, remove items, and refresh the page to see the saved cart return.</p><div class="pills"><span class="pill">React 18</span><span class="pill">useState</span><span class="pill">useEffect</span><span class="pill">localStorage</span></div></header>
+    <div id="cart-app" aria-live="polite"></div>
+    <section class="explain" aria-label="How this assignment works">
+      <article><h2>State belongs to the cart</h2><p>The cart is an array of product IDs and quantities. Each button makes a new array with a functional state update, so React can render the changed values.</p></article>
+      <article><h2>Calculate totals from state</h2><p>The total is derived while rendering from each item’s price and quantity. Keeping it derived avoids storing a second value that could get out of sync.</p></article>
+      <article><h2>Keep the saved version in sync</h2><p>A <code>useEffect</code> writes cart changes to <code>localStorage</code>. On the first render, the component loads a saved cart when one exists.</p></article>
+      <article><h2>Practice checklist</h2><ul><li>Add more than one item.</li><li>Try decrementing a quantity at one.</li><li>Refresh and check that the cart remains.</li><li>Use Reset cart and try again.</li></ul></article>
+    </section>
+  </main>
+  <footer class="site-footer">Week 12.01 · React State · Alisher Ulmasov · Gachon University</footer>
+  <script type="text/babel" src="useState-cart.js"></script>
+</body>
+</html>
