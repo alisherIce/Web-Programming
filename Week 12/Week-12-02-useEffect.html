@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10171c">
+  <meta name="description" content="Week 12.02 React useEffect weather dashboard by Alisher Ulmasov.">
+  <title>Week 12.02 | Weather Dashboard</title>
+  <link rel="stylesheet" href="week12.css">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <nav class="topbar"><a class="brand" href="../index.html">ALISHER ULMASOV · WEB PROGRAMMING</a><a class="back" href="index.html">← Week 12</a></nav>
+  <main class="shell">
+    <header class="hero"><div class="eyebrow">WEEK 12 · FRIDAY · ASSIGNMENT 02</div><h1>Weather<br><em>Dashboard.</em></h1><p class="lead">Search for a city and see live weather conditions from Open-Meteo. The React effect handles loading, successful data, errors, and cleanup when a newer search replaces an older one.</p><div class="pills"><span class="pill">React 18</span><span class="pill">useEffect</span><span class="pill">Fetch API</span><span class="pill">AbortController</span></div></header>
+    <div id="weather-app" aria-live="polite"></div>
+    <section class="explain" aria-label="How this assignment works">
+      <article><h2>Search drives the effect</h2><p>The submitted city is state. Whenever it changes, <code>useEffect</code> geocodes the city and requests current conditions for its coordinates.</p></article>
+      <article><h2>Keep the screen honest</h2><p>The dashboard moves through idle, loading, ready, and error states. It clears an old result before showing new data, so stale weather is not mistaken for the latest search.</p></article>
+      <article><h2>Clean up old requests</h2><p>The effect creates an <code>AbortController</code>. Its cleanup cancels both fetch requests when you submit another city or leave the component.</p></article>
+      <article><h2>Try these searches</h2><ul><li>Seongnam or Seoul</li><li>Tashkent</li><li>A misspelled city name</li><li>Submit two cities quickly to see cancellation</li></ul></article>
+    </section>
+  </main>
+  <footer class="site-footer">Week 12.02 · React Effects · Alisher Ulmasov · Gachon University</footer>
+  <script type="text/babel" src="useEffect-weather.js"></script>
+</body>
+</html>
