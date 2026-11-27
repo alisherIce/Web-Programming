@@ -45,7 +45,7 @@
   if (!document.querySelector("footer")) {
     var footer = document.createElement("footer");
     footer.className = "shared-site-footer";
-    footer.textContent = "Created by Alisher Ulmasov · Student ID: 202537098";
+    footer.textContent = "Created by Alisher Ulmasov · Student ID: 2025370098";
     document.body.appendChild(footer);
   }
 })();

@@ -58,7 +58,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 <section class="panel"><h2>Enhanced registration</h2>
 <form id="js-form" novalidate>
 <div class="grid"><div><label for="js-name">Full name *</label><input id="js-name" autocomplete="name" required><small id="name-error" class="hint"></small></div>
-<div><label for="js-id">Student ID *</label><input id="js-id" inputmode="numeric" maxlength="9" required><small id="id-error" class="hint"></small></div>
+<div><label for="js-id">Student ID *</label><input id="js-id" inputmode="numeric" maxlength="10" required><small id="id-error" class="hint"></small></div>
 <div><label for="js-email">Email *</label><input id="js-email" type="email" autocomplete="email" required><small id="email-error" class="hint"></small></div>
 <div><label for="js-phone">Phone *</label><input id="js-phone" type="tel" placeholder="010-1234-5678" required><small id="phone-error" class="hint"></small></div>
 <div><label for="js-password">Password *</label><input id="js-password" type="password" minlength="8" autocomplete="new-password" required><small id="password-error" class="hint"></small></div>
@@ -68,7 +68,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 </form></section>
 <section class="panel"><h2>Validation behavior</h2><ul><li>Student ID must contain exactly nine digits.</li><li>Email must use a valid email format.</li><li>Phone number must follow 000-0000-0000.</li><li>Password must contain at least eight characters and match confirmation.</li><li>Errors are written in text and associated with fields.</li></ul></section>
 <script>
-const form=document.querySelector('#js-form');const fields=[['name','js-name',v=>v.trim().length>=2,'Enter your full name.'],['id','js-id',v=>/^\d{9}$/.test(v),'Student ID must contain exactly 9 digits.'],['email','js-email',v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),'Enter a valid email address.'],['phone','js-phone',v=>/^\d{3}-\d{4}-\d{4}$/.test(v),'Use the format 000-0000-0000.'],['password','js-password',v=>v.length>=8,'Use at least 8 characters.'],['confirm','js-confirm',v=>v===document.querySelector('#js-password').value,'Passwords do not match.']];
+const form=document.querySelector('#js-form');const fields=[['name','js-name',v=>v.trim().length>=2,'Enter your full name.'],['id','js-id',v=>/^\d{10}$/.test(v),'Student ID must contain exactly 10 digits.'],['email','js-email',v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),'Enter a valid email address.'],['phone','js-phone',v=>/^\d{3}-\d{4}-\d{4}$/.test(v),'Use the format 000-0000-0000.'],['password','js-password',v=>v.length>=8,'Use at least 8 characters.'],['confirm','js-confirm',v=>v===document.querySelector('#js-password').value,'Passwords do not match.']];
 form.addEventListener('submit',e=>{e.preventDefault();let valid=true;fields.forEach(([key,id,check,message])=>{const el=document.getElementById(id);const ok=check(el.value);document.getElementById(key+'-error').textContent=ok?'':message;el.setAttribute('aria-invalid',String(!ok));if(!ok)valid=false;});if(!document.querySelector('#js-terms').checked){valid=false;document.querySelector('#js-status').textContent='Please accept the terms before continuing.';}else document.querySelector('#js-status').textContent=valid?'All fields passed validation. Registration is ready.':'Please correct the highlighted fields.';if(!valid)form.querySelector('[aria-invalid="true"]')?.focus();});
 </script>
 </main>

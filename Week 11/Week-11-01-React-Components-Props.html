@@ -25,10 +25,10 @@
 <div class="eyebrow">WEB PROGRAMMING · WEEK 11 · HOMEWORK 01</div>
 <h1>React Components<br><em>&amp; Props.</em></h1>
 <p class="lead">A practical collection of reusable React components, data-driven interfaces, and component composition. Each task includes a working demonstration and a look at the implementation.</p>
-<div class="chips"><span class="chip">Gachon University</span><span class="chip">Computer Engineering</span><span class="chip">React 18 + JSX</span><span class="chip">Submission 11-01</span></div>
+<div class="chips"><span class="chip">Gachon University</span><span class="chip">Computer Science</span><span class="chip">React 18 + JSX</span><span class="chip">Submission 11-01</span></div>
 <div class="hero-grid">
-<div class="hero-card"><div class="eyebrow">STUDENT PROFILE</div><strong>Alisher Ulmasov</strong><p>Computer Engineering student at Gachon University. Contact: <a href="mailto:202537098@gachon.ac.kr">202537098@gachon.ac.kr</a>. This page demonstrates React component design, reusable props, and dynamic rendering.</p></div>
-<div class="hero-card"><div class="hero-stat"><span>Student ID</span><b>202537098</b></div><div class="hero-stat"><span>Course</span><b>K0126_002</b></div><div class="hero-stat"><span>Exercises</span><b>08</b></div></div>
+<div class="hero-card"><div class="eyebrow">STUDENT PROFILE</div><strong>Alisher Ulmasov</strong><p>Computer Science student at Gachon University. Contact: <a href="mailto:email.2025370098@gachon.ac.kr">email.2025370098@gachon.ac.kr</a>. This page demonstrates React component design, reusable props, and dynamic rendering.</p></div>
+<div class="hero-card"><div class="hero-stat"><span>Student ID</span><b>2025370098</b></div><div class="hero-stat"><span>Course</span><b>K0126_002</b></div><div class="hero-stat"><span>Exercises</span><b>08</b></div></div>
 </div>
 </header>
 
@@ -69,8 +69,8 @@
 
 &lt;StudentCard
   name="Alisher Ulmasov"
-  id="202537098"
-  major="Computer Engineering"
+  id="2025370098"
+  major="Computer Science"
 /&gt;</pre></div></div></article>
 
 <article class="exercise"><div class="exercise-head"><span class="exercise-no">E3</span><h3>ProfileCard with a Default Prop</h3></div><p class="exercise-desc">The <code>avatarUrl</code> prop is optional and falls back to a local inline SVG avatar. The professor's profile uses the information shown in the supplied class reference.</p><div class="split"><div class="demo"><div class="demo-label">LIVE OUTPUT</div><div id="profile-root"></div></div><div class="implementation"><h4>ProfileCard.jsx</h4><pre class="code">const DEFAULT_AVATAR = "data:image/svg+xml,...";
@@ -209,7 +209,7 @@ function FilterBar({items,active,onChange}) { return <div className="project-too
 function ProjectList({projects}) { return <div className="projects">{projects.map(project=><ProjectCard key={project.id} project={project}/>)}</div>; }
 function PortfolioGallery() { const [filter,setFilter]=useState("All"); const filters=["All",...new Set(projects.flatMap(p=>p.tech))]; const visible=filter==="All"?projects:projects.filter(p=>p.tech.includes(filter)); return <><FilterBar items={filters} active={filter} onChange={setFilter}/><ProjectList projects={visible}/></>; }
 function StudentProfileCard({name,studentId,major,year,gpa,sample=false}) { return <article className="student"><div className="avatar">{name.split(" ").map(w=>w[0]).slice(0,2).join("")}</div><h3>{name}</h3><p>{major}</p><dl><dt>Student ID</dt><dd>{studentId}</dd><dt>Year</dt><dd>{year}</dd><dt>GPA</dt><dd>{gpa}</dd></dl>{sample&&<span className="sample">SAMPLE PROFILE · DEMO DATA</span>}</article>; }
-function StudentDirectory() { const students=[{name:"Alisher Ulmasov",studentId:"202537098",major:"Computer Engineering",year:"Gachon University",gpa:"Not provided"}]; return <div className="directory">{students.map(s=><StudentProfileCard key={s.studentId} {...s}/>)}</div>; }
+function StudentDirectory() { const students=[{name:"Alisher Ulmasov",studentId:"2025370098",major:"Computer Science",year:"Gachon University",gpa:"Not provided"}]; return <div className="directory">{students.map(s=><StudentProfileCard key={s.studentId} {...s}/>)}</div>; }
 function Greeting(){return <p>Hello, World!</p>;}
 function StudentCard({name,id,major}){return <div className="inner-card"><h4>{name}</h4><p>Student ID: {id}</p><p>Major: {major}</p></div>;}
 const DEFAULT_AVATAR="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect width="80" height="80" rx="40" fill="#d8edf6"/><circle cx="40" cy="29" r="14" fill="#537487"/><path d="M12 78c2-18 13-28 28-28s26 10 28 28" fill="#537487"/></svg>');
@@ -225,7 +225,7 @@ function mount(id,component){ReactDOM.createRoot(document.getElementById(id)).re
 mount("portfolio-root",<PortfolioGallery/>);
 mount("directory-root",<StudentDirectory/>);
 mount("greeting-root",<><Greeting/><Greeting/><Greeting/></>);
-mount("studentcard-root",<StudentCard name="Alisher Ulmasov" id="202537098" major="Computer Engineering"/>);
+mount("studentcard-root",<StudentCard name="Alisher Ulmasov" id="2025370098" major="Computer Science"/>);
 mount("profile-root",<ProfileCard name="Dr. Toshpulatov" role="Professor · Gachon University" email="muhiddin@gachon.ac.kr"/>);
 mount("notifications-root",<NotificationList/>);
 mount("children-root",<><Card title="Lecture Topics"><ul><li>Components</li><li>Props</li></ul></Card><Card title="Homework"><p>Build a student portfolio component.</p></Card></>);

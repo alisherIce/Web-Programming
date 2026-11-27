@@ -59,7 +59,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 <form id="registration" action="#" method="get">
 <fieldset style="border:0;padding:0;margin:0"><legend><strong>Personal information</strong></legend>
 <div class="grid"><div><label for="full-name">Full name *</label><input id="full-name" name="fullName" autocomplete="name" required minlength="2"></div>
-<div><label for="student-id">Student ID *</label><input id="student-id" name="studentId" inputmode="numeric" pattern="[0-9]{9}" maxlength="9" required aria-describedby="id-help"><p id="id-help" class="hint">Enter exactly 9 digits.</p></div>
+<div><label for="student-id">Student ID *</label><input id="student-id" name="studentId" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required aria-describedby="id-help"><p id="id-help" class="hint">Enter exactly 10 digits.</p></div>
 <div><label for="dob">Date of birth *</label><input id="dob" name="dob" type="date" required></div>
 <div><label for="major">Major *</label><select id="major" name="major" required><option value="">Choose your major</option><option>Computer Engineering</option><option>Software Engineering</option><option>AI &amp; Data Science</option><option>Electronic Engineering</option></select></div></div></fieldset>
 <fieldset style="border:0;padding:0;margin:22px 0 0"><legend><strong>Account information</strong></legend>
