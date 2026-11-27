@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10171c">
+  <meta name="description" content="Week 11-02 React state and events exercises by Alisher Ulmasov.">
+  <title>Week 11-02 | React State &amp; Events — Alisher Ulmasov</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../portfolio.css">
+  <style>
+    .week-hero .hero-inner{max-width:960px}
+    .hero-kicker{font:700 .7rem "DM Mono",monospace}
+    .hero h1{font-size:clamp(3rem,9vw,6.5rem)}
+    .hero h1 span{color:var(--sun)}
+    .course-chip{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;padding:.45rem .7rem;border:1px solid #ffffff55;border-radius:99px;font:500 .72rem "DM Mono",monospace}
+    .assignment-strip{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;margin:0 0 2rem;padding:1rem 1.2rem;border:1px solid var(--line);border-radius:14px;background:var(--white)}
+    .assignment-strip p{margin:0;color:var(--muted);font-size:.83rem}
+    .assignment-strip strong{display:block;color:var(--ink);font-size:1rem}
+    .student-id{font:600 .78rem "DM Mono",monospace;color:var(--ink)}
+    .exercise-grid{display:grid;gap:1rem}
+    .exercise-card{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--white);box-shadow:0 8px 24px #0002}
+    .exercise-head{display:flex;align-items:flex-start;gap:1rem;padding:1.2rem 1.3rem .9rem;border-bottom:1px solid var(--line)}
+    .exercise-number{display:grid;flex:0 0 2.8rem;width:2.8rem;height:2.8rem;place-items:center;border-radius:11px;background:var(--sun);color:#172126;font:700 .82rem "DM Mono",monospace}
+    .exercise-head h2{margin:0;font-size:1.2rem;letter-spacing:-.02em}
+    .exercise-head p{margin:.25rem 0 0;color:var(--muted);font-size:.82rem}
+    .exercise-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,.85fr);gap:1rem;padding:1.2rem 1.3rem}
+    .demo-panel,.code-panel{min-width:0;padding:1rem;border-radius:12px}
+    .demo-panel{background:#eef3f3;color:#152329}
+    .code-panel{background:#111b21;color:#edf2f4}
+    .panel-label{margin:0 0 .8rem;color:#52636a;font:600 .63rem "DM Mono",monospace;letter-spacing:.12em;text-transform:uppercase}
+    .code-panel .panel-label{color:#9db0b8}
+    .demo-panel h3{margin:.2rem 0 .7rem;font-size:1rem}
+    .demo-panel p{margin:.35rem 0;color:#45565c;font-size:.83rem}
+    .demo-row{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem}
+    .demo-button,.demo-select{border:1px solid #b7c6c9;border-radius:9px;background:#fff;color:#14232a;padding:.55rem .78rem;font:600 .78rem system-ui,sans-serif}
+    .demo-button.primary{background:#183f4a;border-color:#183f4a;color:white}
+    .demo-button.danger{color:#9b3a36}
+    .demo-button[aria-pressed="true"]{background:#183f4a;color:white}
+    .demo-field,.demo-textarea{display:block;width:100%;border:1px solid #bcc9ca;border-radius:9px;background:#fff;color:#14232a;padding:.62rem .72rem;font:inherit;font-size:.85rem}
+    .demo-textarea{min-height:80px;resize:vertical}
+    .demo-stack{display:grid;gap:.65rem}
+    .demo-list{display:grid;gap:.45rem;margin:.8rem 0 0;padding:0;list-style:none}
+    .demo-list li{display:flex;align-items:center;justify-content:space-between;gap:.7rem;padding:.55rem .65rem;border:1px solid #d2dddd;border-radius:9px;background:#fff;font-size:.82rem}
+    .demo-list label{display:flex;align-items:center;gap:.55rem}
+    .demo-count{font:800 2.8rem/1 "Bricolage Grotesque",sans-serif;letter-spacing:-.06em}
+    .demo-status{min-height:1.3em;color:#315b48!important;font-size:.75rem!important}
+    pre{overflow:auto;margin:0;white-space:pre-wrap;overflow-wrap:anywhere;color:#e8bd70;font: .72rem/1.6 "DM Mono",monospace}
+    .reflection{margin-top:2rem;padding:1.3rem;border:1px solid var(--line);border-radius:16px;background:var(--white)}
+    .reflection h2{margin:.2rem 0 .65rem;font-size:1.2rem}
+    .reflection ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem 1.4rem;margin:.4rem 0 0;padding-left:1.15rem;color:var(--muted);font-size:.82rem}
+    @media(max-width:680px){.exercise-body{grid-template-columns:1fr}.reflection ul{grid-template-columns:1fr}.exercise-head{padding:1rem}.exercise-body{padding:1rem}}
+  </style>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Main navigation">
+    <a class="wordmark" href="../index.html">ALISHER ULMASOV<span> / WEB PROGRAMMING</span></a>
+    <a class="nav-link" href="index.html">← Week 11</a>
+  </nav>
+  <header class="hero week-hero">
+    <div class="hero-inner">
+      <p class="hero-kicker">WEB PROGRAMMING · WEEK 11 · HOMEWORK 02</p>
+      <h1>React State<br><span>&amp; Events.</span></h1>
+      <div class="hero-bottom">
+        <p>Make the interface respond. Seven small exercises practice state updates, event handlers, controlled forms, list changes, and saved browser data.</p>
+        <a href="#exercises">Explore the exercises <span aria-hidden="true">↓</span></a>
+      </div>
+      <span class="course-chip">GACHON UNIVERSITY · COMPUTER SCIENCE</span>
+    </div>
+  </header>
+  <main class="archive-content">
+    <div class="assignment-strip">
+      <div><span class="eyebrow">STUDENT</span><strong>Alisher Ulmasov</strong><p>Computer Science · Gachon University</p></div>
+      <div class="student-id">STUDENT ID&nbsp; 2025370098</div>
+    </div>
+    <div class="archive-content-head" id="exercises">
+      <div><p class="eyebrow">11.02 / PRACTICE</p><h2>State in action</h2></div>
+      <p>Interactive demos · React 18 · JSX</p>
+    </div>
+    <section class="exercise-grid" aria-label="Week 11-02 React exercises">
+      <article class="exercise-card">
+        <div class="exercise-head"><span class="exercise-number">E1</span><div><h2>Update state with a counter</h2><p>Use a functional state update so each click uses the latest count.</p></div></div>
+        <div class="exercise-body"><div class="demo-panel"><p class="panel-label">Live interaction</p><div id="counter-root"></div></div><div class="code-panel"><p class="panel-label">Counter.jsx</p><pre><code>function Counter() {
+  const [count, setCount] = useState(0);
+  return &lt;button onClick={() =&gt;
+    setCount(current =&gt; current + 1)
+  }&gt;{count}&lt;/button&gt;;
+}</code></pre></div></div>
+      </article>
+      <article class="exercise-card">
+        <div class="exercise-head"><span class="exercise-number">E2</span><div><h2>Keep an input in sync</h2><p>A controlled field updates its value and preview from the same state.</p></div></div>
+        <div class="exercise-body"><div class="demo-panel"><p class="panel-label">Live interaction</p><div id="name-root"></div></div><div class="code-panel"><p class="panel-label">NamePreview.jsx</p><pre><code>const [name, setName] = useState("");
+&lt;input value={name}
+  onChange={event =&gt; setName(event.target.value)} /&gt;
+&lt;p&gt;Hello, {name || "there"}!&lt;/p&gt;</code></pre></div></div>
+      </article>
+      <article class="exercise-card">
+        <div class="exercise-head"><span class="exercise-number">E3</span><div><h2>Add and remove list items</h2><p>Update arrays immutably, give items stable IDs, and handle form submission.</p></div></div>
+        <div class="exercise-body"><div class="demo-panel"><p class="panel-label">Live interaction</p><div id="list-root"></div></div><div class="code-panel"><p class="panel-label">TaskList.jsx</p><pre><code>function addTask(text) {
+  setTasks(current =&gt; [
+    ...current,
+    { id: crypto.randomUUID(), text }
+  ]);
+}</code></pre></div></div>
+      </article>
+      <article class="exercise-card">
+        <div class="exercise-head"><span class="exercise-number">E4</span><div><h2>Show and hide content</h2><p>Use a boolean state value to reveal details accessibly.</p></div></div>
+        <div class="exercise-body"><div class="demo-panel"><p class="panel-label">Live interaction</p><div id="details-root"></div></div><div class="code-panel"><p class="panel-label">Details.jsx</p><pre><code>const [open, setOpen] = useState(false);
+&lt;button aria-expanded={open}
+  onClick={() =&gt; setOpen(value =&gt; !value)}&gt;
+  {open ? "Hide details" : "Show details"}
+&lt;/button&gt;</code></pre></div></div>
+      </article>
+      <article class="exercise-card">
+        <div class="exercise-head"><span class="exercise-number">E5</span><div><h2>Complete and filter tasks</h2><p>Use object updates to mark tasks done, then filter by status.</p></div></div>
+        <div class="exercise-body"><div class="demo-panel"><p class="panel-label">Live interaction</p><div id="filter-root"></div></div><div class="code-panel"><p class="panel-label">TaskFilter.jsx</p><pre><code>setTasks(current =&gt; current.map(task =&gt;
+  task.id === id
+    ? { ...task, done: !task.done }
+    : task
+));</code></pre></div></div>
+      </article>
+      <article class="exercise-card">
+        <div class="exercise-head"><span class="exercise-number">E6</span><div><h2>Validate a controlled form</h2><p>Keep related fields together and show clear feedback after submit.</p></div></div>
+        <div class="exercise-body"><div class="demo-panel"><p class="panel-label">Live interaction</p><div id="form-root"></div></div><div class="code-panel"><p class="panel-label">ProfileForm.jsx</p><pre><code>const [profile, setProfile] = useState({
+  name: "", email: ""
+});
+function update(field, value) {
+  setProfile(current =&gt; ({
+    ...current, [field]: value
+  }));
+}</code></pre></div></div>
+      </article>
+      <article class="exercise-card">
+        <div class="exercise-head"><span class="exercise-number">E7</span><div><h2>Save a note in the browser</h2><p>Use an effect to sync note state to localStorage and restore it later.</p></div></div>
+        <div class="exercise-body"><div class="demo-panel"><p class="panel-label">Live interaction</p><div id="note-root"></div></div><div class="code-panel"><p class="panel-label">SavedNote.jsx</p><pre><code>useEffect(() =&gt; {
+  localStorage.setItem("week11-note", note);
+}, [note]);</code></pre></div></div>
+      </article>
+    </section>
+    <section class="reflection" aria-labelledby="reflection-title">
+      <p class="eyebrow">WHAT I PRACTICED</p><h2 id="reflection-title">From click to interface</h2>
+      <ul><li>State remembers information between renders.</li><li>Event handlers describe what happens after a user action.</li><li>Functional updates use the latest state value.</li><li>Controlled forms keep React state and the input in sync.</li><li>Immutable updates preserve the rest of an array or object.</li><li>Effects keep browser storage synchronized with React state.</li></ul>
+    </section>
+  </main>
+  <footer class="site-footer"><span>Alisher Ulmasov · Student ID 2025370098 · Gachon University</span><a href="mailto:2025370098@gachon.ac.kr">2025370098@gachon.ac.kr</a></footer>
+  <script type="text/babel">
+    const { useEffect, useState } = React;
+    function CounterDemo(){const [count,setCount]=useState(0);return <div className="demo-stack"><div className="demo-count" aria-live="polite">{count}</div><div className="demo-row"><button className="demo-button" type="button" onClick={()=>setCount(value=>value-1)}>Decrease</button><button className="demo-button primary" type="button" onClick={()=>setCount(value=>value+1)}>Add one</button><button className="demo-button" type="button" onClick={()=>setCount(0)}>Reset</button></div></div>;}
+    function NameDemo(){const [name,setName]=useState("");return <div className="demo-stack"><label htmlFor="student-name">Your name</label><input className="demo-field" id="student-name" value={name} onChange={event=>setName(event.target.value)} placeholder="Type your name"/><p aria-live="polite">Hello, <strong>{name.trim()||"there"}</strong>!</p></div>;}
+    function ListDemo(){const [tasks,setTasks]=useState([{id:"a",text:"Review component props"},{id:"b",text:"Practice state updates"},{id:"c",text:"Build something small"}]);const [text,setText]=useState("");function add(event){event.preventDefault();const value=text.trim();if(!value)return;setTasks(current=>[...current,{id:crypto.randomUUID(),text:value}]);setText("");}return <div className="demo-stack"><form className="demo-row" onSubmit={add}><label className="sr-only" htmlFor="new-task">New task</label><input className="demo-field" id="new-task" value={text} onChange={event=>setText(event.target.value)} placeholder="New task"/><button className="demo-button primary" type="submit" disabled={!text.trim()}>Add</button></form><ul className="demo-list">{tasks.map(task=><li key={task.id}><span>{task.text}</span><button className="demo-button danger" type="button" onClick={()=>setTasks(current=>current.filter(item=>item.id!==task.id))} aria-label={"Remove "+task.text}>Remove</button></li>)}</ul></div>;}
+    function DetailsDemo(){const [open,setOpen]=useState(false);return <div className="demo-stack"><button className="demo-button primary" type="button" aria-expanded={open} onClick={()=>setOpen(value=>!value)}>{open?"Hide details":"Show details"}</button>{open&&<p>State lets React update only the part of the interface that changed. This panel appears when the button is pressed.</p>}</div>;}
+    const starterTasks=[{id:1,text:"Read the React lesson",done:false},{id:2,text:"Try the counter",done:true},{id:3,text:"Update the task list",done:false}];
+    function FilterDemo(){const [tasks,setTasks]=useState(starterTasks);const [filter,setFilter]=useState("All");const visible=tasks.filter(task=>filter==="All"||(filter==="Done"?task.done:!task.done));return <div className="demo-stack"><div className="demo-row" role="group" aria-label="Filter tasks">{["All","Active","Done"].map(option=><button key={option} className="demo-button" type="button" aria-pressed={filter===option} onClick={()=>setFilter(option)}>{option}</button>)}</div><p>{tasks.filter(task=>task.done).length} of {tasks.length} tasks complete</p><ul className="demo-list">{visible.map(task=><li key={task.id}><label><input type="checkbox" checked={task.done} onChange={()=>setTasks(current=>current.map(item=>item.id===task.id?{...item,done:!item.done}:item))}/><span>{task.text}</span></label></li>)}</ul></div>;}
+    function FormDemo(){const [profile,setProfile]=useState({name:"",email:""});const [saved,setSaved]=useState(false);function update(field,value){setProfile(current=>({...current,[field]:value}));setSaved(false);}function submit(event){event.preventDefault();setSaved(true);}return <div className="demo-stack"><form className="demo-stack" onSubmit={submit}><label htmlFor="profile-name">Name</label><input className="demo-field" id="profile-name" value={profile.name} onChange={event=>update("name",event.target.value)} required placeholder="Your name"/><label htmlFor="profile-email">Email</label><input className="demo-field" id="profile-email" type="email" value={profile.email} onChange={event=>update("email",event.target.value)} required placeholder="name@example.com"/><button className="demo-button primary" type="submit">Save profile</button></form>{saved&&<p className="demo-status" role="status">Profile saved for {profile.name}.</p>}</div>;}
+    function NoteDemo(){const [note,setNote]=useState(()=>{try{return localStorage.getItem("week11-02-note")||"";}catch{return "";}});const [status,setStatus]=useState("Notes are saved in this browser.");useEffect(()=>{try{localStorage.setItem("week11-02-note",note);setStatus(note.trim()?"Saved in this browser.":"Nothing saved yet.");}catch{setStatus("Browser storage is unavailable.");}},[note]);return <div className="demo-stack"><label htmlFor="quick-note">Quick note</label><textarea className="demo-textarea" id="quick-note" maxLength="240" value={note} onChange={event=>setNote(event.target.value)} placeholder="Write one idea to remember…"/><div className="demo-row"><span className="panel-label" aria-live="polite">{note.length} / 240</span><button className="demo-button" type="button" onClick={()=>setNote("")}>Clear</button></div><p className="demo-status" role="status">{status}</p></div>;}
+    function mount(id,component){ReactDOM.createRoot(document.getElementById(id)).render(component);}
+    mount("counter-root",<CounterDemo/>);mount("name-root",<NameDemo/>);mount("list-root",<ListDemo/>);mount("details-root",<DetailsDemo/>);mount("filter-root",<FilterDemo/>);mount("form-root",<FormDemo/>);mount("note-root",<NoteDemo/>);
+  </script>
+</body>
+</html>
