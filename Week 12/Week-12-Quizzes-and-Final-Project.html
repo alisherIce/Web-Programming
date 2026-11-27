@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10171c">
+<meta name="description" content="Week 12 React useState and useEffect quiz review and final project checklist by Alisher Ulmasov.">
+<title>Week 12 · Quiz Review & Final Project | Alisher Ulmasov</title>
+<link rel="stylesheet" href="../portfolio.css">
+<style>
+:root{color-scheme:dark}body{background:#10171c!important;color:#edf2f4!important}.wrap{width:min(1000px,calc(100% - 36px));margin:auto;padding:38px 0 78px}.back{color:#a9b8bf;text-decoration:none;font-weight:700}.kicker,.label{color:#e6b65d;font-size:.75rem;letter-spacing:.15em;font-weight:800}.kicker{margin:38px 0 12px}h1{font-size:clamp(2.8rem,8vw,5.7rem);letter-spacing:-.06em;line-height:.96;margin:0 0 18px}.intro{max-width:760px;color:#a9b8bf;font-size:1.05rem;line-height:1.7}.panel{margin-top:28px;padding:23px;border:1px solid #34434b;border-radius:20px;background:#1b272e}.panel h2{margin:4px 0 12px;font-size:1.7rem}.panel p,.panel li{color:#c1cdd1;line-height:1.65}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;margin-top:12px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #34434b;vertical-align:top}th{color:#e6b65d;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase}td{color:#d3dfe2;line-height:1.5}td:first-child{white-space:nowrap;color:#e6b65d;font-weight:800}.callout{border-left:3px solid #e6b65d;padding:12px 16px;background:#101820;color:#c1cdd1;line-height:1.65}.links{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px}.links a{color:#7fe0c1}.footer{border-top:1px solid #34434b;padding:24px;text-align:center;color:#a9b8bf}@media(max-width:620px){.panel{padding:16px}th,td{padding:10px 7px;font-size:.86rem}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<a class="back" href="index.html">← Week 12</a>
+<p class="kicker">WEB PROGRAMMING · WEEK 12 · STUDY NOTES</p>
+<h1>State, Effects<br>&amp; the final project<span style="color:#e6b65d">.</span></h1>
+<p class="intro">Quiz review and homework notes from the Monday useState and Friday useEffect lessons. This page is a study guide; submit course work and peer evaluations yourself through Cyber Campus.</p>
+<section class="panel">
+<div class="label">MONDAY · REACT STATE · 7 QUIZZES</div><h2>Answer review</h2>
+<div class="table-wrap"><table><thead><tr><th>Quiz</th><th>Correct answer</th><th>Why</th></tr></thead><tbody>
+<tr><td>1 · State vs props</td><td>C — State is component-owned; props arrive from a parent.</td><td>Receiving components treat props as read-only. The component that owns state updates it with its setter.</td></tr>
+<tr><td>2 · useState</td><td>C — An array: <code>[currentValue, setterFunction]</code>.</td><td>Use array destructuring; the two positions carry the values.</td></tr>
+<tr><td>3 · Rules of Hooks</td><td>B — Calling a Hook inside a condition violates the rules.</td><td>Call Hooks at the top level in the same order on every render.</td></tr>
+<tr><td>4 · Batched updates</td><td>B — Three <code>setCount(count + 1)</code> calls from a render where count is 0 produce 1.</td><td>All three read the same render snapshot. Use <code>setCount(c =&gt; c + 1)</code> when each update depends on the previous one.</td></tr>
+<tr><td>5 · State design</td><td>A — Separate state variables for independent form fields.</td><td>Keep related values together only when they change together; avoid unnecessary coupling.</td></tr>
+<tr><td>6 · Array updates</td><td>C — <code>setTodos(prev =&gt; [...prev, item])</code>.</td><td>Create a new array instead of mutating state with <code>push</code>.</td></tr>
+<tr><td>7 · Shared sibling state</td><td>B — Lift state to the nearest common parent.</td><td>The parent owns one source of truth and passes values and handlers to both children.</td></tr>
+</tbody></table></div>
+</section>
+<section class="panel">
+<div class="label">FRIDAY · REACT EFFECTS · 8 QUIZZES</div><h2>Answer review</h2>
+<div class="table-wrap"><table><thead><tr><th>Quiz</th><th>Correct answer</th><th>Why</th></tr></thead><tbody>
+<tr><td>1 · Effect timing</td><td>B — After React commits the render.</td><td>Effects run outside render; rendering should stay pure.</td></tr>
+<tr><td>2 · Dependencies</td><td>C — No dependency array means after every render.</td><td>An empty array runs after mount; a dependency list reruns when one of its values changes.</td></tr>
+<tr><td>3 · Async effects</td><td>D — The effect callback must not itself be <code>async</code>.</td><td>An async function returns a Promise. Define and call an async function inside the effect instead.</td></tr>
+<tr><td>4 · Cleanup</td><td>A — Return cleanup to stop or release an external process.</td><td>Cleanup runs before a rerun and when the component unmounts; use it to clear timers or unsubscribe.</td></tr>
+<tr><td>5 · Stale requests</td><td>E — Abort or ignore the previous request in cleanup.</td><td>This prevents a slower old response from overwriting the latest search result.</td></tr>
+<tr><td>6 · Lazy initializer</td><td>C — <code>useState(() =&gt; ...)</code> runs the initializer on the first render.</td><td>This avoids repeating expensive initial work on later renders.</td></tr>
+<tr><td>7 · Infinite loops</td><td>B — An effect that updates one of its own dependencies can loop.</td><td>Make dependencies and updates match the intended external synchronization.</td></tr>
+<tr><td>8 · Derived values</td><td>D — Compute values such as fullName during rendering.</td><td>Do not duplicate derivable data in state or synchronize it with an effect.</td></tr>
+</tbody></table></div>
+</section>
+<section class="panel">
+<div class="label">HOMEWORK · FRIDAY ASSIGNMENT 12.02</div><h2>Weather Dashboard</h2>
+<p>The existing <a href="Week-12-02-useEffect.html">Week 12-02 Weather Dashboard</a> looks up a city with Open-Meteo, displays current conditions, handles loading and errors, and aborts stale requests. The class brief asks for city or coordinates, current temperature, wind, weather description, and an optional geolocation bonus. It lists submission of both the GitHub repository URL and live GitHub Pages URL by Sunday.</p>
+</section>
+<section class="panel">
+<div class="label">SEPARATE COURSE BRIEF · FINAL PROJECT</div><h2>Team submission &amp; peer evaluation</h2>
+<p>The final-project PDF is a separate team process, not the Week 12.02 homework. The submission form asks for the team name and leader, every member's full name, GitHub repository URL, live website URL, and a short project description. Test both links in a private window before submitting.</p>
+<ul><li>Project submission deadline listed: November 23.</li><li>Peer evaluation deadline listed: November 30.</li><li>Each team submits one evaluation for each assigned team; do not evaluate your own team.</li><li>Review the repository and live site first. Score code quality, completeness, functionality, and design/UX from 1 to 5; both written responses are required.</li><li>Peer reviews are anonymous to the reviewed team. Skipping evaluations affects the team's score.</li></ul>
+<p class="callout"><strong>Next step:</strong> the project submission date in the provided brief has passed. Confirm any late-submission arrangement with your instructor. The peer-evaluation date is still listed as November 30; use only the teams assigned to you in Cyber Campus.</p>
+<div class="links"><a href="Week-12-01-useState.html">Shopping cart · 12.01 ↗</a><a href="Week-12-02-useEffect.html">Weather dashboard · 12.02 ↗</a></div>
+</section>
+</main>
+<footer class="footer">Alisher Ulmasov · Computer Science · Gachon University · Web Programming</footer>
+</body>
+</html>
