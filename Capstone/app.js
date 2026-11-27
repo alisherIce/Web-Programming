@@ -7,6 +7,7 @@ const projects = [
   { id: "cart", mark: "04", title: "Interactive Cart", description: "Product quantities and computed totals with immutable state updates and local persistence.", tech: ["React", "State", "localStorage"], href: "../Week%2012/Week-12-01-useState.html", label: "Open Week 12.01" },
   { id: "weather", mark: "05", title: "Weather Dashboard", description: "City geocoding, current weather, clear request states, and cancelled stale fetches.", tech: ["React", "Effects", "API"], href: "../Week%2012/Week-12-02-useEffect.html", label: "Open Week 12.02" },
   { id: "forms", mark: "06", title: "React Registration", description: "A guided form flow with controlled inputs, accessible validation, and a profile preview.", tech: ["React", "Forms", "Validation"], href: "../Week%2013/index.html", label: "Open Week 13 work" },
+  { id: "findit-ai", mark: "AI", title: "FindIt AI", description: "A smart lost-and-found app that matches item photos and helps people reconnect with what they misplaced.", tech: ["React", "TypeScript", "Python", "AI"], href: "https://alisherice.github.io/FindIt-AI/", label: "Open FindIt AI demo" },
 ];
 const lessons = [
   { week: "01–02", title: "HTML foundations", detail: "Semantic structure, links, figures, lists, and citations." },
