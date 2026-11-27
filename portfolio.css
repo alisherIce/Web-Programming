@@ -183,3 +183,9 @@ a { color: inherit; }
   html { scroll-behavior: auto; }
   .row, .assignment-link { transition: none; }
 }
+
+/* Visual previews for each week's featured coursework. */
+.weekly-row{grid-template-columns:auto minmax(0,1fr) minmax(120px,160px) auto}
+.task-scene{display:block;width:100%;aspect-ratio:16/9;overflow:hidden;border:1px solid #40535a;border-radius:10px;background:#13232b}
+.task-scene svg{display:block;width:100%;height:100%}
+@media(max-width:560px){.row.weekly-row{grid-template-columns:auto minmax(0,1fr)}.weekly-row .task-scene{grid-column:2;width:min(100%,240px)}.weekly-row .go{grid-column:2}}
